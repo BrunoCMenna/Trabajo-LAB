@@ -4,3 +4,7 @@
     display: flex;
     align-items: center;
 }
+
+nav {
+    background-color: #483D8B;
+}
