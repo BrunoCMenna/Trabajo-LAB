@@ -6,6 +6,7 @@ import Items from "./Items";
 import Ultra_S23 from '../Img/Ultra_S23.png';
 import Product from '../Product/Product';
 import "./Shop.css";
+import Footer from "../Footer/Footer";
 
 const Shop = () => {
 
@@ -33,6 +34,7 @@ const Shop = () => {
                     </ul>
                 </form>
             </div >
+            <Footer />
         </div >
     )
 }
