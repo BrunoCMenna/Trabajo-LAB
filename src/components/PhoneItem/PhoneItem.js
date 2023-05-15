@@ -19,7 +19,7 @@ const PhoneItem = ({ id, brand, model, price }) => {
           {brand} {model}
         </p>
 
-        <button type="button" className="btn btn-outline-success">
+        <button type="button" className="cart-btn">
           Agregar <FaCartPlus />
         </button>
       </div>
