@@ -1,61 +1,52 @@
 import React from "react";
-import { FaShoppingCart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import NavBar from "../NavBar/NavBar";
-import Items from "./Items";
-import Ultra_S23 from "../Img/Ultra_S23.png";
-import Product from "../Product/Product";
+
 import "./Shop.css";
+
 import Footer from "../Footer/Footer";
+import NavBar from "../NavBar/NavBar";
+import PhoneCatalog from "../PhoneCatalog/PhoneCatalog";
 
 const Shop = () => {
-  const navigation = useNavigate();
-
-  const goProduct = () => {
-    navigation("/Product");
-  };
+  const phones = [
+    {
+      id: 1,
+      brand: "Samsung",
+      model: "Galaxy A-10",
+      price: 10000,
+    },
+    {
+      id: 2,
+      brand: "Iphone",
+      model: "14 Pro",
+      price: 20000,
+    },
+    {
+      id: 3,
+      brand: "Xiaomi",
+      model: "Note 12",
+      price: 30000,
+    },
+    {
+      id: 4,
+      brand: "LG",
+      model: "Modelo LG",
+      price: 40000,
+    },
+    {
+      id: 5,
+      brand: "Samsung",
+      model: "Galaxy A-50",
+      price: 50000,
+    },
+  ];
 
   return (
     <div>
-      <NavBar />
-      <div className="App">
-        <form className="Itemsleft">
-          <ul>
-            <button>Busqueda</button>
-          </ul>
-        </form>
-        <form class="Items">
-          <ul>
-            <button onClick={goProduct}>
-              {" "}
-              <img src={Ultra_S23} />{" "}
-              <button>
-                {" "}
-                <FaShoppingCart /> Añadir al carrito{" "}
-              </button>{" "}
-              <Items
-                nombre="Samsung"
-                modelo="S23 Ultra"
-                precio="120.000"
-              />{" "}
-            </button>
-          </ul>
-          <ul>
-            <button onClick={goProduct}>
-              {" "}
-              <img src={Ultra_S23} />{" "}
-              <button>
-                {" "}
-                <FaShoppingCart /> Añadir al carrito{" "}
-              </button>{" "}
-              <Items
-                nombre="Samsung"
-                modelo="S23 Ultra"
-                precio="120.000"
-              />{" "}
-            </button>
-          </ul>
-        </form>
+      <div>
+        <NavBar />
+      </div>
+      <div className="shop-body">
+        <PhoneCatalog phones={phones} />
       </div>
       <Footer />
     </div>
