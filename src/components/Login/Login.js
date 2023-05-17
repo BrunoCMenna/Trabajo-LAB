@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useState } from "react";
 import NavBar from '../NavBar/NavBar'
-
+import Footer from '../Footer/Footer'
 import "./Login.css";
 
 const Login = () => {
@@ -55,7 +55,7 @@ const Login = () => {
           <form>
             <div className="form-group mb-3">
               <label className="form-label" for="email">
-                Email
+                Email:
               </label>
               <input
                 className="form-control"
@@ -70,7 +70,7 @@ const Login = () => {
             </div>
             <div className="form-group mb-3">
               <label className="form-label" for="password">
-                Contraseña
+                Contraseña:
               </label>
               <input
                 className="form-control"
@@ -95,6 +95,7 @@ const Login = () => {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

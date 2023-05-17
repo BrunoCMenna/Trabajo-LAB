@@ -1,6 +1,7 @@
 import React from "react";
 import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
+import "./NavBar.css";
 
 const NavBar = () => {
   const navigation = useNavigate();
@@ -11,8 +12,8 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="navbar bg-primary">
-        <div className="p-2 flex-grow-1">Empresa</div>
+      <nav className="navbar">
+        <div className="p-2 flex-grow-1 text-white">Empresa</div>
         <div classname="cart-icon">
           <h2><FaShoppingCart /> <p>Carrito</p></h2>
         </div>
