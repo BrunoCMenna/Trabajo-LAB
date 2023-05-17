@@ -127,8 +127,8 @@ export default function Footer() {
         </section>
 
         <div
-          className="text-center p-4"
-          style={{ backgroundColor: "rgba(0, 0, 0, 0.05)" }}
+          className="text-center p-4 text-white"
+          style={{ backgroundColor: "rgb(63, 19, 144)" }}
         >
           © 2021 Copyright:
           <a className="text-reset fw-bold" href="https://mdbootstrap.com/">

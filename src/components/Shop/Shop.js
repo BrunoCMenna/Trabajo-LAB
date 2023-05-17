@@ -1,7 +1,6 @@
 import React from "react";
-
 import "./Shop.css";
-
+import { Button, Col, Row } from "react-bootstrap";
 import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 import PhoneCatalog from "../PhoneCatalog/PhoneCatalog";
@@ -37,6 +36,12 @@ const Shop = () => {
       brand: "Samsung",
       model: "Galaxy A-50",
       price: 50000,
+    },
+    {
+      id: 6,
+      brand: "Motorola",
+      model: "One Hyper",
+      price: 55000,
     },
   ];
 
