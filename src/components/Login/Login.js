@@ -44,7 +44,9 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="wrap" style={{
+      backgroundImage: `url("https://www.cronista.com/files/image/419/419139/61d3378d218ac.jpg")`
+    }}>
       <NavBar />
       <div className="wrapper  d-flex align-items-center justify-content-center w-100">
         <div className="login">
@@ -86,7 +88,7 @@ const Login = () => {
             <div className="d-flex justify-content-center">
               <button
                 onClick={logInHandler}
-                className="btn btn-success mt-2 w-50"
+                className="btn-submit"
                 type="submit"
               >
                 Iniciar sesión
