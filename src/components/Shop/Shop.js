@@ -1,6 +1,7 @@
 import React from "react";
+
 import "./Shop.css";
-import { Button, Col, Row } from "react-bootstrap";
+
 import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 import PhoneCatalog from "../PhoneCatalog/PhoneCatalog";
@@ -46,12 +47,15 @@ const Shop = () => {
   ];
 
   return (
-    <div>
+    <div className="d-flex flex-column">
       <div>
         <NavBar />
       </div>
-      <div className="shop-body">
-        <PhoneCatalog phones={phones} />
+      <div className="d-flex flex-row">
+        <div>Aca iria el filtrado de celulares</div>
+        <div className="shop-body">
+          <PhoneCatalog phones={phones} />
+        </div>
       </div>
       <Footer />
     </div>
