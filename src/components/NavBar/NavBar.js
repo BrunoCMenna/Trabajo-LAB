@@ -1,5 +1,6 @@
 import React from "react";
 import { FaShoppingCart } from 'react-icons/fa';
+import { HiChevronDoubleRight } from "react-icons/hi"
 import { useNavigate } from "react-router-dom";
 import "./NavBar.css";
 
@@ -12,13 +13,14 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="p-2 flex-grow-1 text-white">Empresa</div>
-        <div classname="cart-icon">
-          <h2><FaShoppingCart /> <p>Carrito</p></h2>
+      <nav className="navbar px-4">
+        <div className="flex-grow-1 text-white">Empresa</div>
+        <div className="CRI">
+          <button className="cart-icon"><h2 className="px-1"><FaShoppingCart /></h2>Carrito</button>
+          <button onClick={goLogin} type="button">Registrarse</button>
+          <button onClick={goLogin} type="button"><HiChevronDoubleRight />Iniciar sesión</button>
         </div>
-        <button onClick={goLogin} type="button" class="btn btn-outline-light me-2">Iniciar sesión</button>
-      </nav>
+      </nav >
     </>
   );
 };
