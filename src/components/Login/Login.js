@@ -47,8 +47,8 @@ const Login = () => {
   return (
     <div>
       <NavBar />
-
       <div className="wrapper d-flex align-items-center justify-content-center w-100">
+        <div className="banner"></div>
         <div className="login">
           <h2 className="mb-2">¡Bienvenido a Empresa!</h2>
           <p className="d-flex justify-content-center">
