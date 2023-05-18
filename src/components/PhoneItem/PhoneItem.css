@@ -1,0 +1,11 @@
+.phone-container {
+  width: 100%;
+}
+hr {
+  border: solid 1px rgb(218, 216, 216);
+  width: 95%;
+  height: 1r;
+  margin: auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
