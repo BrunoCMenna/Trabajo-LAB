@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
 import { useState } from "react";
-import NavBar from '../NavBar/NavBar'
-import Footer from '../Footer/Footer'
+
 import "./Login.css";
 
-const Login = () => {
+import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
 
+const Login = () => {
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email: "",
@@ -44,11 +45,10 @@ const Login = () => {
   };
 
   return (
-    <div className="wrap" style={{
-      backgroundImage: `url("https://www.cronista.com/files/image/419/419139/61d3378d218ac.jpg")`
-    }}>
+    <div>
       <NavBar />
-      <div className="wrapper  d-flex align-items-center justify-content-center w-100">
+
+      <div className="wrapper d-flex align-items-center justify-content-center w-100">
         <div className="login">
           <h2 className="mb-2">¡Bienvenido a Empresa!</h2>
           <p className="d-flex justify-content-center">
@@ -88,8 +88,8 @@ const Login = () => {
             <div className="d-flex justify-content-center">
               <button
                 onClick={logInHandler}
-                className="btn-submit"
-                type="submit"
+                className="btn btn-primary"
+                type="button"
               >
                 Iniciar sesión
               </button>

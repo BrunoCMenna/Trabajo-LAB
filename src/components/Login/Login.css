@@ -1,11 +1,11 @@
+body {
+  background-image: url("https://www.cronista.com/files/image/419/419139/61d3378d218ac.jpg");
+  backdrop-filter: blur(6px);
+  background-size: cover;
+}
 .wrapper {
   height: 80vh;
 }
-
-form {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-}
-
 .login {
   padding: 20px;
   width: auto;
@@ -15,18 +15,4 @@ form {
   border-radius: 5px;
   box-shadow: 1px 10px 10px 1px rgba(0, 0, 0, 0.377);
   background-color: rgb(63, 19, 144);
-}
-
-.btn-submit {
-  transition: 0.2s;
-  color: white;
-}
-
-.btn-submit:hover {
-  transition: 0.2s;
-  color: wheat;
-}
-
-.wrap {
-  filter: blur(20px);
 }
