@@ -15,7 +15,7 @@ const SidebarFilters = ({ phones, onBrandFilterChange }) => {
   };
 
   const changeBrandFilterHandler = (e) => {
-    onBrandFilterChange(e.target.value);
+    onBrandFilterChange(e.currentTarget.value);
   };
 
   return (
@@ -26,7 +26,7 @@ const SidebarFilters = ({ phones, onBrandFilterChange }) => {
           <button
             className="sb-button"
             type="button"
-            value="showAll"
+            value=""
             onClick={changeBrandFilterHandler}
           >
             Todas las marcas

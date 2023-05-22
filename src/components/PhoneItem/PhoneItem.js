@@ -1,9 +1,9 @@
 import React from "react";
 
-import "./PhoneItem.css";
-
-import PhoneCard from "../PhoneCard/PhoneCard";
 import { FaCartPlus } from "react-icons/fa";
+
+import "./PhoneItem.css";
+import PhoneCard from "../PhoneCard/PhoneCard";
 
 const PhoneItem = ({ id, brand, model, price }) => {
   const img = require(`../Img/Ultra_S23_id${id}.png`);
