@@ -30,3 +30,36 @@ button {
   border-style: none;
   background-color: transparent;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+}
+
+.dropdown-content li {
+  list-style: none;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  border-style: solid;
+  border-radius: 5px;
+  min-width: 250px;
+  max-width: 250px;
+  min-height: 250px;
+  max-height: 300px;
+  box-shadow: 0px 0px 20px;
+  padding-top: 11px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.items {
+  text-align: left;
+}
