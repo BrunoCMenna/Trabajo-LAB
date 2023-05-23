@@ -15,7 +15,7 @@ const SidebarFilters = ({ phones, onBrandFilterChange }) => {
   };
 
   const changeBrandFilterHandler = (e) => {
-    onBrandFilterChange(e.target.value);
+    onBrandFilterChange(e.currentTarget.value);
   };
 
   return (
