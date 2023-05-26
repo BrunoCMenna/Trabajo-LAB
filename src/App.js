@@ -1,13 +1,14 @@
 import Login from "./components/Login/Login";
-import react from "react";
-import { useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 
 import NotFound from "./components/routes/NotFound";
 import Shop from "./components/Shop/Shop";
-import Product from "./components/Product/Product";
+import ShoppingCartProvider from "./contexts/ShoppingCartContext";
+import Cart from "./components/Cart/Cart";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -20,15 +21,31 @@ const App = () => {
       element: <Shop />,
     },
     {
-      path: "/Product",
-      element: <Product />,
+      path: "/Cart",
+      element: <Cart />,
     },
     {
       path: "*",
       element: <NotFound />,
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <ShoppingCartProvider>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
+      <RouterProvider router={router} />
+    </ShoppingCartProvider>
+  );
 };
 
 export default App;

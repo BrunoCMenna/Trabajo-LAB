@@ -1,0 +1,24 @@
+.cart-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-bottom: 0;
+}
+.cart-table {
+  border-right: 1px solid rgba(220, 220, 220, 0.267);
+  background-color: white;
+  padding: 1rem;
+}
+.subtotal {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 250px;
+  padding: 1rem;
+  padding-top: 1.5rem;
+}
+
+.subtotal h4 {
+  display: flex;
+  justify-content: space-between;
+}
