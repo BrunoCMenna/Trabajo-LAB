@@ -2,16 +2,17 @@ import React from "react";
 import "../SidebarFilters/SidebarFilters.css";
 
 const SidebarFilters = ({ phones, onBrandFilterChange }) => {
-  const getStockByBrand = () => {
-    const stockByBrand = {};
+  //funcion de contador de celulres que comparten marca. Devuelve un objeto con "Marca: numCantidad"
+  const getSameBrandPhones = () => {
+    const SameBrandPhones = {};
     phones.forEach((p) => {
-      if (stockByBrand[p.brand]) {
-        stockByBrand[p.brand]++;
+      if (SameBrandPhones[p.brand]) {
+        SameBrandPhones[p.brand]++;
       } else {
-        stockByBrand[p.brand] = 1;
+        SameBrandPhones[p.brand] = 1;
       }
     });
-    return stockByBrand;
+    return SameBrandPhones;
   };
 
   const changeBrandFilterHandler = (e) => {
@@ -32,7 +33,7 @@ const SidebarFilters = ({ phones, onBrandFilterChange }) => {
             Todas las marcas
           </button>
         </div>
-        {Object.entries(getStockByBrand()).map(([brand, counter]) => (
+        {Object.entries(getSameBrandPhones()).map(([brand, counter]) => (
           <div>
             <button
               className="sb-button"
