@@ -20,13 +20,15 @@ const NavBar = () => {
   const goShop = () => {
     navigation("/Shop");
   };
-
+  
   return (
     <>
       <nav className="navbar px-4">
-        <button type="button" onClick={goShop}>
-          <div className="flex-grow-1 text-white">Empresa</div>
-        </button>
+        <div className="enterprise">
+          <button type="button" onClick={goShop}>
+            <div className="flex-grow-1 text-white">Empresa</div>
+          </button>
+        </div>
         <div className="CRI">
           <button className="cart-icon" onClick={goCart}>
             <h2 className="px-1 mx-1">

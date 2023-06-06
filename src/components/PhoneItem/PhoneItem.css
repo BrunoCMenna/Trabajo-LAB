@@ -1,6 +1,7 @@
 .phone-container {
   width: auto;
 }
+
 hr {
   border: solid 1px rgb(218, 216, 216);
   width: 95%;
@@ -8,4 +9,8 @@ hr {
   margin: auto;
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+#cart-button {
+  font-size: smaller;
 }

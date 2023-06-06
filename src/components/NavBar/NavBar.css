@@ -2,6 +2,20 @@
   background-color: rgb(63, 19, 144);
 }
 
+.enterprise button {
+  transition: 0.2s;
+  color: rgb(209, 209, 209);
+  margin-left: 20px;
+  align-items: center;
+}
+
+.enterprise button:hover {
+  transition: 0.2s;
+  transform: translateY(-0.5rem);
+  text-shadow: 2px 1px 5px;
+  color: white;
+}
+
 .cart-icon {
   display: flex;
   align-items: center;
