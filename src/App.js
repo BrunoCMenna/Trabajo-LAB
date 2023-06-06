@@ -9,6 +9,7 @@ import NotFound from "./components/routes/NotFound";
 import Shop from "./components/Shop/Shop";
 import ShoppingCartProvider from "./contexts/ShoppingCartContext";
 import Cart from "./components/Cart/Cart";
+import Product from "./components/Product/Product";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const App = () => {
     {
       path: "/Cart",
       element: <Cart />,
+    },
+    {
+      path: "/Product",
+      element: <Product />,
     },
     {
       path: "*",
