@@ -26,7 +26,7 @@ const NavBar = () => {
       <nav className="navbar px-4">
         <div className="enterprise">
           <button type="button" onClick={goShop}>
-            <div className="flex-grow-1 text-white">Empresa</div>
+            <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
           </button>
         </div>
         <div className="CRI">
