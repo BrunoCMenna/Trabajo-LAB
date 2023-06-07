@@ -13,6 +13,7 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
 
   const goProduct = () => {
     navigation("/Product");
+    toast.success("A continuacion podrá ver los detalles del producto");
   };
 
   const { addToCart } = useContext(CartContext);
@@ -25,9 +26,7 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
     <>
       <PhoneCard>
         <div className="phone-container">
-          <button
-          onClick={goProduct}
-          >
+          <button onClick={goProduct}>
             <img src={image} alt="" />
           </button>
           <hr />
@@ -51,3 +50,4 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
 };
 
 export default PhoneItem;
+
