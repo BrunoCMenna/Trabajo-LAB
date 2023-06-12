@@ -11,7 +11,7 @@
 
 .enterprise button:hover {
   transition: 0.2s;
-  transform: translateY(-0.5rem);
+  transform: translateY(-0.2rem);
   text-shadow: 2px 1px 5px;
   color: white;
 }
@@ -27,7 +27,7 @@
 
 .CRI button:hover {
   transition: 0.2s;
-  transform: translateY(-0.5rem);
+  transform: translateY(-0.2rem);
   text-shadow: 2px 1px 5px;
   color: white;
 }

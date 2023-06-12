@@ -50,7 +50,7 @@ const Login = () => {
       <div className="wrapper d-flex align-items-center justify-content-center w-100">
         <div className="banner"></div>
         <div className="login">
-          <h2 className="mb-2">¡Bienvenido a Empresa!</h2>
+          <h2 className="mb-2">¡Bienvenido a TecnoRosario!</h2>
           <p className="d-flex justify-content-center">
             Inicie sesión para continuar
           </p>
