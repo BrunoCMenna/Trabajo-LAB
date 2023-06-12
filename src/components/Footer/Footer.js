@@ -7,6 +7,14 @@ import {
   MDBCol,
   MDBIcon,
 } from "mdb-react-ui-kit";
+import { 
+  BsInstagram,
+  BsTwitter,
+  BsFacebook,
+  BsWhatsapp,
+  BsYoutube,
+} from 'react-icons/bs';
+
 
 export default function Footer() {
   return (
@@ -18,25 +26,23 @@ export default function Footer() {
           <div className="me-5 d-none d-lg-block">
             <span>Nuestras redes:</span>
           </div>
+          <hr></hr>
           <div>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon fab icon="facebook-f" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon fab icon="twitter" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon fab icon="google" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon fab icon="instagram" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon fab icon="linkedin" />
-            </a>
-            <a href="" className="me-4 text-reset">
-              <MDBIcon fab icon="github" />
-            </a>
+          <a href='https://www.instagram.com/' target="_blanket" className='me-4 text-reset'>
+            <BsInstagram />
+          </a>
+          <a href='https://www.facebook.com/' target="_blanket" className='me-4 text-reset'>
+            <BsFacebook />
+          </a>
+          <a href='https://www.twitter.com/' target="_blanket" className='me-4 text-reset'>
+            <BsTwitter />
+          </a>
+          <a href='https://www.whatsapp.com/?lang=es' target="_blanket" className='me-4 text-reset'>
+            <BsWhatsapp />
+          </a>
+          <a href='https://www.youtube.com/' target="_blanket" className='me-4 text-reset'>
+            <BsYoutube />
+          </a>
           </div>
         </section>
 
