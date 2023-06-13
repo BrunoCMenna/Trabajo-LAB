@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import { HiChevronDoubleRight } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
-
 import "./NavBar.css";
 import { CartContext } from "../../contexts/ShoppingCartContext";
 
