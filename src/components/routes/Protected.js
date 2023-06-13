@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Navigate } from "react-router";
+import { UserContext } from "../../contexts/AuthContext";
 
-const Protected = ({ children, isSignedIn }) => {
-  if (!isSignedIn) {
-    return <Navigate to="/login" replace />;
+const Protected = ({ children }) => {
+  const { user } = useContext(UserContext);
+
+  if (user) {
+    return <Navigate to="/shop" replace />;
   }
 
   return children;
