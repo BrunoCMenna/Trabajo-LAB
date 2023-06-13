@@ -19,7 +19,7 @@ const NavBar = () => {
   const goShop = () => {
     navigation("/Shop");
   };
-  
+
   return (
     <>
       <nav className="navbar px-4">

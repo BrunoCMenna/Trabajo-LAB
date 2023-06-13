@@ -1,4 +1,5 @@
 .phone-card-container {
+  transition: 0.3s;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -21,7 +22,7 @@ button {
 }
 
 .phone-card-container:hover {
-  transition: 0.5s;
+  transition: 0.3s;
   color: black;
   transform: translate(-0.2rem);
   box-shadow: 0.5rem 0.75rem 1.5rem #bbbbbb;

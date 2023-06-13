@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import "./PhoneItem.css";
 import PhoneCard from "../PhoneCard/PhoneCard";
@@ -12,8 +12,7 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
   const navigation = useNavigate();
 
   const goProduct = () => {
-    navigation("/Product");
-    toast.success("A continuacion podrá ver los detalles del producto");
+    navigation(`/Product/${id}`);
   };
 
   const { addToCart } = useContext(CartContext);
