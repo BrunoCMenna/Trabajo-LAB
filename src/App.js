@@ -45,6 +45,10 @@ const App = () => {
       ),
     },
     {
+      path: "/Product/:id",
+      element: <Product />,
+    },
+    {
       path: "*",
       element: <NotFound />,
     },

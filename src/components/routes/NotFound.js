@@ -6,6 +6,10 @@ const NotFound = () => {
   const navigation = useNavigate();
 
   const goBack = () => {
+    navigation("/Shop");
+  };
+
+  const goLogin = () => {
     navigation("/Login");
   };
 
@@ -14,6 +18,9 @@ const NotFound = () => {
       <h2>No se ha encontrado la pagina</h2>
       <Button type="button" class="btn btn-info" onClick={goBack}>
         Volver a la tienda
+      </Button>
+      <Button type="button" class="btn btn-info" onClick={goLogin}>
+        Volver al menu de inicio de sesión
       </Button>
     </div>
   );

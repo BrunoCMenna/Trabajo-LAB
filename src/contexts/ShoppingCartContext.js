@@ -19,6 +19,7 @@ const getDefaultCart = () => {
 };
 
 const ShoppingCartProvider = ({ children }) => {
+
   const [cartItems, setCartItems] = useState(getDefaultCart());
 
   const addToCart = (itemId) => {
