@@ -10,12 +10,19 @@ import Shop from "./components/Shop/Shop";
 import ShoppingCartProvider from "./contexts/ShoppingCartContext";
 import Cart from "./components/Cart/Cart";
 import Product from "./components/Product/Product";
+import SignIn from "./components/SignIn/SignIn";
+import AuthContextProvider from "./contexts/AuthContext";
+import Protected from "./components/routes/Protected";
 
 const App = () => {
   const router = createBrowserRouter([
     {
       path: "/Login",
-      element: <Login />,
+      element: (
+        <Protected>
+          <Login />
+        </Protected>
+      ),
     },
     {
       path: "/Shop",
@@ -30,6 +37,14 @@ const App = () => {
       element: <Product />,
     },
     {
+      path: "/signin",
+      element: (
+        <Protected>
+          <SignIn />
+        </Protected>
+      ),
+    },
+    {
       path: "/Product/:id",
       element: <Product />,
     },
@@ -39,21 +54,23 @@ const App = () => {
     },
   ]);
   return (
-    <ShoppingCartProvider>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={1000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover={false}
-        theme="light"
-      />
-      <RouterProvider router={router} />
-    </ShoppingCartProvider>
+    <AuthContextProvider>
+      <ShoppingCartProvider>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={1000}
+          hideProgressBar
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover={false}
+          theme="light"
+        />
+        <RouterProvider router={router} />
+      </ShoppingCartProvider>
+    </AuthContextProvider>
   );
 };
 

@@ -1,47 +1,45 @@
-import React, { useRef } from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 
 import "./Login.css";
 
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
+import { UserContext } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router";
 
 const Login = () => {
-  const [errors, setErrors] = useState({});
-  const [values, setValues] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const navigation = useNavigate();
+  const { logInUser, logOutUser, user } = useContext(UserContext);
 
-  const handleInput = (e) => {
-    const newObj = { ...values, [e.target.name]: e.target.value };
-    setValues(newObj);
+  const emailChangeHandler = (e) => {
+    setEmail(e.target.value);
   };
 
-  const Validation = (values) => {
-    const errors = {};
-    const emailPattern =
-      /^(?![_.-])((?![_.-][_.-])[a-zA-Z\d_.-]){0,63}[a-zA-Z\d]@((?!-)((?!--)[a-zA-Z\d-]){0,63}[a-zA-Z\d]\.){1,2}([a-zA-Z]{2,14}\.)?[a-zA-Z]{2,14}$/;
-    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-    if (values.email === "") {
-      errors.email = "El email no puede ser vacío";
-    } else if (!emailPattern.test(values.email)) {
-      errors.email = "Ingrese un email válido";
-    }
-
-    if (values.password === "") {
-      errors.password = "Contraseña es obligatoria";
-    } else if (!passwordPattern.test(values.password)) {
-      errors.password = "Mínimo de 8 caracteres con un número";
-    }
-    return errors;
+  const passwordChangeHandler = (e) => {
+    setPassword(e.target.value);
   };
 
   const logInHandler = (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
-    //TODO: si no hay errores, que se logee correctamente y dirija al home con el estatus logeado
+    logInUser(email, password);
+  };
+
+  const logOutHandler = (e) => {
+    e.preventDefault();
+    if (!user) {
+      console.log("no hay user!");
+    } else {
+      console.log("se deslogeo el user:");
+      console.log(user);
+      logOutUser();
+    }
+  };
+
+  const goSignIn = () => {
+    navigation("/signin");
   };
 
   return (
@@ -50,7 +48,9 @@ const Login = () => {
       <div className="wrapper d-flex align-items-center justify-content-center w-100">
         <div className="banner"></div>
         <div className="login">
-          <h2 className="mb-2">¡Bienvenido a TecnoRosario!</h2>
+          <h2 className="mb-2 d-flex justify-content-center fs-4">
+            ¡Bienvenido a Tecno Rosario!
+          </h2>
           <p className="d-flex justify-content-center">
             Inicie sesión para continuar
           </p>
@@ -62,13 +62,10 @@ const Login = () => {
               <input
                 className="form-control"
                 type="email"
-                name="email"
-                onChange={handleInput}
+                value={email}
+                onChange={emailChangeHandler}
                 required
               />
-              {errors.email && (
-                <p className="text-danger text-center">{errors.email}</p>
-              )}
             </div>
             <div className="form-group mb-3">
               <label className="form-label" for="password">
@@ -77,14 +74,11 @@ const Login = () => {
               <input
                 className="form-control"
                 type="password"
-                name="password"
-                onChange={handleInput}
+                value={password}
+                onChange={passwordChangeHandler}
                 required
               />
             </div>
-            {errors.password && (
-              <p className="text-danger text-center">{errors.password}</p>
-            )}
             <div className="d-flex justify-content-center">
               <button
                 onClick={logInHandler}
@@ -92,6 +86,16 @@ const Login = () => {
                 type="button"
               >
                 Iniciar sesión
+              </button>
+            </div>
+            <div className="mx-5">
+              <span>¿No tenés una cuenta?</span>
+              <button
+                type="button"
+                className="text-white text-decoration-underline"
+                onClick={goSignIn}
+              >
+                Registrarse
               </button>
             </div>
           </form>
