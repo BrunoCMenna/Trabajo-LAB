@@ -84,7 +84,7 @@ export default function Footer() {
                   </a>
                 </p>
                 <p>
-                  <a href="Login" className="text-reset">
+                  <a href="signin" className="text-reset">
                     Registrarse
                   </a>
                 </p>
