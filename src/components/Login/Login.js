@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-
 import "./Login.css";
-
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
+import ToggleTheme from "../ToggleTheme/ToggleTheme";
 
 const Login = () => {
   const [email, setEmail] = useState(null);

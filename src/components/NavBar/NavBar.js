@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./NavBar.css";
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { UserContext } from "../../contexts/AuthContext";
+import ToggleTheme from "../ToggleTheme/ToggleTheme";
 
 const NavBar = () => {
   const { getItemAmount } = useContext(CartContext);
@@ -70,6 +71,7 @@ const NavBar = () => {
             <button type="button" onClick={goShop}>
               <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
             </button>
+            <ToggleTheme />
           </div>
           <div className="CRI">
             <button className="cart-icon" onClick={goCart}>
