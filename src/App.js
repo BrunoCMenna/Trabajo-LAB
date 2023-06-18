@@ -11,8 +11,7 @@ import SignIn from "./components/SignIn/SignIn";
 import Protected from "./components/routes/Protected";
 import { useContext } from "react";
 import { ThemeContext } from "./contexts/ThemeContext";
-
-
+import UserPanel from "./components/UserPanel/UserPanel";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -50,26 +49,30 @@ const App = () => {
       element: <Product />,
     },
     {
+      path: "/panel",
+      element: <UserPanel />,
+    },
+    {
       path: "*",
       element: <NotFound />,
     },
   ]);
   return (
-      <div className={`${theme === "dark" && "dark-theme"}`}>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={1000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        />
-          <RouterProvider router={router} />
-      </div>
+    <div className={`${theme === "dark" && "dark-theme"}`}>
+      <ToastContainer
+        position="center"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
+      <RouterProvider router={router} />
+    </div>
   );
 };
 

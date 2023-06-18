@@ -7,6 +7,7 @@ import { initializeApp } from "firebase/app";
 const firebaseConfig = {
   apiKey: "AIzaSyBx3Eiss07r14xCfsYJUrPmRp7yKk-DD8Y",
   authDomain: "ecommerce-lab3.firebaseapp.com",
+  databaseURL: "https://ecommerce-lab3-default-rtdb.firebaseio.com",
   projectId: "ecommerce-lab3",
   storageBucket: "ecommerce-lab3.appspot.com",
   messagingSenderId: "337458973179",

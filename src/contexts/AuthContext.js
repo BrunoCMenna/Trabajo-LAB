@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -7,10 +6,12 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { getDatabase, ref, set, get } from "firebase/database";
 
 import firebaseApp from "../firebase/firebase";
+import { toast } from "react-toastify";
 const auth = getAuth(firebaseApp);
-const firestore = getFirestore(firebaseApp);
+const db = getDatabase();
 export const UserContext = createContext(null);
 
 const AuthContextProvider = ({ children }) => {
@@ -28,7 +29,7 @@ const AuthContextProvider = ({ children }) => {
 
   const logInUser = (email, password) => {
     signInWithEmailAndPassword(auth, email, password).catch((error) => {
-      alert("Email o contraseña son inválidos");
+      toast.error("Email o contraseña son incorrectas");
       console.log(error);
     });
     console.log(user);
@@ -37,18 +38,29 @@ const AuthContextProvider = ({ children }) => {
   const logOutUser = () => {
     signOut(auth);
   };
+
   const createUser = async (email, password, role) => {
-    const userInfo = await createUserWithEmailAndPassword(auth, email, password)
-      .then((firebaseUser) => {
-        return firebaseUser;
-      })
-      .catch((error) => {
-        alert("Email ya está en uso"); //TODO: mejorar manejo de error
-        console.log(error);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+
+      set(ref(db, "users/" + user.uid), {
+        email: email,
+        role: role,
       });
-    console.log(userInfo);
-    const docRef = await doc(firestore, `users/${userInfo.user.uid}`);
-    setDoc(docRef, { email: email, password: password, role: role });
+
+      console.log("Usuario creado y registrado en la base de datos.");
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("Email ya está en uso");
+        console.log(error);
+      }
+      console.log(error);
+    }
   };
 
   const setUserWithFirebaseAndRole = (fbUser) => {
@@ -63,11 +75,15 @@ const AuthContextProvider = ({ children }) => {
     });
   };
 
-  const getRole = async (uid) => {
-    const docuRef = doc(firestore, `users/${uid}`);
-    const docuData = await getDoc(docuRef);
-    const finalInfo = docuData.data().role;
-    return finalInfo;
+  const getRole = async (userId) => {
+    try {
+      const snapshot = await get(ref(getDatabase(), `users/${userId}/role`));
+      const role = snapshot.val();
+      return role;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   };
 
   const contextValue = { createUser, logInUser, logOutUser, user };
