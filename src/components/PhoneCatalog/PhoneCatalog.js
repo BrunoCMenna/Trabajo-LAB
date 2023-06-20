@@ -1,8 +1,10 @@
 import React from "react";
-
+import { ThemeContext } from "../../contexts/ThemeContext";
 import PhoneItem from "../PhoneItem/PhoneItem";
+import { useContext } from "react";
 
 const PhoneCatalog = ({ phones, brandFilterSelected }) => {
+  const { theme } = useContext(ThemeContext);
   const phonesFiltered = phones
     .filter((p) => p.brand === brandFilterSelected)
     .map((p) => (
@@ -24,7 +26,9 @@ const PhoneCatalog = ({ phones, brandFilterSelected }) => {
       image={p.image}
     />
   ));
-  return <>{phonesFiltered.length === 0 ? noFilteredPhones : phonesFiltered}</>;
+  return( 
+    <>{phonesFiltered.length === 0 ? noFilteredPhones : phonesFiltered}</>
+  )
 };
 
 export default PhoneCatalog;

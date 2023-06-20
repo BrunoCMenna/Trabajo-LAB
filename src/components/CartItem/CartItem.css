@@ -11,3 +11,12 @@
 .qty {
   text-align: center;
 }
+
+.cart-item-dark {
+  background-color: #020c1a;
+  color: white;
+}
+
+.trash-button-dark {
+  color: white;
+}

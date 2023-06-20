@@ -24,3 +24,10 @@
 body {
   background-color: unset !important;
 }
+
+.login-box-dark {
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: #020c1a;
+  color: white;
+}

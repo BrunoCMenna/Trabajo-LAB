@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
-
 import "../Cart/Cart.css";
-
+import { ThemeContext } from "../../contexts/ThemeContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { CartContext } from "../../contexts/ShoppingCartContext";
@@ -11,6 +10,7 @@ import CartItem from "../CartItem/CartItem";
 import { useNavigate } from "react-router";
 
 const Cart = () => {
+  const { theme } = useContext(ThemeContext);
   const { getItemAmount, getTotalCartAmount, cartItems } =
     useContext(CartContext);
   const navigation = useNavigate();
@@ -25,10 +25,11 @@ const Cart = () => {
   return (
     <div>
       <NavBar />
-      {itemsInCart > 0 ? (
-        <div className="cart-container">
+        {itemsInCart > 0 ? (
+          <div className="cart-container">
           <div className="cart-table">
-            {PHONES.map((product) => {
+          <div className= {`${theme === "dark" && "cart-table-dark"}`}>
+              {PHONES.map((product) => {
               if (cartItems[product.id] !== 0) {
                 return (
                   <CartItem
@@ -42,15 +43,22 @@ const Cart = () => {
               }
             })}
           </div>
+          </div>
+          
           <div className="subtotal">
+          <div className= {`${theme === "dark" && "subtotal-buttons-dark"}`}>
             <h4>
               Total: <span>${totalPrice}</span>
             </h4>
-            <Button className="btn btn-success">Comprar</Button>
+            <Button className="btn btn-success">
+              Comprar
+            </Button>
             <Button className="btn btn-primary" onClick={goShop}>
               Volver a la tienda
             </Button>
           </div>
+          </div>
+        
         </div>
       ) : (
         <div className="d-flex flex-column justify-content-center align-items-center p-4">
@@ -58,7 +66,6 @@ const Cart = () => {
           <Button onClick={goShop}>Ir a la tienda</Button>
         </div>
       )}
-
       <Footer />
     </div>
   );

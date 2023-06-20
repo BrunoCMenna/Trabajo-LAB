@@ -1,15 +1,39 @@
 .filters-container {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
+  color: black;
   padding: 1rem;
+  width: 250px;
+}
+
+.filters-brands {
+  padding: 1rem;
+  width: 250px;
 }
 
 .sb-button {
   margin-left: 0;
 }
 
+.sb-button-dark {
+  background-color: #020c1a;
+  color: white
+}
+.sb-button-dark {
+  background-color: #020c1a;
+  color: white
+}
+
 .sb-button:hover {
-  background-color: aliceblue;
+  transition: 0.2s;
+  transform: translateY(-0.2rem);
+}
+
+.button-dark {
+  background-color: #020c1a;
+  color: white;
+}
+
+.sidebar-dark {
+  background-color: #020c1a;
+  color: white;
 }
 

@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
 
 import "../Login/Login.css";
-
+import { ThemeContext } from "../../contexts/ThemeContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
 
 const SignIn = () => {
+  const { theme } = useContext(ThemeContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email: "",
@@ -65,6 +66,7 @@ const SignIn = () => {
       <div className="wrapper d-flex align-items-center justify-content-center w-100">
         <div className="banner"></div>
         <div className="login">
+        <div className= {`${theme === "dark" && "login-box-dark"}`}>
           <h2 className="mb-2 d-flex justify-content-center fs-4">
             Creación de cuenta
           </h2>
@@ -119,6 +121,7 @@ const SignIn = () => {
             </div>
           </form>
         </div>
+      </div>
       </div>
       <Footer />
     </div>
