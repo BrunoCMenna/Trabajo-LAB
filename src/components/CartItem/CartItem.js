@@ -38,7 +38,7 @@ const CartItem = ({ id, brand, model, price, image }) => {
           </td>
           <td>${price}</td>
           <td className="qty">
-            <span> </span>
+            <span>{cartItems[id]}</span>
           </td>
           <td>
             <button

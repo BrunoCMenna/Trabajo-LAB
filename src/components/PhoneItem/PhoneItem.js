@@ -8,7 +8,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 
 const PhoneItem = ({ id, brand, model, price, image }) => {
-
   const navigation = useNavigate();
 
   const goProduct = () => {
@@ -49,4 +48,3 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
 };
 
 export default PhoneItem;
-

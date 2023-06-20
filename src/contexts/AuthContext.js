@@ -14,8 +14,10 @@ const auth = getAuth(firebaseApp);
 const db = getDatabase();
 export const UserContext = createContext(null);
 
+const userValue = JSON.parse(localStorage.getItem("user"));
+
 const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(userValue);
 
   onAuthStateChanged(auth, (fbUser) => {
     if (fbUser) {
@@ -37,6 +39,7 @@ const AuthContextProvider = ({ children }) => {
 
   const logOutUser = () => {
     signOut(auth);
+    localStorage.removeItem("user");
   };
 
   const createUser = async (email, password, role) => {
@@ -72,6 +75,7 @@ const AuthContextProvider = ({ children }) => {
       };
       setUser(userData);
       console.log(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
     });
   };
 
@@ -86,7 +90,12 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const contextValue = { createUser, logInUser, logOutUser, user };
+  const contextValue = {
+    createUser,
+    logInUser,
+    logOutUser,
+    user,
+  };
 
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>

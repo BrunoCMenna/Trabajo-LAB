@@ -7,42 +7,77 @@ import {
   MDBCol,
   MDBIcon,
 } from "mdb-react-ui-kit";
-import { 
+import {
   BsInstagram,
   BsTwitter,
   BsFacebook,
   BsWhatsapp,
   BsYoutube,
-} from 'react-icons/bs';
-
+} from "react-icons/bs";
+import { useNavigate } from "react-router";
 
 export default function Footer() {
+  const navigation = useNavigate();
+  const goShop = () => {
+    navigation("/shop");
+  };
+  const goCart = () => {
+    navigation("/cart");
+  };
+  const goLogin = () => {
+    navigation("/login");
+  };
+  const goSignIn = () => {
+    navigation("/signin");
+  };
+
   return (
     <div className="Footer">
       <MDBFooter
         bgColor="light"
-        className="text-center text-lg-start text-muted">
+        className="text-center text-lg-start text-muted"
+      >
         <section className="justify-content-center justify-content-lg-between p-4 border-bottom text-black">
           <div className="me-5 d-none d-lg-block">
             <span>Nuestras redes:</span>
           </div>
           <hr></hr>
           <div>
-          <a href='https://www.instagram.com/' target="_blanket" className='me-4 text-reset'>
-            <BsInstagram />
-          </a>
-          <a href='https://www.facebook.com/' target="_blanket" className='me-4 text-reset'>
-            <BsFacebook />
-          </a>
-          <a href='https://www.twitter.com/' target="_blanket" className='me-4 text-reset'>
-            <BsTwitter />
-          </a>
-          <a href='https://www.whatsapp.com/?lang=es' target="_blanket" className='me-4 text-reset'>
-            <BsWhatsapp />
-          </a>
-          <a href='https://www.youtube.com/' target="_blanket" className='me-4 text-reset'>
-            <BsYoutube />
-          </a>
+            <a
+              href="https://www.instagram.com/"
+              target="_blanket"
+              className="me-4 text-reset"
+            >
+              <BsInstagram />
+            </a>
+            <a
+              href="https://www.facebook.com/"
+              target="_blanket"
+              className="me-4 text-reset"
+            >
+              <BsFacebook />
+            </a>
+            <a
+              href="https://www.twitter.com/"
+              target="_blanket"
+              className="me-4 text-reset"
+            >
+              <BsTwitter />
+            </a>
+            <a
+              href="https://www.whatsapp.com/?lang=es"
+              target="_blanket"
+              className="me-4 text-reset"
+            >
+              <BsWhatsapp />
+            </a>
+            <a
+              href="https://www.youtube.com/"
+              target="_blanket"
+              className="me-4 text-reset"
+            >
+              <BsYoutube />
+            </a>
           </div>
         </section>
 
@@ -55,23 +90,29 @@ export default function Footer() {
                   TECNO ROSARIO
                 </h6>
                 <hr></hr>
-                <p>
-                  Toda la tecnología al alcance de tu mano
-                </p>
+                <p>Toda la tecnología al alcance de tu mano</p>
               </MDBCol>
 
               <MDBCol md="2" lg="2" xl="2" className="mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">Productos</h6>
                 <hr></hr>
                 <p>
-                  <a href="Shop" className="text-reset">
+                  <button
+                    type="button"
+                    onClick={goShop}
+                    className="text-reset text-decoration-underline"
+                  >
                     Tienda
-                  </a>
+                  </button>
                 </p>
                 <p>
-                  <a href="Cart" className="text-reset">
+                  <button
+                    type="button"
+                    className="text-reset text-decoration-underline"
+                    onClick={goCart}
+                  >
                     Mi Carrito
-                  </a>
+                  </button>
                 </p>
               </MDBCol>
 
@@ -79,14 +120,22 @@ export default function Footer() {
                 <h6 className="text-uppercase fw-bold mb-4">LINKS</h6>
                 <hr></hr>
                 <p>
-                  <a href="Login" className="text-reset">
-                    Iniciar Sesión
-                  </a>
+                  <button
+                    type="button"
+                    className="text-reset text-decoration-underline"
+                    onClick={goLogin}
+                  >
+                    Iniciar sesión
+                  </button>
                 </p>
                 <p>
-                  <a href="signin" className="text-reset">
+                  <button
+                    type="button"
+                    className="text-reset text-decoration-underline"
+                    onClick={goSignIn}
+                  >
                     Registrarse
-                  </a>
+                  </button>
                 </p>
               </MDBCol>
 
