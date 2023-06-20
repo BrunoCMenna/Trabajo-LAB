@@ -1,0 +1,21 @@
+.order-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.order {
+  display: inline;
+  flex-wrap: wrap;
+  margin-right: 10px;
+  border: 1px solid black;
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+.products {
+  display: flex;
+}
+.img-product {
+  width: 100px;
+}

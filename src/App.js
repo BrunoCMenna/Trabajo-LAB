@@ -8,11 +8,13 @@ import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";
 import Product from "./components/Product/Product";
 import SignIn from "./components/SignIn/SignIn";
-import Protected from "./components/routes/Protected";
+import ProtectedIfUserIsLogged from "./components/routes/ProtectedIfUserIsLogged";
 import { useContext } from "react";
 import { ThemeContext } from "./contexts/ThemeContext";
-
-
+import UserPanel from "./components/UserPanel/UserPanel";
+import Orders from "./components/Orders/Orders";
+import ProtectedIfUserIsNotLogged from "./components/routes/ProtectedIfUserIsNotLogged";
+import ShowOrders from "./components/ShowOrders/ShowOrders";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -20,9 +22,9 @@ const App = () => {
     {
       path: "/Login",
       element: (
-        <Protected>
+        <ProtectedIfUserIsLogged>
           <Login />
-        </Protected>
+        </ProtectedIfUserIsLogged>
       ),
     },
     {
@@ -40,9 +42,9 @@ const App = () => {
     {
       path: "/signin",
       element: (
-        <Protected>
+        <ProtectedIfUserIsLogged>
           <SignIn />
-        </Protected>
+        </ProtectedIfUserIsLogged>
       ),
     },
     {
@@ -50,26 +52,46 @@ const App = () => {
       element: <Product />,
     },
     {
+      path: "/panel",
+      element: <UserPanel />,
+    },
+    {
+      path: "/orders",
+      element: (
+        <ProtectedIfUserIsNotLogged>
+          <Orders />
+        </ProtectedIfUserIsNotLogged>
+      ),
+    },
+    {
+      path: "/showOrders",
+      element: (
+        <ProtectedIfUserIsNotLogged>
+          <ShowOrders />,
+        </ProtectedIfUserIsNotLogged>
+      ),
+    },
+    {
       path: "*",
       element: <NotFound />,
     },
   ]);
   return (
-      <div className={`${theme === "dark" && "dark-theme"}`}>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={1000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        />
-          <RouterProvider router={router} />
-      </div>
+    <div className={`${theme === "dark" && "dark-theme"}`}>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="light"
+      />
+      <RouterProvider router={router} />
+    </div>
   );
 };
 

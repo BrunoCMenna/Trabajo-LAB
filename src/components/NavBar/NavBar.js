@@ -14,8 +14,6 @@ const NavBar = () => {
   const navigation = useNavigate();
 
   const logOutHandler = () => {
-    console.log("se deslogeo el user:");
-    console.log(user);
     logOutUser();
   };
 
@@ -38,6 +36,7 @@ const NavBar = () => {
             <button type="button" onClick={goShop}>
               <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
             </button>
+            <ToggleTheme />
           </div>
 
           <div className="CRI">

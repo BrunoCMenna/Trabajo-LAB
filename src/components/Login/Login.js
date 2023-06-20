@@ -9,11 +9,11 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 const Login = () => {
-  const { theme } = useContext(ThemeContext);
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigation = useNavigate();
-  const { logInUser, logOutUser, user } = useContext(UserContext);
+  const { logInUser } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
@@ -26,17 +26,6 @@ const Login = () => {
   const logInHandler = (e) => {
     e.preventDefault();
     logInUser(email, password);
-  };
-
-  const logOutHandler = (e) => {
-    e.preventDefault();
-    if (!user) {
-      console.log("no hay user!");
-    } else {
-      console.log("se deslogeo el user:");
-      console.log(user);
-      logOutUser();
-    }
   };
 
   const goSignIn = () => {
@@ -62,7 +51,7 @@ const Login = () => {
           </p>
           <form>
             <div className="form-group mb-3">
-              <label className="form-label" for="email">
+              <label className="form-label" htmlFor="email">
                 Email:
               </label>
               <input
@@ -74,7 +63,7 @@ const Login = () => {
               />
             </div>
             <div className="form-group mb-3">
-              <label className="form-label" for="password">
+              <label className="form-label" htmlFor="password">
                 Contraseña:
               </label>
               <input

@@ -22,6 +22,9 @@ const Cart = () => {
     navigation("/shop");
   };
 
+  const goOrders = () => {
+    navigation("/orders");
+  };
   return (
     <div>
       <NavBar />
@@ -50,7 +53,7 @@ const Cart = () => {
             <h4>
               Total: <span>${totalPrice}</span>
             </h4>
-            <Button className="btn btn-success">
+            <Button className="btn btn-success" onClick={goOrders}>
               Comprar
             </Button>
             <Button className="btn btn-primary" onClick={goShop}>

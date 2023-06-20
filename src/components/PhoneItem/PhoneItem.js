@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const PhoneItem = ({ id, brand, model, price, image }) => {
-
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
   const goProduct = () => {
@@ -52,4 +51,3 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
 };
 
 export default PhoneItem;
-
