@@ -1,4 +1,5 @@
 import React from "react";
+import { useContext } from "react";
 import "./Footer.css";
 import {
   MDBFooter,
@@ -14,16 +15,23 @@ import {
   BsWhatsapp,
   BsYoutube,
 } from 'react-icons/bs';
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 
-export default function Footer() {
+
+const Footer = () => {
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className="Footer">
+    
+    <div className="footer">
+    
       <MDBFooter
         bgColor="light"
-        className="text-center text-lg-start text-muted">
-        <section className="justify-content-center justify-content-lg-between p-4 border-bottom text-black">
-          <div className="me-5 d-none d-lg-block">
+        className="text-center text-m-start text-muted">
+        <div className= {`${theme === "dark" && "socialmedia-dark"}`}>
+        <section className="justify-content-center justify-content-lg-between p-4 border-bottom">
+        
+          <div className="me-3 d-none d-lg-block">
             <span>Nuestras redes:</span>
           </div>
           <hr></hr>
@@ -44,10 +52,13 @@ export default function Footer() {
             <BsYoutube />
           </a>
           </div>
+          
         </section>
+        </div>
 
         <section className="">
-          <MDBContainer className="text-center text-md-start mt-5 border-top">
+        <div className= {`${theme === "dark" && "footer-dark"}`}>
+          <MDBContainer className="text-center text-md-start mt-0 border-top">
             <MDBRow className="mt-3">
               <MDBCol md="4" lg="4" xl="3" className="mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold mb-4">
@@ -107,6 +118,7 @@ export default function Footer() {
               </MDBCol>
             </MDBRow>
           </MDBContainer>
+          </div>
         </section>
 
         <div
@@ -122,3 +134,5 @@ export default function Footer() {
     </div>
   );
 }
+
+export default Footer

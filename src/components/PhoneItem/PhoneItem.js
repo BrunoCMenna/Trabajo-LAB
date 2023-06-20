@@ -6,11 +6,12 @@ import { CartContext } from "../../contexts/ShoppingCartContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const PhoneItem = ({ id, brand, model, price, image }) => {
 
   const navigation = useNavigate();
-
+  const { theme } = useContext(ThemeContext);
   const goProduct = () => {
     navigation(`/Product/${id}`);
   };
@@ -25,6 +26,7 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
     <>
       <PhoneCard>
         <div className="phone-container">
+        <div className= {`${theme === "dark" && "phone-item-dark"}`}>
           <button onClick={goProduct}>
             <img src={image} alt="" />
           </button>
@@ -42,6 +44,7 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
           >
             Agregar al carrito <FaCartPlus />
           </button>
+        </div>
         </div>
       </PhoneCard>
     </>
