@@ -1,7 +1,10 @@
 import React from "react";
 import "../SidebarFilters/SidebarFilters.css";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { useContext } from "react";
 
 const SidebarFilters = ({ phones, onBrandFilterChange }) => {
+  const { theme } = useContext(ThemeContext);
   //funcion de contador de celulres que comparten marca. Devuelve un objeto con "Marca: numCantidad"
   const getSameBrandPhones = () => {
     const SameBrandPhones = {};
@@ -14,35 +17,38 @@ const SidebarFilters = ({ phones, onBrandFilterChange }) => {
     });
     return SameBrandPhones;
   };
-
+  
   const changeBrandFilterHandler = (e) => {
     onBrandFilterChange(e.currentTarget.value);
   };
 
   return (
     <div className="filters-container">
-      <h3>Filtrar por</h3>
-      <div>
-        <div>
+      <div className= {`${theme === "dark" && "sidebar-dark"}`}>
+        <h3>Filtrar por</h3>
           <button
             className="sb-button"
             type="button"
             value=""
             onClick={changeBrandFilterHandler}
           >
+          <div className= {`${theme === "dark" && "sb-button-dark"}`}>
             Todas las marcas
+          </div>
           </button>
-        </div>
+          
+      
         {Object.entries(getSameBrandPhones()).map(([brand, counter]) => (
-          <div>
+          <div className="filters-brands">
             <button
               className="sb-button"
               type="button"
               value={brand}
-              onClick={changeBrandFilterHandler}
-            >
+              onClick={changeBrandFilterHandler}>
+            <div className= {`${theme === "dark" && "button-dark"}`}>
               {brand}
               <span> ({counter})</span>
+            </div>
             </button>
           </div>
         ))}

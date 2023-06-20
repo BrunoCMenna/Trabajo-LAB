@@ -2,6 +2,12 @@
   width: auto;
 }
 
+.phone-item-dark {
+  background-color: #020c1a;
+  color: white;
+  border-radius: 7px;
+}
+
 hr {
   border: solid 1px rgb(218, 216, 216);
   width: 95%;

@@ -5,13 +5,15 @@ import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router";
-import ToggleTheme from "../ToggleTheme/ToggleTheme";
+import { ThemeContext } from "../../contexts/ThemeContext";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
   const { logInUser } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
@@ -29,13 +31,18 @@ const Login = () => {
   const goSignIn = () => {
     navigation("/signin");
   };
+  const goShop = () => {
+    navigation("/shop");
+  };
+
 
   return (
     <div>
       <NavBar />
       <div className="wrapper d-flex align-items-center justify-content-center w-100">
         <div className="banner"></div>
-        <div className="login">
+        <div className="login w-26 p-3">
+        <div className= {`${theme === "dark" && "login-box-dark"}`}>
           <h2 className="mb-2 d-flex justify-content-center fs-4">
             ¡Bienvenido a Tecno Rosario!
           </h2>
@@ -86,7 +93,18 @@ const Login = () => {
                 Registrarse
               </button>
             </div>
+            <div className="mx-5">
+              <span>¿Querés ver los productos sin una cuenta?</span>
+              <button
+                type="button"
+                className="text-white text-decoration-underline"
+                onClick={goShop}
+              >
+                Ir a la tienda
+              </button>
+            </div>
           </form>
+        </div>
         </div>
       </div>
       <Footer />

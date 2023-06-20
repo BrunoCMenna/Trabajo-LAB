@@ -70,7 +70,7 @@ const NavBar = () => {
             <button type="button" onClick={goShop}>
               <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
             </button>
-            <ToggleTheme />
+            <ToggleTheme/>
           </div>
           <div className="CRI">
             <button className="cart-icon" onClick={goCart}>
