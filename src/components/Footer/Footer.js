@@ -168,9 +168,13 @@ const Footer = () => {
           className="text-center p-4 text-white"
           style={{ backgroundColor: "rgb(63, 19, 144)" }}
         >
-          © 2021 Copyright:
-          <a className="text-reset fw-bold" href="https://mdbootstrap.com/">
-            MDBootstrap.com
+          © 2023 Copyright:
+          <a
+            className="text-reset fw-bold"
+            href="https://google.com/"
+            target="_blanket"
+          >
+            tecnorosario.com
           </a>
         </div>
       </MDBFooter>
