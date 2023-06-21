@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
-import { FaShoppingCart } from "react-icons/fa";
-import { HiChevronDoubleRight } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { FaClipboardList, FaShoppingCart } from "react-icons/fa";
+import { RiLoginBoxFill, RiLogoutBoxFill } from "react-icons/ri";
+
 import "./NavBar.css";
+
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { UserContext } from "../../contexts/AuthContext";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
@@ -26,73 +28,75 @@ const NavBar = () => {
   const goShop = () => {
     navigation("/Shop");
   };
+  const goShowOrders = () => {
+    navigation("/showorders");
+  };
 
-  if (user) {
-    const userName = user.email.split("@")[0];
-    return (
-      <>
-        <nav className="navbar px-4">
-          <div className="enterprise">
-            <button type="button" onClick={goShop}>
-              <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
-            </button>
-            <ToggleTheme />
-          </div>
+  return (
+    <>
+      <nav className="navbar px-4">
+        <div className="enterprise">
+          <button type="button" onClick={goShop}>
+            <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
+          </button>
+          <ToggleTheme />
+        </div>
 
-          <div className="CRI">
-            <span className="d-flex justify-content-center align-content-center align-self-center align-text-center text-white">
-              Hola, {userName}!
-            </span>
-            <button className="cart-icon" onClick={goCart}>
-              <h2 className="px-1 mx-1">
-                <FaShoppingCart />
-              </h2>
-              Carrito
-              {cartAmount > 0 && (
-                <div className="badge rounded-pill text-bg-primary mx-2">
-                  {cartAmount}
-                </div>
-              )}
-            </button>
-
-            <button onClick={logOutHandler} type="button">
-              Cerrar sesión
-            </button>
-          </div>
-        </nav>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <nav className="navbar px-4">
-          <div className="enterprise">
-            <button type="button" onClick={goShop}>
-              <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
-            </button>
-            <ToggleTheme/>
-          </div>
-          <div className="CRI">
-            <button className="cart-icon" onClick={goCart}>
-              <h2 className="px-1 mx-1">
-                <FaShoppingCart />
-              </h2>
-              Carrito
-              {cartAmount > 0 && (
-                <div className="badge rounded-pill text-bg-primary mx-2">
-                  {cartAmount}
-                </div>
-              )}
-            </button>
-            <button onClick={goLogin} type="button">
-              <HiChevronDoubleRight />
-              Iniciar sesión
-            </button>
-          </div>
-        </nav>
-      </>
-    );
-  }
+        <div className="CRI">
+          {user ? (
+            <>
+              <span className="d-flex align-self-center align-text-center text-white">
+                Hola, {user.email.split("@")[0]}!
+              </span>
+              <button className="d-flex" onClick={goShowOrders}>
+                <h2 className="px-1 mx-1">
+                  <FaClipboardList />
+                </h2>
+                <span>Mis pedidos</span>
+              </button>
+              <button className="cart-icon" onClick={goCart}>
+                <h2 className="px-1 mx-1">
+                  <FaShoppingCart />
+                </h2>
+                Carrito
+                {cartAmount > 0 && (
+                  <div className="badge rounded-pill text-bg-primary mx-2">
+                    {cartAmount}
+                  </div>
+                )}
+              </button>
+              <button onClick={logOutHandler} type="button" className="d-flex">
+                <h2>
+                  <RiLogoutBoxFill />
+                </h2>
+                Cerrar sesión
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="cart-icon" onClick={goCart}>
+                <h2 className="px-1 mx-1">
+                  <FaShoppingCart />
+                </h2>
+                Carrito
+                {cartAmount > 0 && (
+                  <div className="badge rounded-pill text-bg-primary mx-2">
+                    {cartAmount}
+                  </div>
+                )}
+              </button>
+              <button onClick={goLogin} type="button" className="d-flex mx-3">
+                <h2>
+                  <RiLoginBoxFill />
+                </h2>
+                Iniciar sesión
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
+    </>
+  );
 };
 
 export default NavBar;

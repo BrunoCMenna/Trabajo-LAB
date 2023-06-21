@@ -1,18 +1,19 @@
-import React, { useContext } from 'react'
-import { ThemeContext } from '../../contexts/ThemeContext'
+import React, { useContext } from "react";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const ToggleTheme = () => {
-    const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <button
-        onClick={toggleTheme}
-        className="flex-grow-1 text-white"
-        variant={theme ==="light" ? "dark" : "light"}
+      onClick={toggleTheme}
+      className="flex-grow-1 text-white"
+      variant={theme === "light" ? "dark" : "light"}
     >
-        Cambiar a Tema {theme ==="light" ? "Oscuro" : "Claro"}
+      {theme === "light" ? <FaMoon /> : <FaSun />}
     </button>
-  )
-}
+  );
+};
 
-export default ToggleTheme
+export default ToggleTheme;
