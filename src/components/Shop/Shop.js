@@ -6,9 +6,8 @@ import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
 import PhoneCatalog from "../PhoneCatalog/PhoneCatalog";
 import SidebarFilters from "../SidebarFilters/SidebarFilters";
-import { PHONES } from "../../phones";
 
-const Shop = () => {
+const Shop = ({ products }) => {
   const [brandFilterSelected, setBrandFilterSelected] = useState(null);
   const brandFilterChanged = (brand) => {
     setBrandFilterSelected(brand);
@@ -22,13 +21,13 @@ const Shop = () => {
       <div className="d-flex flex-row shop-body">
         <div className="sidebarfilters">
           <SidebarFilters
-            phones={PHONES}
+            phones={products}
             onBrandFilterChange={brandFilterChanged}
           />
         </div>
         <div className="catalog-body">
           <PhoneCatalog
-            phones={PHONES}
+            phones={products}
             brandFilterSelected={brandFilterSelected}
           />
         </div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { getDatabase, ref, onValue, set, update } from "firebase/database";
+import { getDatabase, ref, onValue, update } from "firebase/database";
 import { toast } from "react-toastify";
+import Footer from "../Footer/Footer";
+import NavBar from "../NavBar/NavBar";
 
 const UserPanel = () => {
   const [users, setUsers] = useState([]);
@@ -37,6 +39,7 @@ const UserPanel = () => {
         toast.success("Permiso cambiado con éxito", {
           position: toast.POSITION.TOP_CENTER,
         });
+        //User tiene que reiniciar sesión para aplicar cambios
         console.log("Rol actualizado exitosamente");
       })
       .catch((error) => {
@@ -44,29 +47,33 @@ const UserPanel = () => {
       });
   };
   return (
-    <div>
-      <h2>Panel de Usuarios</h2>
-      {users == null ? (
-        <div>No hay usuarios disponibles</div>
-      ) : (
-        <ul>
-          {users.map((user) => (
-            <li key={user.id}>
-              <span>{user.email}</span>
-              <select
-                value={user.role}
-                onChange={(event) =>
-                  handleChangeRole(user.id, event.target.value)
-                }
-              >
-                <option value="user">Usuario</option>
-                <option value="admin">Administrador</option>
-              </select>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <>
+      <NavBar />
+      <div>
+        <h2>Panel de Usuarios</h2>
+        {users == null ? (
+          <div>No hay usuarios disponibles</div>
+        ) : (
+          <ul>
+            {users.map((user) => (
+              <li key={user.id}>
+                <span>{user.email}</span>
+                <select
+                  value={user.role}
+                  onChange={(event) =>
+                    handleChangeRole(user.id, event.target.value)
+                  }
+                >
+                  <option value="user">Usuario</option>
+                  <option value="admin">Administrador</option>
+                </select>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <Footer />
+    </>
   );
 };
 

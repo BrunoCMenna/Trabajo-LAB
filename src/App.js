@@ -1,24 +1,54 @@
-import Login from "./components/Login/Login";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+
+import { useContext, useEffect, useState } from "react";
+import { ThemeContext } from "./contexts/ThemeContext";
+import ProtectedIfUserIsLogged from "./components/routes/ProtectedIfUserIsLogged";
+import ProtectedIfUserIsNotLogged from "./components/routes/ProtectedIfUserIsNotLogged";
+import Login from "./components/Login/Login";
 import NotFound from "./components/routes/NotFound";
 import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";
 import Product from "./components/Product/Product";
 import SignIn from "./components/SignIn/SignIn";
-import ProtectedIfUserIsLogged from "./components/routes/ProtectedIfUserIsLogged";
-import { useContext } from "react";
-import { ThemeContext } from "./contexts/ThemeContext";
 import UserPanel from "./components/UserPanel/UserPanel";
 import Orders from "./components/Orders/Orders";
-import ProtectedIfUserIsNotLogged from "./components/routes/ProtectedIfUserIsNotLogged";
 import ShowOrders from "./components/ShowOrders/ShowOrders";
+import ProtectedUserPanel from "./components/routes/ProtectedUserPanel";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
+  const [products, setProducts] = useState([]);
+  const PRODUCTS_ENDPOINT =
+    "https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products";
+
+  useEffect(() => {
+    fetch(PRODUCTS_ENDPOINT, {
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((productData) => {
+        const productsMapped = productData.map((product) => ({
+          ...product,
+        }));
+        setProducts(productsMapped);
+        console.log("Productos cargados en App", productsMapped);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Shop products={products} />,
+    },
     {
       path: "/Login",
       element: (
@@ -29,15 +59,15 @@ const App = () => {
     },
     {
       path: "/Shop",
-      element: <Shop />,
+      element: <Shop products={products} />,
     },
     {
       path: "/Cart",
-      element: <Cart />,
+      element: <Cart products={products} />,
     },
     {
       path: "/Product",
-      element: <Product />,
+      element: <Product products={products} />,
     },
     {
       path: "/signin",
@@ -49,17 +79,21 @@ const App = () => {
     },
     {
       path: "/Product/:id",
-      element: <Product />,
+      element: <Product products={products} />,
     },
     {
       path: "/panel",
-      element: <UserPanel />,
+      element: (
+        <ProtectedUserPanel>
+          <UserPanel />
+        </ProtectedUserPanel>
+      ),
     },
     {
       path: "/orders",
       element: (
         <ProtectedIfUserIsNotLogged>
-          <Orders />
+          <Orders products={products} />
         </ProtectedIfUserIsNotLogged>
       ),
     },
@@ -79,7 +113,7 @@ const App = () => {
   return (
     <div className={`${theme === "dark" && "dark-theme"}`}>
       <ToastContainer
-        position="top-right"
+        position="top-center"
         autoClose={1000}
         hideProgressBar
         newestOnTop={false}
@@ -88,7 +122,7 @@ const App = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover={false}
-        theme="light"
+        theme={`${theme}`}
       />
       <RouterProvider router={router} />
     </div>
