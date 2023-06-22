@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { getDatabase, ref, onValue } from "firebase/database";
 
 import "../ShowOrders/ShowOrders.css";
-
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
@@ -13,6 +13,7 @@ const ShowOrders = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
   const navigation = useNavigate();
+  const { theme } = useContext(ThemeContext)
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,7 +41,7 @@ const ShowOrders = () => {
   };
 
   return (
-    <>
+      <>
       <NavBar />
       <div className="">
         {isLoading ? (
@@ -69,6 +70,7 @@ const ShowOrders = () => {
                 </>
               ) : (
                 <table className="table table-responsive">
+                  <div className={`${theme === "dark" && "table-responsive-dark"}`}>
                   <thead>
                     <tr>
                       <th scope="col">Nombre y Apellido</th>
@@ -134,6 +136,7 @@ const ShowOrders = () => {
                       </tr>
                     ))}
                   </tbody>
+                  </div>
                 </table>
               )}
             </div>
