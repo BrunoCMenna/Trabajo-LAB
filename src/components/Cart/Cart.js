@@ -6,12 +6,11 @@ import "../Cart/Cart.css";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { CartContext } from "../../contexts/ShoppingCartContext";
-import { PHONES } from "../../phones";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import CartItem from "../CartItem/CartItem";
 
-const Cart = () => {
+const Cart = ({ products }) => {
   const { theme } = useContext(ThemeContext);
   const { getItemAmount, getTotalCartAmount, cartItems } =
     useContext(CartContext);
@@ -34,7 +33,7 @@ const Cart = () => {
         <div className="cart-container">
           <div className="cart-table">
             <div className={`${theme === "dark" && "cart-table-dark"}`}>
-              {PHONES.map((product) => {
+              {products.map((product) => {
                 if (cartItems[product.id] !== 0) {
                   return (
                     <CartItem
@@ -45,6 +44,8 @@ const Cart = () => {
                       image={product.image}
                     />
                   );
+                } else {
+                  return null;
                 }
               })}
             </div>

@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router";
 
 import "../Login/Login.css";
+
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
-import { UserContext } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router";
 
 const SignIn = () => {
   const { theme } = useContext(ThemeContext);
@@ -66,62 +67,62 @@ const SignIn = () => {
       <div className="wrapper d-flex align-items-center justify-content-center w-100">
         <div className="banner"></div>
         <div className="login">
-        <div className= {`${theme === "dark" && "login-box-dark"}`}>
-          <h2 className="mb-2 d-flex justify-content-center fs-4">
-            Creación de cuenta
-          </h2>
-          <form>
-            <div className="form-group mb-3">
-              <label className="form-label" for="email">
-                Email:
-              </label>
-              <input
-                className="form-control"
-                type="email"
-                name="email"
-                onChange={handleInput}
-                required
-              />
-              {errors.email && (
-                <p className="text-danger text-center">{errors.email}</p>
+          <div className={`${theme === "dark" && "login-box-dark"}`}>
+            <h2 className="mb-2 d-flex justify-content-center fs-4">
+              Creación de cuenta
+            </h2>
+            <form>
+              <div className="form-group mb-3">
+                <label className="form-label" for="email">
+                  Email:
+                </label>
+                <input
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  onChange={handleInput}
+                  required
+                />
+                {errors.email && (
+                  <p className="text-danger text-center">{errors.email}</p>
+                )}
+              </div>
+              <div className="form-group mb-3">
+                <label className="form-label" for="password">
+                  Contraseña:
+                </label>
+                <input
+                  className="form-control"
+                  type="password"
+                  name="password"
+                  onChange={handleInput}
+                  required
+                />
+              </div>
+              {errors.password && (
+                <p className="text-danger text-center">{errors.password}</p>
               )}
-            </div>
-            <div className="form-group mb-3">
-              <label className="form-label" for="password">
-                Contraseña:
-              </label>
-              <input
-                className="form-control"
-                type="password"
-                name="password"
-                onChange={handleInput}
-                required
-              />
-            </div>
-            {errors.password && (
-              <p className="text-danger text-center">{errors.password}</p>
-            )}
-            <div className="d-flex justify-content-center">
-              <button
-                onClick={logInHandler}
-                className="btn btn-primary"
-                type="button"
-              >
-                Crear cuenta
-              </button>
-            </div>
-            <div className="d-flex justify-content-center">
-              <button
-                type="button"
-                className="text-white text-decoration-underline"
-                onClick={goLogIn}
-              >
-                Volver
-              </button>
-            </div>
-          </form>
+              <div className="d-flex justify-content-center">
+                <button
+                  onClick={logInHandler}
+                  className="btn btn-primary"
+                  type="button"
+                >
+                  Crear cuenta
+                </button>
+              </div>
+              <div className="d-flex justify-content-center">
+                <button
+                  type="button"
+                  className="text-white text-decoration-underline"
+                  onClick={goLogIn}
+                >
+                  Volver
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
       </div>
       <Footer />
     </div>

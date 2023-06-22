@@ -1,26 +1,49 @@
-import React, { createContext, useState } from "react";
-import { PHONES } from "../phones";
+import React, { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext(null);
 
-const getDefaultCart = () => {
-  let cart = {};
-  for (let i = 1; i <= PHONES.length; i++) {
-    cart[i] = 0;
-  }
-  return cart;
-  //Devuelve un objeto "cart" que su atributo va a coincidir con la ID de cada uno de nuestros objetos PHONES.
-  //Se crearia un objeto que simula ser el carrito de esta forma:
-  // 1: 0
-  // 2: 0
-  // 3: 0
-  // ...
-  // donde el atributo indica el ID de nuestro producto y lo setea en 0 (es decir ninguno esta en el carrito todavia)
-};
-
 const ShoppingCartProvider = ({ children }) => {
+  const [cartItems, setCartItems] = useState();
+  const [products, setProducts] = useState([]);
 
-  const [cartItems, setCartItems] = useState(getDefaultCart());
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const PRODUCTS_ENDPOINT =
+          "https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products";
+        const response = await fetch(PRODUCTS_ENDPOINT, {
+          headers: {
+            accept: "application/json",
+          },
+        });
+        const productData = await response.json();
+        const productsMapped = productData.map((product) => ({
+          ...product,
+        }));
+        setProducts(productsMapped);
+        const cartItems = getDefaultCart(productsMapped);
+        setCartItems(cartItems);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const getDefaultCart = (products) => {
+    let cart = {};
+    for (let i = 1; i <= products.length; i++) {
+      cart[i] = 0;
+    }
+    return cart;
+    //Devuelve un objeto "cart" que su atributo va a coincidir con la ID de cada uno de nuestros objetos PHONES.
+    //Se crearia un objeto que simula ser el carrito de esta forma:
+    // 1: 0
+    // 2: 0
+    // 3: 0
+    // ...
+    // donde el atributo indica el ID de nuestro producto y lo setea en 0 (es decir ninguno esta en el carrito todavia)
+  };
 
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
@@ -35,6 +58,9 @@ const ShoppingCartProvider = ({ children }) => {
   };
 
   const getItemAmount = () => {
+    if (!cartItems) {
+      return 0;
+    }
     const total = Object.values(cartItems).reduce((accum, n) => accum + n);
     return total;
   };
@@ -43,7 +69,7 @@ const ShoppingCartProvider = ({ children }) => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = PHONES.find((product) => product.id === Number(item));
+        let itemInfo = products.find((product) => product.id === Number(item));
         totalAmount += cartItems[item] * itemInfo.price;
       }
     }
@@ -58,7 +84,6 @@ const ShoppingCartProvider = ({ children }) => {
     getItemAmount,
     getTotalCartAmount,
   };
-  console.log(cartItems);
   return (
     <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );
