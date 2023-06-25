@@ -3,7 +3,6 @@
   flex-direction: row;
   width: 100%;
 }
-
 .order {
   display: inline;
   flex-wrap: wrap;
@@ -18,4 +17,9 @@
 }
 .img-product {
   width: 100px;
+}
+
+.table-responsive-dark {
+  background-color: #020c1a;
+  color: white;
 }
