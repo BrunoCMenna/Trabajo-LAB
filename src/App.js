@@ -17,7 +17,9 @@ import SignIn from "./components/SignIn/SignIn";
 import UserPanel from "./components/UserPanel/UserPanel";
 import Orders from "./components/Orders/Orders";
 import ShowOrders from "./components/ShowOrders/ShowOrders";
-import ProtectedUserPanel from "./components/routes/ProtectedUserPanel";
+import ProductPanel from "./components/ProductPanel/ProductPanel";
+import ProtectedAdmin from "./components/routes/ProtectedAdmin";
+import OrderPanel from "./components/OrderPanel/OrderPanel";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -84,9 +86,9 @@ const App = () => {
     {
       path: "/panel",
       element: (
-        <ProtectedUserPanel>
+        <ProtectedAdmin>
           <UserPanel />
-        </ProtectedUserPanel>
+        </ProtectedAdmin>
       ),
     },
     {
@@ -103,6 +105,22 @@ const App = () => {
         <ProtectedIfUserIsNotLogged>
           <ShowOrders />,
         </ProtectedIfUserIsNotLogged>
+      ),
+    },
+    {
+      path: "/ProductPanel",
+      element: (
+        <ProtectedAdmin>
+          <ProductPanel products={products} />
+        </ProtectedAdmin>
+      ),
+    },
+    {
+      path: "/OrderPanel",
+      element: (
+        <ProtectedAdmin>
+          <OrderPanel />
+        </ProtectedAdmin>
       ),
     },
     {
