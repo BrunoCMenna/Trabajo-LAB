@@ -123,24 +123,23 @@ const ProductPanel = ({ products }) => {
 
   const saveChanges = () => {
     setHasChanges(false);
-    editedProducts.forEach((product) => {
-      fetch(
-        `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${product.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(product),
-        }
-      )
-        .then((response) => response.json())
-        .then((updatedProduct) => {
-          console.log("Producto actualizado:", updatedProduct);
-        })
-        .catch((error) => {
-          console.error("Error al actualizar el producto:", error);
-        });
+    editedProducts.forEach(async (product) => {
+      try {
+        const response = await fetch(
+          `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${product.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(product),
+          }
+        );
+        const updatedProduct = await response.json();
+        console.log("Producto actualizado:", updatedProduct);
+      } catch (error) {
+        console.error("Error al actualizar el producto:", error);
+      }
     });
     toast.success("Se han guardado los cambios");
   };
