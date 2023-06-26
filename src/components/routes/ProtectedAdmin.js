@@ -3,7 +3,7 @@ import { Navigate } from "react-router";
 
 import { UserContext } from "../../contexts/AuthContext";
 
-const ProtectedUserPanel = ({ children }) => {
+const ProtectedAdmin = ({ children }) => {
   const { user } = useContext(UserContext);
 
   if (!user || user.role !== "admin") {
@@ -12,4 +12,4 @@ const ProtectedUserPanel = ({ children }) => {
   return children;
 };
 
-export default ProtectedUserPanel;
+export default ProtectedAdmin;

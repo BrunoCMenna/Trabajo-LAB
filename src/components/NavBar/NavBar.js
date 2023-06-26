@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaClipboardList, FaShoppingCart } from "react-icons/fa";
 import { RiLoginBoxFill, RiLogoutBoxFill } from "react-icons/ri";
 
@@ -8,6 +8,7 @@ import "./NavBar.css";
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { UserContext } from "../../contexts/AuthContext";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
+import { Dropdown } from "react-bootstrap";
 
 const NavBar = () => {
   const { getItemAmount } = useContext(CartContext);
@@ -48,6 +49,23 @@ const NavBar = () => {
               <span className="d-flex align-self-center align-text-center text-white">
                 Hola, {user.email.split("@")[0]}!
               </span>
+              {user.role === "admin" && (
+                <>
+                  <Dropdown>
+                    <Dropdown.Toggle variant="dark">
+                      Administrador
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item as={Link} to="/productpanel">
+                        Panel de productos
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/orderpanel">
+                        Panel de pedidos
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              )}
               <button className="d-flex" onClick={goShowOrders}>
                 <h2 className="px-1 mx-1">
                   <FaClipboardList />

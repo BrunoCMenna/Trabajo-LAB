@@ -69,7 +69,9 @@ const ShoppingCartProvider = ({ children }) => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = products.find((product) => product.id === Number(item));
+        let itemInfo = products.find(
+          (product) => parseInt(product.id) === Number(item)
+        );
         totalAmount += cartItems[item] * itemInfo.price;
       }
     }
@@ -83,6 +85,8 @@ const ShoppingCartProvider = ({ children }) => {
     removeFromCart,
     getItemAmount,
     getTotalCartAmount,
+    getDefaultCart,
+    setCartItems,
   };
   return (
     <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>

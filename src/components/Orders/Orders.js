@@ -18,10 +18,10 @@ const Orders = ({ products }) => {
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const { user } = useContext(UserContext);
-  const { cartItems, getTotalCartAmount } = useContext(CartContext);
+  const { cartItems, getTotalCartAmount, getDefaultCart, setCartItems } =
+    useContext(CartContext);
   const TotalCartAmount = getTotalCartAmount();
   const navigation = useNavigate();
-
   const goShop = () => {
     navigation("/shop");
   };
@@ -31,7 +31,9 @@ const Orders = ({ products }) => {
     for (const productId in cart) {
       //Se recorre el el objeto carrito (compuesto de id_del_producto: cantidad)
       const quantity = cart[productId]; //Se accede a la cantidad de cada id (de cada producto)
-      const phone = products.find((phone) => phone.id === parseInt(productId)); //Busca en tdos los productos traidos de la api, el celular correspondiente a la ID que esta en el carrito
+      const phone = products.find(
+        (phone) => parseInt(phone.id) === parseInt(productId)
+      ); //Busca en tdos los productos traidos de la api, el celular correspondiente a la ID que esta en el carrito
 
       if (phone && quantity >= 1) {
         //Si se encuentra y su cantidad es mayor a 1, es decir, que fue agregado al menos 1 vez al carrito, se agrega al nuevo objeto.
@@ -46,13 +48,7 @@ const Orders = ({ products }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const products = createProductsObject(cartItems);
-    console.log(products);
-    if (TotalCartAmount === 0) {
-      toast.error("No hay ningún producto en el carrito");
-      return;
-    }
-
+    const productsObj = createProductsObject(cartItems);
     const newOrder = {
       name: name,
       phoneNumber: phone,
@@ -60,8 +56,9 @@ const Orders = ({ products }) => {
       city: city,
       zipcode: zipcode,
       address: address,
-      products: products,
+      products: productsObj,
       totalPrice: TotalCartAmount,
+      state: "Pendiente",
     };
 
     const database = getDatabase();
@@ -69,7 +66,7 @@ const Orders = ({ products }) => {
     const newOrderRef = push(orderRef);
 
     try {
-      toast.info("Iniciando carga"); //PONER LOADERS
+      //PONER LOADERS
       await set(newOrderRef, newOrder).then(() => {
         console.log("El pedido se guardó correctamente en la base de datos.");
         setName("");
@@ -78,7 +75,8 @@ const Orders = ({ products }) => {
         setZipcode("");
         setAddress("");
       });
-      toast.success("Listo");
+      toast.success("¡Tu compra ha sido realizada con éxito!");
+      setCartItems(getDefaultCart(products));
     } catch (error) {
       console.log("Error al guardar el pedido:", error);
     }
@@ -137,6 +135,9 @@ const Orders = ({ products }) => {
                     onChange={(e) => setProvince(e.target.value)}
                     required
                   >
+                    <option value="" disabled selected className="text-reset">
+                      Seleccione una provicia...
+                    </option>
                     <option value="Buenos Aires">Buenos Aires</option>
                     <option value="Capital Federal">Capital Federal</option>
                     <option value="Catamarca">Catamarca</option>

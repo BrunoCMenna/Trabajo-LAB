@@ -33,10 +33,11 @@ const Cart = ({ products }) => {
         <div className="cart-container">
           <div className="cart-table">
             <div className={`${theme === "dark" && "cart-table-dark"}`}>
-              {products.map((product) => {
+              {products.map((product, index) => {
                 if (cartItems[product.id] !== 0) {
                   return (
                     <CartItem
+                      key={index}
                       id={product.id}
                       brand={product.brand}
                       model={product.model}

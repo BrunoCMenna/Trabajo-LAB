@@ -10,7 +10,7 @@ import PhoneCard from "../PhoneCard/PhoneCard";
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
-const PhoneItem = ({ id, brand, model, price, image }) => {
+const PhoneItem = ({ id, brand, model, price, image, isActive }) => {
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
   const goProduct = () => {
@@ -36,15 +36,24 @@ const PhoneItem = ({ id, brand, model, price, image }) => {
             <p>
               {brand} {model}
             </p>
-
-            <button
-              id="cart-button"
-              type="button"
-              onClick={addToCartAction}
-              className="btn btn-outline-success"
-            >
-              Agregar al carrito <FaCartPlus />
-            </button>
+            {isActive ? (
+              <>
+                <button
+                  id="cart-button"
+                  type="button"
+                  onClick={addToCartAction}
+                  className="btn btn-outline-success"
+                >
+                  Agregar al carrito <FaCartPlus />
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="text-danger">
+                  <p>No disponible</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </PhoneCard>

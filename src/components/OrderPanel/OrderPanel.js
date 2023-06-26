@@ -1,31 +1,36 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, update } from "firebase/database";
 
 import "../ShowOrders/ShowOrders.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
+import { toast } from "react-toastify";
 
 const ShowOrders = () => {
   const [userOrders, setUserOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useContext(UserContext);
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     setIsLoading(true);
     const database = getDatabase();
-    const ordersRef = ref(database, `orders/${user.uid}`);
+    const ordersRef = ref(database, "orders");
 
     const unsubscribe = onValue(ordersRef, (snapshot) => {
       const orders = [];
-      snapshot.forEach((childSnapshot) => {
-        const order = childSnapshot.val();
-        order.products = Object.values(order.products);
-        orders.push(order);
+      snapshot.forEach((userSnapshot) => {
+        const userId = userSnapshot.key; // Obtener el ID del usuario
+        userSnapshot.forEach((orderSnapshot) => {
+          const orderId = orderSnapshot.key; // Obtener el ID del pedido
+          const order = orderSnapshot.val();
+          order.products = Object.values(order.products);
+          order.userId = userId; // Agregar el ID del usuario al objeto order
+          order.orderId = orderId; // Agregar el ID del pedido al objeto order
+          orders.push(order);
+        });
       });
       setUserOrders(orders);
       setIsLoading(false);
@@ -40,6 +45,19 @@ const ShowOrders = () => {
     navigation("/shop");
   };
 
+  const handleStateChange = (userId, newState, orderId) => {
+    const userRef = ref(getDatabase(), `orders/${userId}/${orderId}`);
+
+    update(userRef, { state: newState })
+      .then(() => {
+        toast.info("Estado actualizado");
+        console.log("Estado actualizado exitosamente");
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el Estado:", error);
+      });
+  };
+
   return (
     <>
       <NavBar />
@@ -49,14 +67,14 @@ const ShowOrders = () => {
         ) : (
           <>
             <div className="d-flex justify-content-center mt-4">
-              <h2>Mis pedidos</h2>
+              <h2>Gestión de Pedidos</h2>
             </div>
             <hr />
             <div className="container">
               {userOrders.length === 0 ? (
                 <>
                   <div className="d-flex justify-content-center">
-                    <h4>No realizaste ningún pedido</h4>
+                    <h4>No se realizó ningún pedido</h4>
                   </div>
                   <div className="d-flex justify-content-center m-2">
                     <button
@@ -75,32 +93,30 @@ const ShowOrders = () => {
                   >
                     <thead>
                       <tr>
-                        <th scope="col" className="">
-                          Nombre y Apellido
-                        </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col">Nombre y Apellido</th>
+                        <th scope="col" className="px-3">
                           Teléfono
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Provincia
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Localidad
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Código Postal
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Dirección
                         </th>
-                        <th scope="col" className="px-2">
-                          Estado
-                        </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Productos
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Total del pedido
+                        </th>
+                        <th scope="col" className="px-3">
+                          Estado
                         </th>
                       </tr>
                     </thead>
@@ -113,7 +129,6 @@ const ShowOrders = () => {
                           <td>{order.city}</td>
                           <td>{order.zipcode}</td>
                           <td>{order.address}</td>
-                          <td>{order.state}</td>
                           <td>
                             <ul className="list-unstyled d-flex">
                               {order.products.map((product, productIndex) => (
@@ -135,7 +150,9 @@ const ShowOrders = () => {
                                           src={product.image}
                                           alt="Producto"
                                           className="img-fluid img-thumbnail img-product mr-3"
-                                          style={{ width: "100px" }}
+                                          style={{
+                                            width: "100px",
+                                          }}
                                         />
                                       </div>
                                     </div>
@@ -149,7 +166,7 @@ const ShowOrders = () => {
                                       <p>
                                         {product.brand} {product.model}
                                       </p>
-                                      <p>Precio unitario: ${product.price}</p>
+                                      <p>Precio: ${product.price}</p>
                                       <p>Cantidad: {product.quantity}</p>
                                     </div>
                                   </div>
@@ -158,6 +175,22 @@ const ShowOrders = () => {
                             </ul>
                           </td>
                           <td className="px-3">${order.totalPrice}</td>
+                          <td>
+                            <select
+                              value={order.state}
+                              onChange={(e) =>
+                                handleStateChange(
+                                  order.userId,
+                                  e.target.value,
+                                  order.orderId
+                                )
+                              }
+                            >
+                              <option value="Pendiente">Pendiente</option>
+                              <option value="Despachado">Despachado</option>
+                              <option value="Entregado">Entregado</option>
+                            </select>
+                          </td>
                         </tr>
                       ))}
                     </tbody>

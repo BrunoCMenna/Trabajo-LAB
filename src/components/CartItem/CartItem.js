@@ -18,8 +18,8 @@ const CartItem = ({ id, brand, model, price, image }) => {
     }
   };
   return (
-      <table className="table bordered">
-        <div className= {`${theme === "dark" && "cart-item-dark"}`}>
+    <table className="table bordered">
+      <div className={`${theme === "dark" && "cart-item-dark"}`}>
         <thead>
           <tr>
             <th></th>
@@ -42,20 +42,20 @@ const CartItem = ({ id, brand, model, price, image }) => {
               <span>{cartItems[id]}</span>
             </td>
             <td>
-            <button
-              type="button"
-              onClick={() => removeAction()}
-              className="trash-btn"
-            >
-              <div className= {`${theme === "dark" && "trash-button-dark"}`}>
-              <FaTrash></FaTrash>
-              </div>
-            </button>
+              <button
+                type="button"
+                onClick={() => removeAction()}
+                className="trash-btn"
+              >
+                <div className={`${theme === "dark" && "trash-button-dark"}`}>
+                  <FaTrash></FaTrash>
+                </div>
+              </button>
             </td>
           </tr>
         </tbody>
-        </div>
-      </table>
+      </div>
+    </table>
   );
 };
 
