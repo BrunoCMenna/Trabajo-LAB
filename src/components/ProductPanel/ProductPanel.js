@@ -5,6 +5,8 @@ import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Button, Modal } from "react-bootstrap";
+import { LoaderContext } from "../../contexts/LoaderContext";
+import Spinner from "../ui/Spinner";
 
 const ProductPanel = ({ products }) => {
   const [editedProducts, setEditedProducts] = useState([]);
@@ -20,10 +22,10 @@ const ProductPanel = ({ products }) => {
   });
   const [hasChanges, setHasChanges] = useState(false);
   const { theme } = useContext(ThemeContext);
+  const { isLoading } = useContext(LoaderContext);
 
   useEffect(() => {
     setEditedProducts(products);
-    console.log("ProductPanel: Seteó los productos en useEffect");
   }, [products]);
 
   const handleInputChangeOnExistingProduct = (event, productId) => {
@@ -82,7 +84,8 @@ const ProductPanel = ({ products }) => {
     setSelectedProductId(null);
   };
 
-  const addNewProduct = () => {
+  const addNewProduct = (e) => {
+    e.preventDefault();
     fetch("https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products", {
       method: "POST",
       headers: {
@@ -144,7 +147,6 @@ const ProductPanel = ({ products }) => {
     toast.success("Se han guardado los cambios");
   };
 
-  console.log("editedProducts:", editedProducts);
   return (
     <>
       <NavBar />
@@ -153,197 +155,222 @@ const ProductPanel = ({ products }) => {
           Panel de Gestión de Productos
         </h2>
         <hr />
-        <div className="row">
-          {editedProducts.map((product) => (
-            <div key={product.id} className="col-md-4 mb-4">
-              <div
-                className={`card ${product.isActive ? "" : "bg-secondary"} ${
-                  theme === "dark" ? "text-bg-dark" : ""
-                }`}
-              >
-                <img
-                  src={product.image}
-                  alt={product.model}
-                  className="card-img-top img-fluid"
-                />
-                <div className="card-body d-flex flex-column">
-                  <p className="card-text">
-                    Marca:{" "}
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="brand"
-                      value={product.brand}
-                      onChange={(e) =>
-                        handleInputChangeOnExistingProduct(e, product.id)
-                      }
-                    />
-                  </p>
-                  <p className="card-text">
-                    Modelo:{" "}
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="model"
-                      value={product.model}
-                      onChange={(e) =>
-                        handleInputChangeOnExistingProduct(e, product.id)
-                      }
-                    />
-                  </p>
-                  <p className="card-text">
-                    Precio:
-                    <input
-                      type="number"
-                      className="form-control"
-                      name="price"
-                      value={product.price}
-                      onChange={(e) =>
-                        handleInputChangeOnExistingProduct(e, product.id)
-                      }
-                    />
-                  </p>
-                  <p className="card-text">
-                    Estado: {product.isActive ? "Disponible" : "No disponible"}
-                  </p>
-                  <button
-                    className={`mx-auto btn btn-sm ${
-                      product.isActive ? "btn-danger" : "btn-success"
-                    }`}
-                    onClick={(e) =>
-                      handleStatusChange(product.id, !product.isActive)
-                    }
+        {isLoading ? (
+          <div className="d-flex justify-content-center mb-5">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            <div className="row">
+              {editedProducts.map((product) => (
+                <div key={product.id} className="col-md-4 mb-4">
+                  <div
+                    className={`card ${
+                      product.isActive ? "" : "bg-secondary"
+                    } ${theme === "dark" ? "text-bg-dark" : ""}`}
                   >
-                    {product.isActive ? "Desenlistar" : "Listar"}
-                  </button>
-                  <button
-                    className="mx-auto btn btn-sm btn-danger mt-2"
-                    onClick={() => openDeleteModal(product.id)}
-                  >
-                    Eliminar producto
-                  </button>
+                    <img
+                      src={product.image}
+                      alt={product.model}
+                      className="card-img-top img-fluid"
+                    />
+                    <div className="card-body d-flex flex-column">
+                      <p className="card-text">
+                        Marca:{" "}
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="brand"
+                          value={product.brand}
+                          onChange={(e) =>
+                            handleInputChangeOnExistingProduct(e, product.id)
+                          }
+                        />
+                      </p>
+                      <p className="card-text">
+                        Modelo:{" "}
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="model"
+                          value={product.model}
+                          onChange={(e) =>
+                            handleInputChangeOnExistingProduct(e, product.id)
+                          }
+                        />
+                      </p>
+                      <p className="card-text">
+                        Precio:
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="price"
+                          value={product.price}
+                          onChange={(e) =>
+                            handleInputChangeOnExistingProduct(e, product.id)
+                          }
+                        />
+                      </p>
+                      <p className="card-text">
+                        Estado:{" "}
+                        {product.isActive ? "Disponible" : "No disponible"}
+                      </p>
+                      <button
+                        className={`mx-auto btn btn-sm ${
+                          product.isActive ? "btn-danger" : "btn-success"
+                        }`}
+                        onClick={(e) =>
+                          handleStatusChange(product.id, !product.isActive)
+                        }
+                      >
+                        {product.isActive ? "Desenlistar" : "Listar"}
+                      </button>
+                      <button
+                        className="mx-auto btn btn-sm btn-danger mt-2"
+                        onClick={() => openDeleteModal(product.id)}
+                      >
+                        Eliminar producto
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="d-flex flex-column justify-content-center align-self-center">
-          <button
-            className="btn btn-success mt-3 align-self-center"
-            onClick={openModal}
-            style={{ width: "250px", padding: "1rem", margin: "1rem" }}
-          >
-            Agregar nuevo producto
-          </button>
-          <button
-            className="btn btn-primary mt-3 align-self-center"
-            disabled={!hasChanges}
-            onClick={saveChanges}
-            style={{ width: "250px", padding: "1rem", margin: "2rem" }}
-          >
-            Guardar Cambios
-          </button>
-        </div>
-        <div>
-          {/* POST METHOD MODAL */}
-          <Modal
-            show={showModal}
-            onHide={closeModal}
-            backdrop="static"
-            keyboard={false}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Agregar nuevo producto</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="brand" className="form-label">
-                    Marca
-                  </label>
-                  <input
-                    type="text"
-                    id="brand"
-                    name="brand"
-                    className="form-control"
-                    value={newProduct.brand}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="model" className="form-label">
-                    Modelo
-                  </label>
-                  <input
-                    type="text"
-                    id="model"
-                    name="model"
-                    className="form-control"
-                    value={newProduct.model}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="price" className="form-label">
-                    Precio
-                  </label>
-                  <input
-                    type="number"
-                    id="price"
-                    name="price"
-                    className="form-control"
-                    value={newProduct.price}
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="image" className="form-label">
-                    URL de la imagen
-                  </label>
-                  <input
-                    type="text"
-                    id="image"
-                    name="image"
-                    className="form-control"
-                    value={newProduct.image}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              </form>
-            </Modal.Body>
-            <Modal.Footer>
+            <div className="d-flex flex-column justify-content-center align-self-center">
+              <button
+                className="btn btn-success mt-3 align-self-center"
+                onClick={openModal}
+                style={{ width: "250px", padding: "1rem", margin: "1rem" }}
+              >
+                Agregar nuevo producto
+              </button>
+              <button
+                className="btn btn-primary mt-3 align-self-center"
+                disabled={!hasChanges}
+                onClick={saveChanges}
+                style={{ width: "250px", padding: "1rem", margin: "2rem" }}
+              >
+                Guardar Cambios
+              </button>
+            </div>
+            <div>
+              {/* POST METHOD MODAL */}
+              <Modal
+                show={showModal}
+                onHide={closeModal}
+                backdrop="static"
+                keyboard={false}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Agregar nuevo producto</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <form onSubmit={addNewProduct}>
+                    <div className="mb-3">
+                      <label htmlFor="brand" className="form-label">
+                        Marca
+                      </label>
+                      <input
+                        type="text"
+                        id="brand"
+                        name="brand"
+                        className="form-control"
+                        value={newProduct.brand}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="model" className="form-label">
+                        Modelo
+                      </label>
+                      <input
+                        type="text"
+                        id="model"
+                        name="model"
+                        className="form-control"
+                        value={newProduct.model}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="price" className="form-label">
+                        Precio
+                      </label>
+                      <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        className="form-control"
+                        value={newProduct.price}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="image" className="form-label">
+                        URL de la imagen
+                      </label>
+                      <input
+                        type="text"
+                        id="image"
+                        name="image"
+                        className="form-control"
+                        value={newProduct.image}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center gap-3">
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={closeModal}
+                      >
+                        Cancelar
+                      </button>
+                      <button type="submit" className="btn btn-success">
+                        Agregar
+                      </button>
+                    </div>
+                  </form>
+                </Modal.Body>
+                {/* <Modal.Footer>
               <Button variant="secondary" onClick={closeModal}>
                 Cancelar
               </Button>
               <Button variant="primary" onClick={addNewProduct}>
                 Agregar
               </Button>
-            </Modal.Footer>
-          </Modal>
-          {/* DELETE METHOD MODAL */}
-          <Modal
-            show={showDeleteModal}
-            onHide={closeDeleteModal}
-            backdrop="static"
-            keyboard={false}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title>Eliminar producto</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <p>Este producto se elminará para siempre.</p>
-              <p>¿Está seguro que desea continuar?</p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={closeDeleteModal}>
-                Cancelar
-              </Button>
-              <Button variant="danger" onClick={deleteProduct}>
-                Eliminar
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </div>
+            </Modal.Footer> */}
+              </Modal>
+              {/* DELETE METHOD MODAL */}
+              <Modal
+                show={showDeleteModal}
+                onHide={closeDeleteModal}
+                backdrop="static"
+                keyboard={false}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Eliminar producto</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>Este producto se elminará para siempre.</p>
+                  <p>¿Está seguro que desea continuar?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={closeDeleteModal}>
+                    Cancelar
+                  </Button>
+                  <Button variant="danger" onClick={deleteProduct}>
+                    Eliminar
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </div>
+          </>
+        )}
       </div>
       <Footer />
     </>

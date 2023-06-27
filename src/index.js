@@ -5,6 +5,7 @@ import App from "./App";
 import { ThemeContextProvider } from "./contexts/ThemeContext";
 import AuthContextProvider from "./contexts/AuthContext";
 import ShoppingCartProvider from "./contexts/ShoppingCartContext";
+import LoaderContextProvider from "./contexts/LoaderContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -12,7 +13,9 @@ root.render(
     <AuthContextProvider>
       <ShoppingCartProvider>
         <ThemeContextProvider>
-          <App />
+          <LoaderContextProvider>
+            <App />
+          </LoaderContextProvider>
         </ThemeContextProvider>
       </ShoppingCartProvider>
     </AuthContextProvider>

@@ -2,22 +2,26 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getDatabase, ref, onValue, update } from "firebase/database";
 import { Modal, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+
 import "../ShowOrders/ShowOrders.css";
+
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { LoaderContext } from "../../contexts/LoaderContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
-import { toast } from "react-toastify";
+import Spinner from "../ui/Spinner";
 
 const ShowOrders = () => {
   const [userOrders, setUserOrders] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
+  const { toggleLoading, isLoading } = useContext(LoaderContext);
 
   useEffect(() => {
-    setIsLoading(true);
+    toggleLoading(true);
     const database = getDatabase();
     const ordersRef = ref(database, "orders");
 
@@ -35,7 +39,7 @@ const ShowOrders = () => {
         });
       });
       setUserOrders(orders);
-      setIsLoading(false);
+      toggleLoading(false);
     });
 
     return () => {
@@ -85,19 +89,21 @@ const ShowOrders = () => {
     <>
       <NavBar />
       <div className="">
+        <div className="d-flex justify-content-center mt-4">
+          <h2>Gestión de Pedidos</h2>
+        </div>
+        <hr />
         {isLoading ? (
-          <h2 className="d-flex justify-content-center">Cargando...</h2>
+          <div className="d-flex justify-content-center mb-5">
+            <Spinner />
+          </div>
         ) : (
           <>
-            <div className="d-flex justify-content-center mt-4">
-              <h2>Gestión de Pedidos</h2>
-            </div>
-            <hr />
             <div className="container">
               {filteredOrders.length === 0 ? (
                 <>
                   <div className="d-flex justify-content-center">
-                    <h4>No se realizó ningún pedido pendiente o despachado</h4>
+                    <h4>No se realizó ningún pedido</h4>
                   </div>
                   <div className="d-flex justify-content-center m-2">
                     <button

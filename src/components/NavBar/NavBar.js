@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 import { FaClipboardList, FaShoppingCart } from "react-icons/fa";
 import { RiLoginBoxFill, RiLogoutBoxFill } from "react-icons/ri";
+import { CgDanger } from "react-icons/cg";
 
 import "./NavBar.css";
 
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { UserContext } from "../../contexts/AuthContext";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
-import { Dropdown } from "react-bootstrap";
 
 const NavBar = () => {
   const { getItemAmount } = useContext(CartContext);
@@ -49,10 +50,13 @@ const NavBar = () => {
               <span className="d-flex align-self-center align-text-center text-white">
                 Hola, {user.email.split("@")[0]}!
               </span>
-              {user.role === "admin" && (
+              {user.role === "admin" ? (
                 <>
                   <Dropdown>
-                    <Dropdown.Toggle variant="dark">
+                    <Dropdown.Toggle
+                      variant="outline-success"
+                      className="d-flex p-1 align-self-center justify-content-center text-align-center mt-3"
+                    >
                       Administrador
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -65,6 +69,36 @@ const NavBar = () => {
                     </Dropdown.Menu>
                   </Dropdown>
                 </>
+              ) : user.role === "sysadmin" ? (
+                <>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="outline-success"
+                      className="d-flex p-1 align-self-center justify-content-center text-align-center mt-3"
+                    >
+                      SysAdmin
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item as={Link} to="/userpanel">
+                        Panel de usuarios
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </>
+              ) : (
+                user.role === "disabled" && (
+                  <Dropdown>
+                    <Dropdown.Toggle variant="danger" className="fs-5">
+                      <CgDanger />
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        Esta cuenta está deshabilitada. Contáctese con el dueño
+                        del sitio para más información.
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )
               )}
               <button className="d-flex" onClick={goShowOrders}>
                 <h2 className="px-1 mx-1">

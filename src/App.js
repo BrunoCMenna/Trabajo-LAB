@@ -12,7 +12,6 @@ import Login from "./components/Login/Login";
 import NotFound from "./components/routes/NotFound";
 import Shop from "./components/Shop/Shop";
 import Cart from "./components/Cart/Cart";
-import Product from "./components/Product/Product";
 import SignIn from "./components/SignIn/SignIn";
 import UserPanel from "./components/UserPanel/UserPanel";
 import Orders from "./components/Orders/Orders";
@@ -20,14 +19,18 @@ import ShowOrders from "./components/ShowOrders/ShowOrders";
 import ProductPanel from "./components/ProductPanel/ProductPanel";
 import ProtectedAdmin from "./components/routes/ProtectedAdmin";
 import OrderPanel from "./components/OrderPanel/OrderPanel";
+import ProtectedSysAdmin from "./components/routes/ProtectedSysAdmin";
+import { LoaderContext } from "./contexts/LoaderContext";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
+  const { toggleLoading } = useContext(LoaderContext);
   const [products, setProducts] = useState([]);
   const PRODUCTS_ENDPOINT =
     "https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products";
 
   useEffect(() => {
+    toggleLoading(true);
     fetch(PRODUCTS_ENDPOINT, {
       headers: {
         accept: "application/json",
@@ -39,10 +42,12 @@ const App = () => {
           ...product,
         }));
         setProducts(productsMapped);
+        toggleLoading(false);
         console.log("Productos cargados en App", productsMapped);
       })
       .catch((error) => {
         console.log(error);
+        toggleLoading(false);
       });
   }, []);
 
@@ -68,10 +73,6 @@ const App = () => {
       element: <Cart products={products} />,
     },
     {
-      path: "/Product",
-      element: <Product products={products} />,
-    },
-    {
       path: "/signin",
       element: (
         <ProtectedIfUserIsLogged>
@@ -80,15 +81,11 @@ const App = () => {
       ),
     },
     {
-      path: "/Product/:id",
-      element: <Product products={products} />,
-    },
-    {
-      path: "/panel",
+      path: "/userpanel",
       element: (
-        <ProtectedAdmin>
+        <ProtectedSysAdmin>
           <UserPanel />
-        </ProtectedAdmin>
+        </ProtectedSysAdmin>
       ),
     },
     {
