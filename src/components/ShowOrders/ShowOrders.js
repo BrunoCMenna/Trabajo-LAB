@@ -7,16 +7,18 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
+import { LoaderContext } from "../../contexts/LoaderContext";
+import Spinner from "../ui/Spinner";
 
 const ShowOrders = () => {
   const [userOrders, setUserOrders] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
+  const { isLoading, toggleLoading } = useContext(LoaderContext);
 
   useEffect(() => {
-    setIsLoading(true);
+    toggleLoading(true);
     const database = getDatabase();
     const ordersRef = ref(database, `orders/${user.uid}`);
 
@@ -28,7 +30,7 @@ const ShowOrders = () => {
         orders.push(order);
       });
       setUserOrders(orders);
-      setIsLoading(false);
+      toggleLoading(false);
     });
 
     return () => {
@@ -44,14 +46,18 @@ const ShowOrders = () => {
     <>
       <NavBar />
       <div className="">
+        <div className="d-flex justify-content-center mt-4">
+          <h2>Mis pedidos</h2>
+        </div>
+        <hr />
         {isLoading ? (
-          <h2 className="d-flex justify-content-center">Cargando...</h2>
+          <>
+            <div className="d-flex justify-content-center mb-5">
+              <Spinner />
+            </div>
+          </>
         ) : (
           <>
-            <div className="d-flex justify-content-center mt-4">
-              <h2>Mis pedidos</h2>
-            </div>
-            <hr />
             <div className="container">
               {userOrders.length === 0 ? (
                 <>

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -11,12 +10,7 @@ import { CartContext } from "../../contexts/ShoppingCartContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 const PhoneItem = ({ id, brand, model, price, image, isActive }) => {
-  const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
-  const goProduct = () => {
-    navigation(`/Product/${id}`);
-  };
-
   const { addToCart } = useContext(CartContext);
   const addToCartAction = () => {
     addToCart(id);
@@ -28,7 +22,7 @@ const PhoneItem = ({ id, brand, model, price, image, isActive }) => {
       <PhoneCard>
         <div className="phone-container">
           <div className={`${theme === "dark" && "phone-item-dark"}`}>
-            <button onClick={goProduct}>
+            <button>
               <img src={image} alt="" />
             </button>
             <hr />

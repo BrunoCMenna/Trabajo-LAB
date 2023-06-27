@@ -1,21 +1,27 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getDatabase, ref, onValue, update } from "firebase/database";
+import { Modal, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 import "../ShowOrders/ShowOrders.css";
+
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { LoaderContext } from "../../contexts/LoaderContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
-import { toast } from "react-toastify";
+import Spinner from "../ui/Spinner";
 
 const ShowOrders = () => {
   const [userOrders, setUserOrders] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showModal, setShowModal] = useState(false);
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
+  const { toggleLoading, isLoading } = useContext(LoaderContext);
 
   useEffect(() => {
-    setIsLoading(true);
+    toggleLoading(true);
     const database = getDatabase();
     const ordersRef = ref(database, "orders");
 
@@ -33,7 +39,7 @@ const ShowOrders = () => {
         });
       });
       setUserOrders(orders);
-      setIsLoading(false);
+      toggleLoading(false);
     });
 
     return () => {
@@ -46,6 +52,15 @@ const ShowOrders = () => {
   };
 
   const handleStateChange = (userId, newState, orderId) => {
+    setSelectedOrder({ userId, orderId, newState });
+    if (newState === "Entregado") {
+      setShowModal(true);
+    } else {
+      updateOrderState(userId, newState, orderId);
+    }
+  };
+
+  const updateOrderState = (userId, newState, orderId) => {
     const userRef = ref(getDatabase(), `orders/${userId}/${orderId}`);
 
     update(userRef, { state: newState })
@@ -58,20 +73,34 @@ const ShowOrders = () => {
       });
   };
 
+  const confirmStateChange = () => {
+    const { userId, orderId, newState } = selectedOrder;
+    updateOrderState(userId, newState, orderId);
+    setShowModal(false);
+  };
+
+  const filterOrders = (orders) => {
+    return orders.filter((order) => order.state !== "Entregado");
+  };
+
+  const filteredOrders = filterOrders(userOrders);
+
   return (
     <>
       <NavBar />
       <div className="">
+        <div className="d-flex justify-content-center mt-4">
+          <h2>Gestión de Pedidos</h2>
+        </div>
+        <hr />
         {isLoading ? (
-          <h2 className="d-flex justify-content-center">Cargando...</h2>
+          <div className="d-flex justify-content-center mb-5">
+            <Spinner />
+          </div>
         ) : (
           <>
-            <div className="d-flex justify-content-center mt-4">
-              <h2>Gestión de Pedidos</h2>
-            </div>
-            <hr />
             <div className="container">
-              {userOrders.length === 0 ? (
+              {filteredOrders.length === 0 ? (
                 <>
                   <div className="d-flex justify-content-center">
                     <h4>No se realizó ningún pedido</h4>
@@ -121,7 +150,7 @@ const ShowOrders = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {userOrders.map((order, index) => (
+                      {filteredOrders.map((order, index) => (
                         <tr key={index}>
                           <td>{order.name}</td>
                           <td>{order.phoneNumber}</td>
@@ -176,20 +205,24 @@ const ShowOrders = () => {
                           </td>
                           <td className="px-3">${order.totalPrice}</td>
                           <td>
-                            <select
-                              value={order.state}
-                              onChange={(e) =>
-                                handleStateChange(
-                                  order.userId,
-                                  e.target.value,
-                                  order.orderId
-                                )
-                              }
-                            >
-                              <option value="Pendiente">Pendiente</option>
-                              <option value="Despachado">Despachado</option>
-                              <option value="Entregado">Entregado</option>
-                            </select>
+                            {order.state !== "Entregado" ? (
+                              <select
+                                value={order.state}
+                                onChange={(e) =>
+                                  handleStateChange(
+                                    order.userId,
+                                    e.target.value,
+                                    order.orderId
+                                  )
+                                }
+                              >
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Despachado">Despachado</option>
+                                <option value="Entregado">Entregado</option>
+                              </select>
+                            ) : (
+                              "Entregado"
+                            )}
                           </td>
                         </tr>
                       ))}
@@ -201,6 +234,25 @@ const ShowOrders = () => {
           </>
         )}
       </div>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar cambio de estado</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>El pedido cambiará a estado "Entregado" y se archivará.</p>
+          <span className="d-flex justify-content-center">
+            ¿Desea continuar?
+          </span>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={confirmStateChange}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Footer />
     </>
   );
