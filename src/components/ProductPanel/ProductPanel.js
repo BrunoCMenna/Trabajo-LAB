@@ -20,7 +20,9 @@ const ProductPanel = ({ products }) => {
     image: "",
     isActive: true,
   });
+  const [isUpdating, setIsUpdating] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
+  const [modifiedProductIds, setModifiedProductIds] = useState([]);
   const { theme } = useContext(ThemeContext);
   const { isLoading } = useContext(LoaderContext);
 
@@ -39,6 +41,10 @@ const ProductPanel = ({ products }) => {
         return product;
       })
     );
+
+    if (!modifiedProductIds.includes(productId)) {
+      setModifiedProductIds((prevIds) => [...prevIds, productId]);
+    }
     setHasChanges(true);
   };
 
@@ -57,6 +63,9 @@ const ProductPanel = ({ products }) => {
         return product;
       })
     );
+    if (!modifiedProductIds.includes(productId)) {
+      setModifiedProductIds((prevIds) => [...prevIds, productId]);
+    }
   };
 
   const openModal = () => {
@@ -124,9 +133,11 @@ const ProductPanel = ({ products }) => {
     closeDeleteModal();
   };
 
-  const saveChanges = () => {
+  const saveChanges = async () => {
     setHasChanges(false);
-    editedProducts.forEach(async (product) => {
+    setIsUpdating(true);
+    for (const productId of modifiedProductIds) {
+      const product = editedProducts.find((p) => p.id === productId);
       try {
         const response = await fetch(
           `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${product.id}`,
@@ -143,7 +154,8 @@ const ProductPanel = ({ products }) => {
       } catch (error) {
         console.error("Error al actualizar el producto:", error);
       }
-    });
+    }
+    setIsUpdating(false);
     toast.success("Se han guardado los cambios");
   };
 
@@ -185,6 +197,7 @@ const ProductPanel = ({ products }) => {
                           onChange={(e) =>
                             handleInputChangeOnExistingProduct(e, product.id)
                           }
+                          disabled={isUpdating}
                         />
                       </p>
                       <p className="card-text">
@@ -197,6 +210,7 @@ const ProductPanel = ({ products }) => {
                           onChange={(e) =>
                             handleInputChangeOnExistingProduct(e, product.id)
                           }
+                          disabled={isUpdating}
                         />
                       </p>
                       <p className="card-text">
@@ -209,6 +223,7 @@ const ProductPanel = ({ products }) => {
                           onChange={(e) =>
                             handleInputChangeOnExistingProduct(e, product.id)
                           }
+                          disabled={isUpdating}
                         />
                       </p>
                       <p className="card-text">
@@ -222,12 +237,14 @@ const ProductPanel = ({ products }) => {
                         onClick={(e) =>
                           handleStatusChange(product.id, !product.isActive)
                         }
+                        disabled={isUpdating}
                       >
                         {product.isActive ? "Desenlistar" : "Listar"}
                       </button>
                       <button
                         className="mx-auto btn btn-sm btn-danger mt-2"
                         onClick={() => openDeleteModal(product.id)}
+                        disabled={isUpdating}
                       >
                         Eliminar producto
                       </button>
@@ -240,6 +257,7 @@ const ProductPanel = ({ products }) => {
               <button
                 className="btn btn-success mt-3 align-self-center"
                 onClick={openModal}
+                disabled={isUpdating}
                 style={{ width: "250px", padding: "1rem", margin: "1rem" }}
               >
                 Agregar nuevo producto
@@ -252,6 +270,11 @@ const ProductPanel = ({ products }) => {
               >
                 Guardar Cambios
               </button>
+              {isUpdating && (
+                <div className="d-flex justify-content-center align-self-center m-4">
+                  <Spinner />
+                </div>
+              )}
             </div>
             <div>
               {/* POST METHOD MODAL */}
