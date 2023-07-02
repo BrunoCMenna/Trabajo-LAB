@@ -50,6 +50,7 @@ const Orders = ({ products }) => {
     e.preventDefault();
     const productsObj = createProductsObject(cartItems);
     const newOrder = {
+      email: user.email,
       name: name,
       phoneNumber: phone,
       province: province,

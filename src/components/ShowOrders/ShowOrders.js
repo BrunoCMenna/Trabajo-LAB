@@ -84,28 +84,28 @@ const ShowOrders = () => {
                         <th scope="col" className="">
                           Nombre y Apellido
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Teléfono
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Provincia
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Localidad
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Código Postal
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Dirección
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Estado
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Productos
                         </th>
-                        <th scope="col" className="px-2">
+                        <th scope="col" className="px-3">
                           Total del pedido
                         </th>
                       </tr>
@@ -113,14 +113,14 @@ const ShowOrders = () => {
                     <tbody>
                       {userOrders.map((order, index) => (
                         <tr key={index}>
-                          <td>{order.name}</td>
-                          <td>{order.phoneNumber}</td>
-                          <td>{order.province}</td>
-                          <td>{order.city}</td>
-                          <td>{order.zipcode}</td>
-                          <td>{order.address}</td>
-                          <td>{order.state}</td>
-                          <td>
+                          <td className="px-3">{order.name}</td>
+                          <td className="px-3">{order.phoneNumber}</td>
+                          <td className="px-3">{order.province}</td>
+                          <td className="px-3">{order.city}</td>
+                          <td className="px-3">{order.zipcode}</td>
+                          <td className="px-3">{order.address}</td>
+                          <td className="px-3">{order.state}</td>
+                          <td className="px-3">
                             <ul className="list-unstyled d-flex">
                               {order.products.map((product, productIndex) => (
                                 <li

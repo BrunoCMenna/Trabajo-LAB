@@ -32,8 +32,8 @@ const ShoppingCartProvider = ({ children }) => {
 
   const getDefaultCart = (products) => {
     let cart = {};
-    for (let i = 1; i <= products.length; i++) {
-      cart[i] = 0;
+    for (const product of products) {
+      cart[product.id] = 0;
     }
     return cart;
     //Devuelve un objeto "cart" que su atributo va a coincidir con la ID de cada uno de nuestros objetos PHONES.

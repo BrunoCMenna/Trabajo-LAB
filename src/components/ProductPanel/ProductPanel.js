@@ -227,6 +227,19 @@ const ProductPanel = ({ products }) => {
                         />
                       </p>
                       <p className="card-text">
+                        Imagen:
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="image"
+                          value={product.image}
+                          onChange={(e) =>
+                            handleInputChangeOnExistingProduct(e, product.id)
+                          }
+                          disabled={isUpdating}
+                        />
+                      </p>
+                      <p className="card-text">
                         Estado:{" "}
                         {product.isActive ? "Disponible" : "No disponible"}
                       </p>

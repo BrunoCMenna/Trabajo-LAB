@@ -34,7 +34,6 @@ const AuthContextProvider = ({ children }) => {
       toast.error("Email o contraseña son incorrectas");
       console.log(error);
     });
-    console.log(user);
   };
 
   const logOutUser = () => {
@@ -74,7 +73,6 @@ const AuthContextProvider = ({ children }) => {
         role: role,
       };
       setUser(userData);
-      console.log(userData);
       localStorage.setItem("user", JSON.stringify(userData));
     });
   };
