@@ -27,7 +27,7 @@ const App = () => {
   const { toggleLoading } = useContext(LoaderContext);
   const [products, setProducts] = useState([]);
   const PRODUCTS_ENDPOINT =
-    "https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products";
+    "http://www.ecommercecelulares.somee.com/api/Product/GetProducts";
 
   useEffect(() => {
     toggleLoading(true);
