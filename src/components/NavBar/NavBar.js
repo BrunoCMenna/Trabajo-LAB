@@ -39,7 +39,11 @@ const NavBar = () => {
       <nav className="navbar px-4">
         <div className="enterprise">
           <button type="button" onClick={goShop}>
-            <div className="flex-grow-1 text-white">TECNO ROSARIO</div>
+            <img
+              src="https://cdn-icons-png.flaticon.com/256/1094/1094764.png"
+              alt="logo"
+              height={60}
+            />
           </button>
           <ToggleTheme />
         </div>

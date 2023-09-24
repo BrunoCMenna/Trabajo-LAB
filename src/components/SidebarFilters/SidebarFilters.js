@@ -5,54 +5,48 @@ import { useContext } from "react";
 
 const SidebarFilters = ({ phones, onBrandFilterChange }) => {
   const { theme } = useContext(ThemeContext);
-  //funcion de contador de celulres que comparten marca. Devuelve un objeto con "Marca: numCantidad"
+
   const getSameBrandPhones = () => {
-    const SameBrandPhones = {};
+    const sameBrandPhones = {};
     phones.forEach((p) => {
-      if (SameBrandPhones[p.brand]) {
-        SameBrandPhones[p.brand]++;
+      if (sameBrandPhones[p.brand]) {
+        sameBrandPhones[p.brand]++;
       } else {
-        SameBrandPhones[p.brand] = 1;
+        sameBrandPhones[p.brand] = 1;
       }
     });
-    return SameBrandPhones;
+    return sameBrandPhones;
   };
-  
+
   const changeBrandFilterHandler = (e) => {
     onBrandFilterChange(e.currentTarget.value);
   };
 
   return (
-    <div className="filters-container">
-      <div className= {`${theme === "dark" && "sidebar-dark"}`}>
-        <h3>Filtrar por</h3>
+    <div className={`filters-container ${theme === "dark" && "sidebar-dark"}`}>
+      <h3>Filtrar por</h3>
+      <button
+        className={`sb-button ${theme === "dark" && "sb-button-dark"}`}
+        type="button"
+        value=""
+        onClick={changeBrandFilterHandler}
+      >
+        Todas las marcas
+      </button>
+
+      {Object.entries(getSameBrandPhones()).map(([brand, counter]) => (
+        <div className="filters-brands" key={brand}>
           <button
-            className="sb-button"
+            className={`sb-button ${theme === "dark" && "sb-button-dark"}`}
             type="button"
-            value=""
+            value={brand}
             onClick={changeBrandFilterHandler}
           >
-          <div className= {`${theme === "dark" && "sb-button-dark"}`}>
-            Todas las marcas
-          </div>
+            {brand}
+            <span> ({counter})</span>
           </button>
-          
-      
-        {Object.entries(getSameBrandPhones()).map(([brand, counter]) => (
-          <div className="filters-brands">
-            <button
-              className="sb-button"
-              type="button"
-              value={brand}
-              onClick={changeBrandFilterHandler}>
-            <div className= {`${theme === "dark" && "button-dark"}`}>
-              {brand}
-              <span> ({counter})</span>
-            </div>
-            </button>
-          </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };

@@ -69,6 +69,11 @@ const Cart = ({ products }) => {
       ) : (
         <div className="d-flex flex-column justify-content-center align-items-center p-5">
           <h3>No hay productos en el carrito</h3>
+          <img
+            src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"
+            alt="Carrito Vacio Imagen"
+            height={200}
+          />
           <Button onClick={goShop}>Ir a la tienda</Button>
         </div>
       )}
