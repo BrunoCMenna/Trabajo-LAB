@@ -6,13 +6,12 @@
   align-items: center;
   text-align: center;
   width: 30%;
-  background-color: white;
-  border: 3px solid purple;
   border-radius: 10px;
+  height: min-content;
+  background-color: white;
 }
 
 .phone-card-dark {
-  background-color: #020c1a;
   color: white;
   border-radius: 10px;
   width: 100%;
@@ -33,11 +32,10 @@ button {
 }
 
 .phone-card-container:hover {
-  transition: 0.3s;
+  transition: 0.1s;
   color: black;
   transform: translate(-0.2rem);
-  box-shadow: 0.5rem 0.75rem 1.5rem #bbbbbb;
-  background-color: white;
+  box-shadow: 10px 10px 10px #bbbbbb;
 }
 
 @font-face {

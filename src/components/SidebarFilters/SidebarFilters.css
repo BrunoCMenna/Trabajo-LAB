@@ -17,7 +17,7 @@
 }
 
 .sb-button-dark {
-  background-color: #020c1a;
+  background-color: #303030;
   color: white;
 }
 
@@ -29,16 +29,16 @@
 }
 
 .sb-button-dark:hover {
-  background-color: #061e3f;
+  background-color: #757575;
   border-color: #999;
 }
 
 .button-dark {
-  background-color: #020c1a;
+  background-color: #303030;
   color: white;
 }
 
 .sidebar-dark {
-  background-color: #020c1a;
+  background-color: #303030;
   color: white;
 }

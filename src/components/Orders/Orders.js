@@ -7,6 +7,7 @@ import "../Orders/Orders.css";
 import NavBar from "../NavBar/NavBar";
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { UserContext } from "../../contexts/AuthContext";
+import { ThemeContext } from "../../contexts/ThemeContext";
 import { toast } from "react-toastify";
 import Footer from "../Footer/Footer";
 
@@ -18,6 +19,7 @@ const Orders = ({ products }) => {
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const { user } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
   const { cartItems, getTotalCartAmount, getDefaultCart, setCartItems } =
     useContext(CartContext);
   const TotalCartAmount = getTotalCartAmount();
@@ -97,7 +99,11 @@ const Orders = ({ products }) => {
         </>
       ) : (
         <>
-          <div className="body-container d-flex justify-content-center">
+          <div
+            className={`d-flex justify-content-center ${
+              theme === "dark" && "body-container-dark"
+            }`}
+          >
             <div className="form-container">
               <hr />
               <form onSubmit={handleSubmit} className="">

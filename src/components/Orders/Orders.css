@@ -10,3 +10,24 @@
 .product-img {
   width: 80px;
 }
+
+.body-container-dark {
+  background-color: #303030;
+  color: white;
+}
+
+.body-container-dark form input,
+.body-container-dark form select {
+  background-color: #343434;
+  border-color: #505050;
+  color: white;
+}
+
+.body-container-dark form input:focus {
+  background-color: #242424;
+  color: white;
+}
+
+.body-container-dark form select:default {
+  background-color: red;
+}

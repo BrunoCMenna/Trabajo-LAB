@@ -126,7 +126,7 @@ const App = () => {
     },
   ]);
   return (
-    <div className={`${theme === "dark" && "dark-theme"}`}>
+    <div>
       <ToastContainer
         position="top-center"
         autoClose={1000}
