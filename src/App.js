@@ -27,7 +27,7 @@ const App = () => {
   const { toggleLoading } = useContext(LoaderContext);
   const [products, setProducts] = useState([]);
   const PRODUCTS_ENDPOINT =
-    "http://www.ecommercecelulares.somee.com/api/Product/GetProducts";
+    "https://localhost:44377/api/Product/GetProducts";
 
   useEffect(() => {
     toggleLoading(true);

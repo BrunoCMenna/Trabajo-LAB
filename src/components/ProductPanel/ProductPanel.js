@@ -16,8 +16,12 @@ const ProductPanel = ({ products }) => {
   const [newProduct, setNewProduct] = useState({
     brand: "",
     model: "",
+    storage: "",
+    ram: "",
+    description: "",
     price: "",
     image: "",
+    inStock: "",
     isActive: true,
   });
   const [isUpdating, setIsUpdating] = useState(false);
@@ -82,8 +86,12 @@ const ProductPanel = ({ products }) => {
     setNewProduct({
       brand: "",
       model: "",
+      storage: "",
+      ram: "",
+      description: "",
       price: "",
       image: "",
+      inStock: "",
       isActive: true,
     });
   };
@@ -94,8 +102,9 @@ const ProductPanel = ({ products }) => {
   };
 
   const addNewProduct = (e) => {
+    debugger
     e.preventDefault();
-    fetch("http://www.ecommercecelulares.somee.com/api/Product/AddNewProduct", {
+    fetch("https://localhost:44377/api/Product/AddNewProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -207,6 +216,19 @@ const ProductPanel = ({ products }) => {
                           className="form-control"
                           name="model"
                           value={product.model}
+                          onChange={(e) =>
+                            handleInputChangeOnExistingProduct(e, product.id)
+                          }
+                          disabled={isUpdating}
+                        />
+                      </p>
+                      <p className="card-text">
+                        Almacenamiento:{" "}
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="storage"
+                          value={product.storage}
                           onChange={(e) =>
                             handleInputChangeOnExistingProduct(e, product.id)
                           }
@@ -326,6 +348,62 @@ const ProductPanel = ({ products }) => {
                         name="model"
                         className="form-control"
                         value={newProduct.model}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="storage" className="form-label">
+                        Almacenamiento
+                      </label>
+                      <input
+                        type="text"
+                        id="storage"
+                        name="storage"
+                        className="form-control"
+                        value={newProduct.storage}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="ram" className="form-label">
+                        Ram
+                      </label>
+                      <input
+                        type="text"
+                        id="ram"
+                        name="ram"
+                        className="form-control"
+                        value={newProduct.ram}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="description" className="form-label">
+                        Descripción
+                      </label>
+                      <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        className="form-control"
+                        value={newProduct.description}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="inStock" className="form-label">
+                        Stock
+                      </label>
+                      <input
+                        type="text"
+                        id="inStock"
+                        name="inStock"
+                        className="form-control"
+                        value={newProduct.inStock}
                         onChange={handleInputChange}
                         required
                       />
