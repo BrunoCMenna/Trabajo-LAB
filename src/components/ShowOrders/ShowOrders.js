@@ -45,8 +45,8 @@ const ShowOrders = () => {
   return (
     <>
       <NavBar />
-      <div className="">
-        <div className="d-flex justify-content-center mt-4">
+      <div className={`${theme === "dark" && "container-dark pb-2"}`}>
+        <div className="d-flex justify-content-center pt-5">
           <h2>Mis pedidos</h2>
         </div>
         <hr />

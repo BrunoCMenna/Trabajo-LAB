@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+import "../ProductPanel/ProductPanel.css";
+
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -160,7 +162,7 @@ const ProductPanel = ({ products }) => {
   };
 
   return (
-    <>
+    <div className={`${theme === "dark" && "container-dark"}`}>
       <NavBar />
       <div className="container mt-4 d-flex flex-column">
         <h2 className="d-flex justify-content-center">
@@ -409,7 +411,7 @@ const ProductPanel = ({ products }) => {
         )}
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

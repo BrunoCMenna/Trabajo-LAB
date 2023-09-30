@@ -73,7 +73,11 @@ const Cart = ({ products }) => {
           </div>
         </div>
       ) : (
-        <div className="d-flex flex-column justify-content-center align-items-center p-5">
+        <div
+          className={` d-flex flex-column justify-content-center align-items-center p-5 ${
+            theme === "dark" && "emptyCart-dark"
+          }`}
+        >
           <h3>No hay productos en el carrito</h3>
           <img
             src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"

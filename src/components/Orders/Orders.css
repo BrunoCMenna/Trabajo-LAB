@@ -27,7 +27,3 @@
   background-color: #242424;
   color: white;
 }
-
-.body-container-dark form select:default {
-  background-color: red;
-}

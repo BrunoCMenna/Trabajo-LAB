@@ -104,8 +104,7 @@ const Orders = ({ products }) => {
               theme === "dark" && "body-container-dark"
             }`}
           >
-            <div className="form-container">
-              <hr />
+            <div className="form-container mt-4 mb-4">
               <form onSubmit={handleSubmit} className="">
                 <h4>Información:</h4>
                 <div className="mb-3">
@@ -214,8 +213,7 @@ const Orders = ({ products }) => {
                 </button>
               </form>
             </div>
-            <div className="total">
-              <hr />
+            <div className="total mt-4">
               <h4>Detalle:</h4>
               {products.map((product) => {
                 if (cartItems && cartItems[product.id] !== 0) {

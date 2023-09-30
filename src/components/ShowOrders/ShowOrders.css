@@ -19,7 +19,8 @@
   width: 100px;
 }
 
-.table-responsive-dark {
-  background-color: #020c1a;
+.table-responsive-dark,
+.container-dark {
+  background-color: #303030;
   color: white;
 }
