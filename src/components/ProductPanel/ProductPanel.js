@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Button, Modal } from "react-bootstrap";
 import { LoaderContext } from "../../contexts/LoaderContext";
+import { UserContext } from "../../contexts/AuthContext";
 import Spinner from "../ui/Spinner";
 
 const ProductPanel = ({ products }) => {
@@ -16,13 +17,18 @@ const ProductPanel = ({ products }) => {
   const [newProduct, setNewProduct] = useState({
     brand: "",
     model: "",
+    storage: "",
+    ram: "",
+    description: "",
     price: "",
     image: "",
+    inStock: "",
     isActive: true,
   });
   const [isUpdating, setIsUpdating] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [modifiedProductIds, setModifiedProductIds] = useState([]);
+  const { token } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const { isLoading } = useContext(LoaderContext);
 
@@ -70,11 +76,13 @@ const ProductPanel = ({ products }) => {
 
   const openModal = () => {
     setShowModal(true);
+    console.log(token);
   };
 
   const openDeleteModal = (productId) => {
     setSelectedProductId(productId);
     setShowDeleteModal(true);
+    console.log(token);
   };
 
   const closeModal = () => {
@@ -82,8 +90,12 @@ const ProductPanel = ({ products }) => {
     setNewProduct({
       brand: "",
       model: "",
+      storage: "",
+      ram: "",
+      description: "",
       price: "",
       image: "",
+      inStock: "",
       isActive: true,
     });
   };
@@ -94,11 +106,13 @@ const ProductPanel = ({ products }) => {
   };
 
   const addNewProduct = (e) => {
+    //debugger
     e.preventDefault();
-    fetch("http://www.ecommercecelulares.somee.com/api/Product/AddNewProduct", {
+    fetch("https://localhost:44377/api/Product/AddNewProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(newProduct),
     })
@@ -118,6 +132,10 @@ const ProductPanel = ({ products }) => {
       `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${selectedProductId}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
       }
     )
       .then((response) => response.json())
@@ -140,11 +158,12 @@ const ProductPanel = ({ products }) => {
       const product = editedProducts.find((p) => p.id === productId);
       try {
         const response = await fetch(
-          `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${product.id}`,
+          `https://localhost:44377/api/Product/Updateproduct/${product.id}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(product),
           }
@@ -207,6 +226,19 @@ const ProductPanel = ({ products }) => {
                           className="form-control"
                           name="model"
                           value={product.model}
+                          onChange={(e) =>
+                            handleInputChangeOnExistingProduct(e, product.id)
+                          }
+                          disabled={isUpdating}
+                        />
+                      </p>
+                      <p className="card-text">
+                        Almacenamiento:{" "}
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="storage"
+                          value={product.storage}
                           onChange={(e) =>
                             handleInputChangeOnExistingProduct(e, product.id)
                           }
@@ -326,6 +358,62 @@ const ProductPanel = ({ products }) => {
                         name="model"
                         className="form-control"
                         value={newProduct.model}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="storage" className="form-label">
+                        Almacenamiento
+                      </label>
+                      <input
+                        type="text"
+                        id="storage"
+                        name="storage"
+                        className="form-control"
+                        value={newProduct.storage}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="ram" className="form-label">
+                        Ram
+                      </label>
+                      <input
+                        type="text"
+                        id="ram"
+                        name="ram"
+                        className="form-control"
+                        value={newProduct.ram}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="description" className="form-label">
+                        Descripción
+                      </label>
+                      <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        className="form-control"
+                        value={newProduct.description}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="inStock" className="form-label">
+                        Stock
+                      </label>
+                      <input
+                        type="text"
+                        id="inStock"
+                        name="inStock"
+                        className="form-control"
+                        value={newProduct.inStock}
                         onChange={handleInputChange}
                         required
                       />

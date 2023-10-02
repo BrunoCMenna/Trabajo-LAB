@@ -1,28 +1,33 @@
 import React, { useContext, useState } from "react";
+import { useJwt, decodeToken } from "react-jwt";
 import { useNavigate } from "react-router";
-
 import "../Login/Login.css";
-
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
+//const token = "Your JWT";
 
 const SignIn = () => {
+  const { logInUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
+    firstName: "Gerardos",
+    lastName: "Aguirres",
     email: "",
     password: "",
     role: "user",
   });
+  //const { decodedToken, isExpired } = useJwt(token);
 
-  const { createUser } = useContext(UserContext);
+  //const { createUser } = useContext(UserContext);
   const navigation = useNavigate();
 
   const handleInput = (e) => {
     const newObj = { ...values, [e.target.name]: e.target.value };
     setValues(newObj);
+    console.log(values);
   };
 
   const Validation = (values) => {
@@ -45,13 +50,68 @@ const SignIn = () => {
     return errors;
   };
 
-  const logInHandler = (e) => {
+  // const requestData = {
+  //   firstName: values.firstName,
+  //   lastName: values.lastName,
+  //   email: values.email,
+  //   password: values.password,
+  // };
+
+  const logInHandler = async (e) => {
     e.preventDefault();
     const errorObj = Validation(values);
     if (Object.keys(errorObj).length === 0) {
       console.log("no hay errores");
       setErrors(errorObj);
-      createUser(values.email, values.password, values.role);
+      //debugger;
+      //borrar este createUser()
+      //createUser(values.email, values.password, values.role);
+      //aca estoy tratando de usar el endpoint
+      try {
+        // Realiza la solicitud POST al endpoint
+        const response = await fetch(
+          "https://localhost:44377/api/Auth/SignIn",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json", // Asegúrate de establecer el tipo de contenido correcto
+            },
+            body: JSON.stringify(
+              // values.firstName,
+              // values.lastName,
+              // values.email,
+              // values.password
+              {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                password: values.password,
+              }
+            ), // Convierte los datos a formato JSON
+          }
+        );
+
+        // Verifica si la solicitud fue exitosa (código de respuesta 200)
+        if (response.ok || response.status === 200) {
+          // const responseData = decodedToken(response.token);
+          const responseData = await response.text();
+          // console.log("token decodificado:", responseData);
+          // const myDecodedToken = decodeToken(responseData);
+          logInUser(responseData);
+          // const responseData = await response.json();
+          // // Aquí puedes manejar la respuesta del servidor según tus necesidades
+          // console.log("Respuesta del servidor:", responseData);
+        } else {
+          // Si la solicitud no fue exitosa, puedes manejar el error aquí
+          console.error(
+            "Error en la solicituddddddd:",
+            response.status,
+            response.statusText
+          );
+        }
+      } catch (error) {
+        console.error("Error en la solicitud:", error);
+      }
     } else {
       console.log("hay errores");
       setErrors(errorObj);
