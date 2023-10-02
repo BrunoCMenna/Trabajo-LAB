@@ -1,23 +1,25 @@
 import React, { useContext, useState } from "react";
+import { useJwt, decodeToken } from "react-jwt";
 import { useNavigate } from "react-router";
-
 import "../Login/Login.css";
-
 import { ThemeContext } from "../../contexts/ThemeContext";
-//import { UserContext } from "../../contexts/AuthContext";
+import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
+//const token = "Your JWT";
 
 const SignIn = () => {
+  const { logInUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
-    firstName: "Gerardo",
-    lastName: "Aguirre",
+    firstName: "Gerardos",
+    lastName: "Aguirres",
     email: "",
     password: "",
     role: "user",
   });
+  //const { decodedToken, isExpired } = useJwt(token);
 
   //const { createUser } = useContext(UserContext);
   const navigation = useNavigate();
@@ -61,7 +63,7 @@ const SignIn = () => {
     if (Object.keys(errorObj).length === 0) {
       console.log("no hay errores");
       setErrors(errorObj);
-      debugger;
+      //debugger;
       //borrar este createUser()
       //createUser(values.email, values.password, values.role);
       //aca estoy tratando de usar el endpoint
@@ -90,14 +92,19 @@ const SignIn = () => {
         );
 
         // Verifica si la solicitud fue exitosa (código de respuesta 200)
-        if (response.ok || response.status == 200) {
-          const responseData = await response.json();
-          // Aquí puedes manejar la respuesta del servidor según tus necesidades
-          console.log("Respuesta del servidor:", responseData);
+        if (response.ok || response.status === 200) {
+          // const responseData = decodedToken(response.token);
+          const responseData = await response.text();
+          // console.log("token decodificado:", responseData);
+          // const myDecodedToken = decodeToken(responseData);
+          logInUser(responseData);
+          // const responseData = await response.json();
+          // // Aquí puedes manejar la respuesta del servidor según tus necesidades
+          // console.log("Respuesta del servidor:", responseData);
         } else {
           // Si la solicitud no fue exitosa, puedes manejar el error aquí
           console.error(
-            "Error en la solicitud:",
+            "Error en la solicituddddddd:",
             response.status,
             response.statusText
           );

@@ -7,6 +7,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { getDatabase, ref, set, get } from "firebase/database";
+import { decodeToken } from "react-jwt";
 
 import firebaseApp from "../firebase/firebase";
 import { toast } from "react-toastify";
@@ -15,30 +16,34 @@ const db = getDatabase();
 export const UserContext = createContext(null);
 
 const userValue = JSON.parse(localStorage.getItem("user"));
+const userToken = localStorage.getItem("userToken");
 
 const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(userValue);
+  const [token, setToken] = useState(userToken);
 
-  onAuthStateChanged(auth, (fbUser) => {
-    if (fbUser) {
-      if (!user) {
-        setUserWithFirebaseAndRole(fbUser);
-      }
-    } else {
-      setUser(null);
-    }
-  });
+  // onAuthStateChanged(auth, (fbUser) => {
+  //   if (fbUser) {
+  //     if (!user) {
+  //       setUserWithFirebaseAndRole(fbUser);
+  //     }
+  //   } else {
+  //     setUser(null);
+  //   }
+  // });
 
-  const logInUser = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password).catch((error) => {
-      toast.error("Email o contraseña son incorrectas");
-      console.log(error);
-    });
-  };
+  // const logInUser = (email, password) => {
+  //   signInWithEmailAndPassword(auth, email, password).catch((error) => {
+  //     toast.error("Email o contraseña son incorrectas");
+  //     console.log(error);
+  //   });
+  // };
 
   const logOutUser = () => {
-    signOut(auth);
+    setUser(null);
+    setToken(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("userToken");
   };
 
   const createUser = async (email, password, role) => {
@@ -65,27 +70,36 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
-  const setUserWithFirebaseAndRole = (fbUser) => {
-    getRole(fbUser.uid).then((role) => {
-      const userData = {
-        uid: fbUser.uid,
-        email: fbUser.email,
-        role: role,
-      };
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
-    });
-  };
+  // const setUserWithFirebaseAndRole = (fbUser) => {
+  //   getRole(fbUser.uid).then((role) => {
+  //     const userData = {
+  //       uid: fbUser.uid,
+  //       email: fbUser.email,
+  //       role: role,
+  //     };
+  //     setUser(userData);
+  //     localStorage.setItem("user", JSON.stringify(userData));
+  //   });
+  // };
 
-  const getRole = async (userId) => {
-    try {
-      const snapshot = await get(ref(getDatabase(), `users/${userId}/role`));
-      const role = snapshot.val();
-      return role;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
+  // const getRole = async (userId) => {
+  //   try {
+  //     const snapshot = await get(ref(getDatabase(), `users/${userId}/role`));
+  //     const role = snapshot.val();
+  //     return role;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return null;
+  //   }
+  // };
+
+  const logInUser = (token) => {
+    const myDecodedToken = decodeToken(token);
+    console.log(myDecodedToken);
+    setToken(token);
+    setUser(myDecodedToken);
+    localStorage.setItem("user", JSON.stringify(myDecodedToken));
+    localStorage.setItem("userToken", token);
   };
 
   const contextValue = {
@@ -93,6 +107,7 @@ const AuthContextProvider = ({ children }) => {
     logInUser,
     logOutUser,
     user,
+    token,
   };
 
   return (

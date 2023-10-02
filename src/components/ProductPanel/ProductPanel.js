@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { Button, Modal } from "react-bootstrap";
 import { LoaderContext } from "../../contexts/LoaderContext";
+import { UserContext } from "../../contexts/AuthContext";
 import Spinner from "../ui/Spinner";
 
 const ProductPanel = ({ products }) => {
@@ -27,6 +28,7 @@ const ProductPanel = ({ products }) => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [modifiedProductIds, setModifiedProductIds] = useState([]);
+  const { token } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const { isLoading } = useContext(LoaderContext);
 
@@ -74,11 +76,13 @@ const ProductPanel = ({ products }) => {
 
   const openModal = () => {
     setShowModal(true);
+    console.log(token);
   };
 
   const openDeleteModal = (productId) => {
     setSelectedProductId(productId);
     setShowDeleteModal(true);
+    console.log(token);
   };
 
   const closeModal = () => {
@@ -102,12 +106,13 @@ const ProductPanel = ({ products }) => {
   };
 
   const addNewProduct = (e) => {
-    debugger
+    //debugger
     e.preventDefault();
     fetch("https://localhost:44377/api/Product/AddNewProduct", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(newProduct),
     })
@@ -127,6 +132,10 @@ const ProductPanel = ({ products }) => {
       `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${selectedProductId}`,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        }
       }
     )
       .then((response) => response.json())
@@ -149,11 +158,12 @@ const ProductPanel = ({ products }) => {
       const product = editedProducts.find((p) => p.id === productId);
       try {
         const response = await fetch(
-          `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${product.id}`,
+          `https://localhost:44377/api/Product/Updateproduct/${product.id}`,
           {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}`,
             },
             body: JSON.stringify(product),
           }

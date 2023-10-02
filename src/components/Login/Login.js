@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useJwt, decodeToken } from "react-jwt";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -8,13 +9,19 @@ import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
+//const token = "Your JWT";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
+  //const { logInUser } = useContext(UserContext);
   const { logInUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
+  //const { decodedToken } = useJwt(token);
+
+  const [token, setToken] = useState("");
+  //const myDecodedToken
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
@@ -24,9 +31,40 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const logInHandler = (e) => {
+  const logInHandler = async (e) => {
     e.preventDefault();
-    logInUser(email, password);
+    try {
+      // Realiza la solicitud POST al endpoint
+      const response = await fetch("https://localhost:44377/api/Auth/LogIn", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Asegúrate de establecer el tipo de contenido correcto
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      // Verifica si la solicitud fue exitosa (código de respuesta 200)
+      if (response.ok || response.status === 200) {
+        const responseData = await response.text();
+        // console.log("token del back:", responseData);
+        // const myDecodedToken = decodeToken(responseData);
+        // console.log(myDecodedToken);
+        // setToken(responseData);
+        logInUser(responseData);
+      } else {
+        // Si la solicitud no fue exitosa, puedes manejar el error aquí
+        console.error(
+          "Error en la solicitud:",
+          response.status,
+          response.statusText
+        );
+      }
+    } catch (error) {
+      console.error("Error en la solicitud:", error);
+    }
   };
 
   const goSignIn = () => {
