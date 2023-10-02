@@ -135,7 +135,7 @@ const ProductPanel = ({ products }) => {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
-        }
+        },
       }
     )
       .then((response) => response.json())
