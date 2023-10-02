@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  background-color: red;
   font-family: Montserrat, "Arial Narrow", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -6,16 +6,18 @@ import PhoneCatalog from "../PhoneCatalog/PhoneCatalog";
 import SidebarFilters from "../SidebarFilters/SidebarFilters";
 import { LoaderContext } from "../../contexts/LoaderContext";
 import Spinner from "../ui/Spinner";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const Shop = ({ products }) => {
   const [brandFilterSelected, setBrandFilterSelected] = useState(null);
   const { isLoading } = useContext(LoaderContext);
+  const { theme } = useContext(ThemeContext);
   const brandFilterChanged = (brand) => {
     setBrandFilterSelected(brand);
   };
 
   return (
-    <div className="d-flex flex-column">
+    <div className={`d-flex flex-column ${theme === "dark" && "shop-dark"}`}>
       <div>
         <NavBar />
       </div>

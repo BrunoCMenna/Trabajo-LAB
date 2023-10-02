@@ -40,12 +40,11 @@ const Footer = () => {
         className="text-center text-m-start text-muted"
       >
         <div className={`${theme === "dark" && "socialmedia-dark"}`}>
-          <section className="justify-content-center justify-content-lg-between p-4 border-bottom">
+          <section className="justify-content-center justify-content-lg-between p-4 pb-5">
             <div className="me-3 d-none d-lg-block">
               <span>Nuestras redes:</span>
             </div>
-            <hr></hr>
-            <div>
+            <div className="mt-1">
               <a
                 href="https://www.instagram.com/"
                 target="_blanket"
@@ -84,11 +83,10 @@ const Footer = () => {
             </div>
           </section>
         </div>
-
         <section className="">
           <div className={`${theme === "dark" && "footer-dark"}`}>
-            <MDBContainer className="text-center text-md-start mt-0 border-top">
-              <MDBRow className="mt-3">
+            <MDBContainer className="text-center text-md-start">
+              <MDBRow className="">
                 <MDBCol md="4" lg="4" xl="3" className="mx-auto mb-4">
                   <h6 className="text-uppercase fw-bold mb-4">
                     <MDBIcon icon="gem" className="me-1" />

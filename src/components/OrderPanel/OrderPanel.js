@@ -4,7 +4,7 @@ import { getDatabase, ref, onValue, update } from "firebase/database";
 import { Modal, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-import "../ShowOrders/ShowOrders.css";
+import "../OrderPanel/OrderPanel.css";
 
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { LoaderContext } from "../../contexts/LoaderContext";
@@ -98,8 +98,12 @@ const ShowOrders = () => {
   return (
     <>
       <NavBar />
-      <div className="">
-        <div className="d-flex justify-content-center mt-4">
+      <div
+        className={`orderPanel-container ${
+          theme === "dark" && "orderPanel-container-dark"
+        }`}
+      >
+        <div className="d-flex justify-content-center pt-4">
           <h2>Gestión de Pedidos</h2>
         </div>
         <div className="d-flex justify-content-center m-3">
@@ -119,7 +123,7 @@ const ShowOrders = () => {
           </div>
         ) : (
           <>
-            <div className="container">
+            <div className="container pb-2">
               {filteredOrders.length === 0 ? (
                 <>
                   <div className="d-flex justify-content-center">
@@ -216,7 +220,12 @@ const ShowOrders = () => {
                                       className="accordion-collapse collapse"
                                       aria-labelledby={`heading${index}${productIndex}`}
                                     >
-                                      <div className="card card-body">
+                                      <div
+                                        className={`card card-body ${
+                                          theme === "dark" &&
+                                          "text-bg-secondary"
+                                        }`}
+                                      >
                                         <p>
                                           {product.brand} {product.model}
                                         </p>
