@@ -11,6 +11,7 @@ import { LoaderContext } from "../../contexts/LoaderContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import Spinner from "../ui/Spinner";
+import { UserContext } from "../../contexts/AuthContext";
 
 const ShowOrders = () => {
   const [userOrders, setUserOrders] = useState([]);
@@ -20,6 +21,7 @@ const ShowOrders = () => {
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
   const { toggleLoading, isLoading } = useContext(LoaderContext);
+  const { token } = useContext(UserContext);
 
   useEffect(() => {
     toggleLoading(true);
@@ -42,6 +44,22 @@ const ShowOrders = () => {
       setUserOrders(orders);
       toggleLoading(false);
     });
+
+    fetch("https://localhost:44377/api/Order/GetOrders", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((newProductData) => {
+        //toast.success("Producto agregado con éxito");
+        console.log("Ventas traidas:", newProductData);
+      })
+      .catch((error) => {
+        console.error("Error al traer ventas:", error);
+      });
 
     return () => {
       unsubscribe();
