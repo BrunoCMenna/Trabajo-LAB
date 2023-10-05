@@ -23,6 +23,8 @@
 
 .CRI {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .CRI button:hover {

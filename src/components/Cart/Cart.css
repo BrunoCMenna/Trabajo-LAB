@@ -4,10 +4,25 @@
   justify-content: center;
   padding-bottom: 0;
 }
+
+.cart-container-dark {
+  background-color: #181a1b;
+}
+
+.emptyCart-dark {
+  background-color: #303030;
+  color: white;
+}
+
 .cart-table {
   border-right: 1px solid rgba(220, 220, 220, 0.267);
-  padding: 1rem;
+  padding: 2rem;
 }
+
+.cart-table-dark {
+  background-color: #242424;
+}
+
 .subtotal {
   display: flex;
   flex-direction: column;
@@ -22,25 +37,12 @@
 }
 
 .subtotal-dark {
-  background-color: #020c1a;
+  background-color: #242424;
   color: white;
 }
 
 .subtotal-buttons-dark {
-  background-color: #020c1a;
-  border: 3px solid purple;
+  background-color: #242424;
   border-radius: 5px;
   color: white;
 }
-
-.cart-table-dark {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1rem;
-  background-color: #020c1a;
-  color: white;
-  border: 3px solid purple;
-  border-radius: 10px;
-}
-

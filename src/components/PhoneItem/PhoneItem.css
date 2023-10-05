@@ -1,9 +1,10 @@
 .phone-container {
   width: auto;
+  height: 100%;
 }
 
 .phone-item-dark {
-  background-color: #020c1a;
+  background-color: #242424;
   color: white;
   border-radius: 7px;
 }

@@ -6,6 +6,7 @@ import { RiLoginBoxFill, RiLogoutBoxFill } from "react-icons/ri";
 import { CgDanger } from "react-icons/cg";
 
 import "./NavBar.css";
+import logo from "../../img/logo.png";
 
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { UserContext } from "../../contexts/AuthContext";
@@ -39,11 +40,7 @@ const NavBar = () => {
       <nav className="navbar px-4">
         <div className="enterprise">
           <button type="button" onClick={goShop}>
-            <img
-              src="https://cdn-icons-png.flaticon.com/256/1094/1094764.png"
-              alt="logo"
-              height={60}
-            />
+            <img src={logo} alt="logo" height={60} />
           </button>
           <ToggleTheme />
         </div>

@@ -30,9 +30,15 @@ const Cart = ({ products }) => {
     <div>
       <NavBar />
       {itemsInCart > 0 ? (
-        <div className="cart-container">
-          <div className="cart-table">
-            <div className={`${theme === "dark" && "cart-table-dark"}`}>
+        <div
+          className={`cart-container ${
+            theme === "dark" && "cart-container-dark"
+          }`}
+        >
+          <div
+            className={`cart-table ${theme === "dark" && "cart-table-dark"}`}
+          >
+            <div>
               {products.map((product, index) => {
                 if (cartItems[product.id] !== 0) {
                   return (
@@ -52,7 +58,7 @@ const Cart = ({ products }) => {
             </div>
           </div>
 
-          <div className="subtotal">
+          <div className={`subtotal ${theme === "dark" && "subtotal-dark"}`}>
             <div className={`${theme === "dark" && "subtotal-buttons-dark"}`}>
               <h4>
                 Total: <span>${totalPrice}</span>
@@ -67,7 +73,11 @@ const Cart = ({ products }) => {
           </div>
         </div>
       ) : (
-        <div className="d-flex flex-column justify-content-center align-items-center p-5">
+        <div
+          className={` d-flex flex-column justify-content-center align-items-center p-5 ${
+            theme === "dark" && "emptyCart-dark"
+          }`}
+        >
           <h3>No hay productos en el carrito</h3>
           <img
             src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"
