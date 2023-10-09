@@ -5,7 +5,6 @@ import { useContext } from "react";
 
 const SidebarFilters = ({ phones, onBrandFilterChange }) => {
   const { theme } = useContext(ThemeContext);
-
   const getSameBrandPhones = () => {
     const sameBrandPhones = {};
     phones.forEach((p) => {

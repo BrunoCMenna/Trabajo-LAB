@@ -22,12 +22,13 @@ import OrderPanel from "./components/OrderPanel/OrderPanel";
 import ProtectedSysAdmin from "./components/routes/ProtectedSysAdmin";
 import { LoaderContext } from "./contexts/LoaderContext";
 
+import SuppContent from "./components/Supp/SuppContent";
+
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const { toggleLoading } = useContext(LoaderContext);
   const [products, setProducts] = useState([]);
-  const PRODUCTS_ENDPOINT =
-    "https://localhost:44377/api/Product/GetProducts";
+  const PRODUCTS_ENDPOINT = "https://localhost:44377/api/Product/GetProducts";
 
   useEffect(() => {
     toggleLoading(true);
@@ -123,6 +124,10 @@ const App = () => {
     {
       path: "*",
       element: <NotFound />,
+    },
+    {
+      path: "/Help",
+      element: <SuppContent />,
     },
   ]);
   return (

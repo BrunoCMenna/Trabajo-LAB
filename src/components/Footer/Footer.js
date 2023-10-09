@@ -33,6 +33,9 @@ const Footer = () => {
   const goSignIn = () => {
     navigation("/signin");
   };
+  const goHelp = () => {
+    navigation("/help");
+  };
   return (
     <div className="footer">
       <MDBFooter
@@ -138,6 +141,15 @@ const Footer = () => {
                       onClick={goSignIn}
                     >
                       Registrarse
+                    </button>
+                  </p>
+                  <p>
+                    <button
+                      type="button"
+                      onClick={goHelp}
+                      className="text-reset text-decoration-underline"
+                    >
+                      Ayuda
                     </button>
                   </p>
                 </MDBCol>
