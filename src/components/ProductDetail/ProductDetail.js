@@ -1,33 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router";
+import React, { useState } from "react";
+import "../ProductDetail/ProductDetail.css";
 
-const ProductDetails = ({ id, products }) => {
-  const params = useParams();
-
-  id = parseInt(params.id, 10);
-
-  const [phone, setPhone] = useState(null);
-
-  useEffect(() => {
-    const foundPhone = products.find((item) => item.id === id);
-    setPhone(foundPhone);
-  }, [id]);
-
-  if (!phone) {
-    return <div>Phone not found.</div>;
-  }
-
-  const { brand, model, price, image } = phone;
+const ProductDetail = ({ product }) => {
+  const {
+    brand,
+    model,
+    price,
+    image,
+    storage,
+    ram,
+    description,
+    inStock,
+    isActive,
+  } = product;
 
   return (
-    <div>
-      <h2>
-        {brand} {model}
-      </h2>
-      <p>Price: {price}</p>
-      <img src={image} alt={model} />
+    <div className="d-flex flex-column border border-primary p-5">
+      <div className="d-flex flex-wrap justify-content-center gap-5">
+        <div className="">
+          <img src={image} alt={model} className="img-fluid" />
+        </div>
+        <div className="">
+          <h3 className="h3">
+            {brand} {model}
+          </h3>
+          <p>${price}</p>
+          <p>Memoria RAM: {ram} gb</p>
+          <p>Almacenamiento: {storage} gb</p>
+          <p>Descripción: {description}</p>
+          <p>Unidades disponibles: {inStock}</p>
+          <p>{isActive}</p>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default ProductDetails;
+export default ProductDetail;
