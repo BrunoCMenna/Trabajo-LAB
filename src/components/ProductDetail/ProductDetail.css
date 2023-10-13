@@ -1,0 +1,14 @@
+.product-detail {
+  background-color: white;
+  border-radius: 5px;
+}
+
+.product-detail-dark {
+  background-color: #242424;
+  color: white;
+}
+
+.quantity {
+  max-width: 280px;
+  margin: auto;
+}

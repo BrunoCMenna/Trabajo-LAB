@@ -13,6 +13,9 @@ const PhoneCatalog = ({ phones, brandFilterSelected }) => {
         price={p.price}
         image={p.image}
         isActive={p.isActive}
+        inStock={p.inStock}
+        ram={p.ram}
+        storage={p.storage}
       />
     ));
 
@@ -25,6 +28,9 @@ const PhoneCatalog = ({ phones, brandFilterSelected }) => {
       price={p.price}
       image={p.image}
       isActive={p.isActive}
+      inStock={p.inStock}
+      ram={p.ram}
+      storage={p.storage}
     />
   ));
   return <>{phonesFiltered.length === 0 ? noFilteredPhones : phonesFiltered}</>;

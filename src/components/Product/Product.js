@@ -1,47 +1,50 @@
-import React from "react";
-import { useNavigate } from "react-router";
-import { Button } from "react-bootstrap";
-import { useParams } from "react-router";
+import React, { useContext } from "react";
+import { useNavigate, useParams } from "react-router";
 
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
-import ProductItem from "../ProductDetail/ProductDetail";
+
+import ProductDetail from "../ProductDetail/ProductDetail";
+import "../Product/Product.css";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import { Button } from "react-bootstrap";
+import { LoaderContext } from "../../contexts/LoaderContext";
+import Spinner from "../ui/Spinner";
+import NotFoundContent from "../ui/NotFoundContent";
 
 const Product = ({ products }) => {
-  const params = useParams();
+  const { theme } = useContext(ThemeContext);
+  const { isLoading } = useContext(LoaderContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const navigation = useNavigate();
-
-  const goShop = () => {
-    navigation("/shop");
-  };
+  // Encuentra el producto correspondiente al ID en la lista de productos
+  const product = products.find((product) => product.id == id);
+  console.log(product);
 
   return (
-    <div>
+    <div className="">
       <NavBar />
-      <div className="product-container">
-        <div className="product-table">
-          {products.map((product) => {
-            return (
-              <ProductItem
-                products={products}
-                id={params.id}
-                brand={product.brand}
-                model={product.model}
-                price={product.price}
-                image={product.image}
-              />
-            );
-          })}
+      {isLoading ? (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ minHeight: "calc(100vh - 100px - 460px)" }}
+        >
+          <Spinner />
         </div>
-        <div className="subtotal">
-          <Button className="btn btn-primary" onClick={goShop}>
-            Volver a la tienda
-          </Button>
+      ) : (
+        <div
+          className={`d-flex justify-content-center ${
+            theme === "dark" && "product-container-dark"
+          }`}
+        >
+          {product ? <ProductDetail product={product} /> : <NotFoundContent />}
         </div>
-      </div>
+      )}
+
       <Footer />
     </div>
   );
 };
+
 export default Product;
