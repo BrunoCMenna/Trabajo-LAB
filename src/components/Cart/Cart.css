@@ -3,10 +3,18 @@
   flex-direction: row;
   justify-content: center;
   padding-bottom: 0;
+  height: calc(
+    100vh - 60px - 500px
+  ); /*100vh menos el header+footer 60px del header y 460 del footer*/
 }
 
 .cart-container-dark {
-  background-color: #181a1b;
+  background-color: #303030;
+}
+
+.emptyCart {
+  min-height: calc(100vh - 60px - 461px);
+  overflow-y: hidden;
 }
 
 .emptyCart-dark {

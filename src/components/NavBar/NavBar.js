@@ -40,7 +40,7 @@ const NavBar = () => {
       <nav className="navbar px-4">
         <div className="enterprise">
           <button type="button" onClick={goShop}>
-            <img src={logo} alt="logo" height={60} />
+            <img src={logo} alt="logo" className="img-fluid logo-img" />
           </button>
           <ToggleTheme />
         </div>

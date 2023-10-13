@@ -28,13 +28,13 @@ const Shop = ({ products }) => {
           </div>
         ) : (
           <>
-            <div className="sidebarfilters">
+            <div className="sidebarfilters d-flex flex-wrap">
               <SidebarFilters
                 phones={products}
                 onBrandFilterChange={brandFilterChanged}
               />
             </div>
-            <div className="catalog-body">
+            <div className="card-grid">
               <PhoneCatalog
                 phones={products}
                 brandFilterSelected={brandFilterSelected}

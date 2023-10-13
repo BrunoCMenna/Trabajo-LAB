@@ -10,7 +10,7 @@ const ShoppingCartProvider = ({ children }) => {
     const fetchData = async () => {
       try {
         const PRODUCTS_ENDPOINT =
-          "https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products";
+          "https://localhost:44377/api/Product/GetProducts";
         const response = await fetch(PRODUCTS_ENDPOINT, {
           headers: {
             accept: "application/json",
@@ -45,8 +45,11 @@ const ShoppingCartProvider = ({ children }) => {
     // donde el atributo indica el ID de nuestro producto y lo setea en 0 (es decir ninguno esta en el carrito todavia)
   };
 
-  const addToCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+  const addToCart = (itemId, quantity) => {
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: prev[itemId] + parseInt(quantity),
+    }));
   };
 
   const removeFromCart = (itemId) => {
@@ -58,11 +61,10 @@ const ShoppingCartProvider = ({ children }) => {
   };
 
   const getItemAmount = () => {
-    if (!cartItems) {
-      return 0;
-    }
-    const total = Object.values(cartItems).reduce((accum, n) => accum + n);
-    return total;
+    const uniqueIds = Object.keys(cartItems || {}).filter(
+      (id) => cartItems[id] > 0
+    ).length;
+    return uniqueIds;
   };
 
   const getTotalCartAmount = () => {
