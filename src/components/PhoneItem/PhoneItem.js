@@ -17,6 +17,7 @@ const PhoneItem = ({
   model,
   price,
   image,
+  description,
   isActive,
   inStock,
   ram,

@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFormattedNumber from "../../hooks/useFormattedNumber";
 import "../ProductDetail/ProductDetail.css";
-import { BsCart, BsCheck2Circle } from "react-icons/bs";
+import { BsCheck2Circle } from "react-icons/bs";
 import { FaCartPlus, FaCheck } from "react-icons/fa";
 
 import { RxCross1 } from "react-icons/rx";
@@ -13,6 +13,13 @@ const ProductDetail = ({ product }) => {
   const { theme } = useContext(ThemeContext);
   const { addToCart, cartItems } = useContext(CartContext);
   const [cantidad, setCantidad] = useState(1);
+  const [isProductInCart, setIsProductInCart] = useState(false);
+
+  useEffect(() => {
+    if (cartItems) {
+      setIsProductInCart(cartItems[product.id] > 0);
+    }
+  }, [cartItems]);
 
   const {
     id,
@@ -44,8 +51,6 @@ const ProductDetail = ({ product }) => {
   for (let i = 1; i <= inStock; i++) {
     stockOptions.push(i);
   }
-
-  const isProductInCart = cartItems[product.id];
 
   return (
     <div
@@ -100,8 +105,8 @@ const ProductDetail = ({ product }) => {
             <span>Descripción:</span>
             <p>{description}</p>
           </div>
-          <div class="input-group quantity mt-4">
-            <label class="input-group-text">Cantidad</label>
+          <div className="input-group quantity mt-4">
+            <label className="input-group-text">Cantidad</label>
             <select
               className="form-select"
               value={cantidad}
@@ -115,22 +120,28 @@ const ProductDetail = ({ product }) => {
             </select>
           </div>
           <div className="d-grid mx-auto">
-            <button
-              className="btn btn-primary"
-              type="button"
-              onClick={addToCartAction}
-              disabled={isProductInCart}
-            >
-              {isProductInCart ? (
-                <span>
-                  Agregado al carrito <FaCheck />
-                </span>
-              ) : (
-                <span>
-                  Agregar al carrito <FaCartPlus />
-                </span>
-              )}
-            </button>
+            {isActive ? (
+              <button
+                className="btn btn-primary"
+                type="button"
+                onClick={addToCartAction}
+                disabled={isProductInCart}
+              >
+                {isProductInCart ? (
+                  <span>
+                    Agregado al carrito <FaCheck />
+                  </span>
+                ) : (
+                  <span>
+                    Agregar al carrito <FaCartPlus />
+                  </span>
+                )}
+              </button>
+            ) : (
+              <button disabled className="btn btn-danger">
+                Producto no disponible
+              </button>
+            )}
           </div>
         </div>
       </div>

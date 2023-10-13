@@ -1,5 +1,6 @@
 .showorders {
-  min-height: calc(100vh - 522px);
+  min-height: calc(100vh - 100px - 460px);
+  /*VH roto, queda una barrita blanca abajo*/
 }
 
 .order-container {
