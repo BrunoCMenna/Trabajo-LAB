@@ -1,3 +1,8 @@
+.showorders {
+  min-height: calc(100vh - 100px - 460px);
+  /*VH roto, queda una barrita blanca abajo*/
+}
+
 .order-container {
   display: flex;
   flex-direction: row;

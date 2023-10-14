@@ -25,3 +25,22 @@ body {
   padding: 0;
   background-color: #303030;
 }
+
+.card-grid {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Crea 3 columnas de igual ancho */
+  gap: 20px; /* Espacio entre las cards */
+  justify-content: center;
+  grid-column: auto;
+}
+
+@media (max-width: 767px) {
+  .card-grid {
+    grid-template-columns: 1fr; /* Cambia a una sola columna */
+  }
+}
+
+.sidebarfilters {
+  display: flex;
+}

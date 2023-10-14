@@ -23,6 +23,7 @@ import ProtectedSysAdmin from "./components/routes/ProtectedSysAdmin";
 import { LoaderContext } from "./contexts/LoaderContext";
 
 import SuppContent from "./components/Supp/SuppContent";
+import Product from "./components/Product/Product";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -128,6 +129,10 @@ const App = () => {
     {
       path: "/Help",
       element: <SuppContent />,
+    },
+    {
+      path: "/product/:id",
+      element: <Product products={products} />,
     },
   ]);
   return (

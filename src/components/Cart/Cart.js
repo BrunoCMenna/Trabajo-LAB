@@ -74,7 +74,7 @@ const Cart = ({ products }) => {
         </div>
       ) : (
         <div
-          className={` d-flex flex-column justify-content-center align-items-center p-5 ${
+          className={` d-flex flex-column justify-content-center align-items-center emptyCart p-5 ${
             theme === "dark" && "emptyCart-dark"
           }`}
         >
