@@ -28,6 +28,7 @@ import Product from "./components/Product/Product";
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const { toggleLoading } = useContext(LoaderContext);
+  const [top3, setTop3] = useState([]);
   const [products, setProducts] = useState([]);
   const PRODUCTS_ENDPOINT = "https://localhost:44377/api/Product/GetProducts";
 
@@ -53,10 +54,32 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    toggleLoading(true);
+    fetch("https://localhost:44377/api/Product/GetTopProducts", {
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((productData) => {
+        const topProducts = productData.map((product) => ({
+          ...product,
+        }));
+        setTop3(topProducts);
+        toggleLoading(false);
+        console.log("top3 cargado", topProducts);
+      })
+      .catch((error) => {
+        console.log(error);
+        toggleLoading(false);
+      });
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Shop products={products} />,
+      element: <Shop products={products} top3={top3} />,
     },
     {
       path: "/Login",
@@ -65,10 +88,6 @@ const App = () => {
           <Login />
         </ProtectedIfUserIsLogged>
       ),
-    },
-    {
-      path: "/Shop",
-      element: <Shop products={products} />,
     },
     {
       path: "/Cart",

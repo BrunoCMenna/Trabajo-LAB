@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Shop.css";
 import Footer from "../Footer/Footer";
 import NavBar from "../NavBar/NavBar";
@@ -7,11 +7,13 @@ import SidebarFilters from "../SidebarFilters/SidebarFilters";
 import { LoaderContext } from "../../contexts/LoaderContext";
 import Spinner from "../ui/Spinner";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import TopProducts from "../TopProducts/TopProducts";
 
-const Shop = ({ products }) => {
+const Shop = ({ products, top3 }) => {
   const [brandFilterSelected, setBrandFilterSelected] = useState(null);
   const { isLoading } = useContext(LoaderContext);
   const { theme } = useContext(ThemeContext);
+  const { toggleLoading } = useContext(LoaderContext);
   const brandFilterChanged = (brand) => {
     setBrandFilterSelected(brand);
   };
@@ -39,6 +41,9 @@ const Shop = ({ products }) => {
                 phones={products}
                 brandFilterSelected={brandFilterSelected}
               />
+            </div>
+            <div className="mt-3">
+              <TopProducts top3={top3} />
             </div>
           </>
         )}

@@ -29,7 +29,7 @@ const NavBar = () => {
     navigation("/Cart");
   };
   const goShop = () => {
-    navigation("/Shop");
+    navigation("/");
   };
   const goShowOrders = () => {
     navigation("/showorders");
