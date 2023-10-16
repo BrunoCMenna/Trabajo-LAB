@@ -71,7 +71,7 @@ const Login = () => {
     navigation("/signin");
   };
   const goShop = () => {
-    navigation("/shop");
+    navigation("/");
   };
 
   return (

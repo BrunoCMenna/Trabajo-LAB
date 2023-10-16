@@ -83,6 +83,9 @@ const NavBar = () => {
                       <Dropdown.Item as={Link} to="/userpanel">
                         Panel de usuarios
                       </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/dashboard">
+                        Metricas de ventas
+                      </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </>

@@ -24,6 +24,7 @@ import { LoaderContext } from "./contexts/LoaderContext";
 
 import SuppContent from "./components/Supp/SuppContent";
 import Product from "./components/Product/Product";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -34,6 +35,8 @@ const App = () => {
 
   useEffect(() => {
     toggleLoading(true);
+  
+    // Primera llamada API
     fetch(PRODUCTS_ENDPOINT, {
       headers: {
         accept: "application/json",
@@ -52,10 +55,8 @@ const App = () => {
         console.log(error);
         toggleLoading(false);
       });
-  }, []);
-
-  useEffect(() => {
-    toggleLoading(true);
+  
+    // Segunda llamada API
     fetch("https://localhost:44377/api/Product/GetTopProducts", {
       headers: {
         accept: "application/json",
@@ -75,10 +76,14 @@ const App = () => {
         toggleLoading(false);
       });
   }, []);
-
+  
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <Shop products={products} top3={top3} />,
+    },
+    {
+      path: "/shop",
       element: <Shop products={products} top3={top3} />,
     },
     {
@@ -152,6 +157,14 @@ const App = () => {
     {
       path: "/product/:id",
       element: <Product products={products} />,
+    },
+    {
+      path: "/Dashboard",
+      element: (
+        <ProtectedSysAdmin>
+          <AdminDashboard />
+        </ProtectedSysAdmin>
+      ),
     },
   ]);
   return (
