@@ -21,6 +21,7 @@ function SuppContent() {
       <NavBar />
       <div className="App">
         <AccordionItem
+          //estas 3 cosas capas pueden ser pasadas como render props
           title="Preguntas Frecuentes"
           isActive={activeItem === "preguntas-frecuentes"}
           toggleItem={() => toggleItem("preguntas-frecuentes")}
