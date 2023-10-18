@@ -16,7 +16,7 @@ function AccordionItem({ title, isActive, toggleItem, children }) {
       >
         {title}
       </button>
-      {isActive && <div className="content">{children}</div>}
+      {children(isActive)}
     </div>
   );
 }

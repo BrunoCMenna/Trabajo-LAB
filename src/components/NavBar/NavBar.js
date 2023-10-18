@@ -29,7 +29,7 @@ const NavBar = () => {
     navigation("/Cart");
   };
   const goShop = () => {
-    navigation("/Shop");
+    navigation("/");
   };
   const goShowOrders = () => {
     navigation("/showorders");
@@ -82,6 +82,9 @@ const NavBar = () => {
                     <Dropdown.Menu>
                       <Dropdown.Item as={Link} to="/userpanel">
                         Panel de usuarios
+                      </Dropdown.Item>
+                      <Dropdown.Item as={Link} to="/dashboard">
+                        Metricas de ventas
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>

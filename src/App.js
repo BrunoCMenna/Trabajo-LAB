@@ -24,15 +24,19 @@ import { LoaderContext } from "./contexts/LoaderContext";
 
 import SuppContent from "./components/Supp/SuppContent";
 import Product from "./components/Product/Product";
+import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const { toggleLoading } = useContext(LoaderContext);
+  const [top3, setTop3] = useState([]);
   const [products, setProducts] = useState([]);
   const PRODUCTS_ENDPOINT = "https://localhost:44377/api/Product/GetProducts";
 
   useEffect(() => {
     toggleLoading(true);
+  
+    // Primera llamada API
     fetch(PRODUCTS_ENDPOINT, {
       headers: {
         accept: "application/json",
@@ -51,12 +55,36 @@ const App = () => {
         console.log(error);
         toggleLoading(false);
       });
+  
+    // Segunda llamada API
+    fetch("https://localhost:44377/api/Product/GetTopProducts", {
+      headers: {
+        accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((productData) => {
+        const topProducts = productData.map((product) => ({
+          ...product,
+        }));
+        setTop3(topProducts);
+        toggleLoading(false);
+        console.log("top3 cargado", topProducts);
+      })
+      .catch((error) => {
+        console.log(error);
+        toggleLoading(false);
+      });
   }, []);
-
+  
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Shop products={products} />,
+      element: <Shop products={products} top3={top3} />,
+    },
+    {
+      path: "/shop",
+      element: <Shop products={products} top3={top3} />,
     },
     {
       path: "/Login",
@@ -65,10 +93,6 @@ const App = () => {
           <Login />
         </ProtectedIfUserIsLogged>
       ),
-    },
-    {
-      path: "/Shop",
-      element: <Shop products={products} />,
     },
     {
       path: "/Cart",
@@ -133,6 +157,14 @@ const App = () => {
     {
       path: "/product/:id",
       element: <Product products={products} />,
+    },
+    {
+      path: "/Dashboard",
+      element: (
+        <ProtectedSysAdmin>
+          <AdminDashboard />
+        </ProtectedSysAdmin>
+      ),
     },
   ]);
   return (
