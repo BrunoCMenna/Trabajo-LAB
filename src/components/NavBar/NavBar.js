@@ -49,7 +49,7 @@ const NavBar = () => {
           {user ? (
             <>
               <span className="d-flex align-self-center align-text-center text-white">
-                Hola, {user.email.split("@")[0]}!
+                Hola, {user && user.email ? user.email.split("@")[0] : "invitado"}!
               </span>
               {user.role === "admin" ? (
                 <>

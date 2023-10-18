@@ -3,23 +3,24 @@ import { useNavigate } from "react-router";
 import { getDatabase, ref, onValue, update } from "firebase/database";
 import { Modal, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
-
-import "../OrderPanel/OrderPanel.css";
-
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { LoaderContext } from "../../contexts/LoaderContext";
+import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import Spinner from "../ui/Spinner";
+import "../OrderPanel/OrderPanel.css";
 
 const ShowOrders = () => {
   const [userOrders, setUserOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Pedidos");
+  const [orderEndpointsResult, SetOrderEndpointsResult] = useState("");
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
   const { toggleLoading, isLoading } = useContext(LoaderContext);
+  const { token } = useContext(UserContext);
 
   useEffect(() => {
     toggleLoading(true);
@@ -42,6 +43,24 @@ const ShowOrders = () => {
       setUserOrders(orders);
       toggleLoading(false);
     });
+
+    fetch("https://localhost:44377/api/Order/GetOrders", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((newProductData) => {
+        //toast.success("Producto agregado con éxito");
+        console.log("Ventas traidas:", newProductData);
+        console.log("Objeto como está ahora: ", filteredOrders);
+        SetOrderEndpointsResult(newProductData);
+      })
+      .catch((error) => {
+        console.error("Error al traer ventas:", error);
+      });
 
     return () => {
       unsubscribe();
@@ -178,88 +197,104 @@ const ShowOrders = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredOrders.map((order, index) => (
-                          <tr key={index}>
-                            <td className="px-3">{order.email}</td>
-                            <td className="px-3">{order.name}</td>
-                            <td className="px-3">{order.phoneNumber}</td>
-                            <td className="px-3">{order.province}</td>
-                            <td className="px-3">{order.city}</td>
-                            <td className="px-3">{order.zipcode}</td>
-                            <td className="px-3">{order.address}</td>
-                            <td className="px-3">
-                              <ul className="list-unstyled d-flex">
-                                {order.products.map((product, productIndex) => (
-                                  <li
-                                    key={productIndex}
-                                    className="accordion-item"
-                                  >
-                                    <button
-                                      className="accordion-button"
-                                      type="button"
-                                      data-bs-toggle="collapse"
-                                      data-bs-target={`#collapse${index}${productIndex}`}
-                                      aria-expanded="false"
-                                      aria-controls={`collapse${index}${productIndex}`}
-                                    >
-                                      <div className="d-flex align-items-center">
-                                        <div className="d-flex flex-wrap">
-                                          <img
-                                            src={product.image}
-                                            alt="Producto"
-                                            className="img-fluid img-thumbnail img-product mr-3"
-                                            style={{
-                                              width: "100px",
-                                            }}
-                                          />
-                                        </div>
-                                      </div>
-                                    </button>
-                                    <div
-                                      id={`collapse${index}${productIndex}`}
-                                      className="accordion-collapse collapse"
-                                      aria-labelledby={`heading${index}${productIndex}`}
-                                    >
-                                      <div
-                                        className={`card card-body ${
-                                          theme === "dark" &&
-                                          "text-bg-secondary"
-                                        }`}
+                        {/* {orderEndpointsResult.map((order, index))} */}
+                        {orderEndpointsResult &&
+                          orderEndpointsResult.map((order, index) => (
+                            <tr key={index}>
+                              <td className="px-3">
+                                {order.email || order.userId}
+                              </td>
+                              <td className="px-3">{order.name || "Jorge"}</td>
+                              <td className="px-3">{order.phone}</td>
+                              <td className="px-3">{order.province}</td>
+                              <td className="px-3">
+                                {order.city || "Rosario"}
+                              </td>
+                              <td className="px-3">{order.zipCode}</td>
+                              <td className="px-3">{order.shippingAddress}</td>
+                              <td className="px-3">
+                              {/* forma de mapear los items de las ventas */}
+                              {/* {order.orderItems.map((item) => item.productId).join(", ")} */}
+                              <img src={order.orderImage} alt="Imagen de la orden" width={50} />
+                              <img src={order.orderImage} alt="Imagen de la orden" width={50} />
+                              </td>
+                              {/* <td className="px-3">
+                                <ul className="list-unstyled d-flex"> */}
+                              {/* {order.products.map(
+                                    (product, productIndex) => (
+                                      <li
+                                        key={productIndex}
+                                        className="accordion-item"
                                       >
-                                        <p>
-                                          {product.brand} {product.model}
-                                        </p>
-                                        <p>Precio: ${product.price}</p>
-                                        <p>Cantidad: {product.quantity}</p>
-                                      </div>
-                                    </div>
-                                  </li>
-                                ))}
-                              </ul>
-                            </td>
-                            <td className="px-3">${order.totalPrice}</td>
-                            <td>
-                              {order.state !== "Entregado" ? (
-                                <select
-                                  value={order.state}
-                                  onChange={(e) =>
-                                    handleStateChange(
-                                      order.userId,
-                                      e.target.value,
-                                      order.orderId
+                                        <button
+                                          className="accordion-button"
+                                          type="button"
+                                          data-bs-toggle="collapse"
+                                          data-bs-target={`#collapse${index}${productIndex}`}
+                                          aria-expanded="false"
+                                          aria-controls={`collapse${index}${productIndex}`}
+                                        >
+                                          <div className="d-flex align-items-center">
+                                            <div className="d-flex flex-wrap">
+                                              <img
+                                                src={product.image}
+                                                alt="Producto"
+                                                className="img-fluid img-thumbnail img-product mr-3"
+                                                style={{
+                                                  width: "100px",
+                                                }}
+                                              />
+                                            </div>
+                                          </div>
+                                        </button>
+                                        <div
+                                          id={`collapse${index}${productIndex}`}
+                                          className="accordion-collapse collapse"
+                                          aria-labelledby={`heading${index}${productIndex}`}
+                                        >
+                                          <div
+                                            className={`card card-body ${
+                                              theme === "dark" &&
+                                              "text-bg-secondary"
+                                            }`}
+                                          >
+                                            <p>
+                                              {product.brand} {product.model}
+                                            </p>
+                                            <p>Precio: ${product.price}</p>
+                                            <p>Cantidad: {product.quantity}</p>
+                                          </div>
+                                        </div>
+                                      </li>
                                     )
-                                  }
-                                >
-                                  <option value="Pendiente">Pendiente</option>
-                                  <option value="Despachado">Despachado</option>
-                                  <option value="Entregado">Entregado</option>
-                                </select>
-                              ) : (
-                                "Entregado"
-                              )}
-                            </td>
-                          </tr>
-                        ))}
+                                  )} */}
+                              {/* </ul>
+                              </td> */}
+                              <td className="px-3">${order.orderTotal}</td>
+                              <td>
+                                {order.orderStatus !== "Entregado" ? (
+                                  <select
+                                    value={order.status}
+                                    onChange={(e) =>
+                                      handleStateChange(
+                                        order.userId,
+                                        e.target.value,
+                                        order.orderId
+                                      )
+                                    }
+                                  >
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Despachado">
+                                      Despachado
+                                    </option>
+                                    <option value="Entregado">Entregado</option>
+                                  </select>
+                                ) : (
+                                  "Entregado"
+                                )}
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </div>
                   </table>

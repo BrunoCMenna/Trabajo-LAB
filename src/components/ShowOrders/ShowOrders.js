@@ -16,6 +16,7 @@ const ShowOrders = () => {
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
   const { isLoading, toggleLoading } = useContext(LoaderContext);
+  const { token } = useContext(UserContext);
 
   useEffect(() => {
     toggleLoading(true);
@@ -32,6 +33,25 @@ const ShowOrders = () => {
       setUserOrders(orders);
       toggleLoading(false);
     });
+
+    fetch(
+      `https://localhost:44377/api/Order/GetOrdersByUserId/${user.nameid}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((newProductData) => {
+        //toast.success("Producto agregado con éxito");
+        console.log("Ventas traidas:", newProductData);
+      })
+      .catch((error) => {
+        console.error("Error al traer ventas:", error);
+      });
 
     return () => {
       unsubscribe();
