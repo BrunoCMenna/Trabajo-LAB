@@ -5,7 +5,7 @@ import "./FloatingButton.css";
 
 const FloatingButton = () => {
   const handleClick = () => {
-    window.location.href = "https://web.whatsapp.com";
+    window.open("https://web.whatsapp.com", "_blank");
   };
 
   return (
