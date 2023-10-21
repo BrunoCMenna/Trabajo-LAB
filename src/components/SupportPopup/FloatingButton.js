@@ -5,7 +5,7 @@ import "./FloatingButton.css";
 
 const FloatingButton = () => {
   const handleClick = () => {
-    window.open("https://api.whatsapp.com", "_blank");
+    window.open("https://wa.me.com/", "_blank");
   };
 
   return (
