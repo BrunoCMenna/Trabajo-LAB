@@ -11,9 +11,6 @@
 # production
 /build
 
-#para que no haya conflicto con tobi 23/10 19:00
-/src/components/ShowOrders
-
 # misc
 .DS_Store
 .env.local
