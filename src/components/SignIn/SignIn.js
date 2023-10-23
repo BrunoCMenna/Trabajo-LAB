@@ -6,6 +6,8 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { UserContext } from "../../contexts/AuthContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
+import { ToastContainer } from "react-bootstrap";
+import { toast } from "react-toastify";
 //const token = "Your JWT";
 
 const SignIn = () => {
@@ -37,15 +39,15 @@ const SignIn = () => {
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     if (values.email === "") {
-      errors.email = "El email no puede ser vacío";
+      return toast.error("El email no puede ser vacío");
     } else if (!emailPattern.test(values.email)) {
-      errors.email = "Ingrese un email válido";
+      return toast.error("Ingrese un email válido");
     }
 
     if (values.password === "") {
-      errors.password = "Contraseña es obligatoria";
+      return toast.error("Contraseña es obligatoria");
     } else if (!passwordPattern.test(values.password)) {
-      errors.password = "Mínimo de 8 caracteres con un número";
+      return toast.error("Mínimo de 8 caracteres con un número");
     }
     return errors;
   };
@@ -63,58 +65,34 @@ const SignIn = () => {
     if (Object.keys(errorObj).length === 0) {
       console.log("no hay errores");
       setErrors(errorObj);
-      //debugger;
-      //borrar este createUser()
-      //createUser(values.email, values.password, values.role);
-      //aca estoy tratando de usar el endpoint
       try {
-        // Realiza la solicitud POST al endpoint
         const response = await fetch(
           "https://localhost:44377/api/Auth/SignIn",
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json", // Asegúrate de establecer el tipo de contenido correcto
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(
-              // values.firstName,
-              // values.lastName,
-              // values.email,
-              // values.password
-              {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                password: values.password,
-              }
-            ), // Convierte los datos a formato JSON
+            body: JSON.stringify({
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+              password: values.password,
+            }),
           }
         );
 
         // Verifica si la solicitud fue exitosa (código de respuesta 200)
         if (response.ok || response.status === 200) {
-          // const responseData = decodedToken(response.token);
           const responseData = await response.text();
-          // console.log("token decodificado:", responseData);
-          // const myDecodedToken = decodeToken(responseData);
           logInUser(responseData);
-          // const responseData = await response.json();
-          // // Aquí puedes manejar la respuesta del servidor según tus necesidades
-          // console.log("Respuesta del servidor:", responseData);
         } else {
-          // Si la solicitud no fue exitosa, puedes manejar el error aquí
-          console.error(
-            "Error en la solicituddddddd:",
-            response.status,
-            response.statusText
-          );
+          const responseData = await response.text();
+          return toast.error(responseData);
         }
       } catch (error) {
         console.error("Error en la solicitud:", error);
       }
-    } else {
-      console.log("hay errores");
-      setErrors(errorObj);
     }
   };
 
@@ -183,6 +161,18 @@ const SignIn = () => {
             </form>
           </div>
         </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
       <Footer />
     </div>
