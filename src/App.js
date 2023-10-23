@@ -25,6 +25,7 @@ import { LoaderContext } from "./contexts/LoaderContext";
 import SuppContent from "./components/Supp/SuppContent";
 import Product from "./components/Product/Product";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import FloatingButton from "./components/SupportPopup/FloatingButton";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -35,7 +36,7 @@ const App = () => {
 
   useEffect(() => {
     toggleLoading(true);
-  
+
     // Primera llamada API
     fetch(PRODUCTS_ENDPOINT, {
       headers: {
@@ -55,7 +56,7 @@ const App = () => {
         console.log(error);
         toggleLoading(false);
       });
-  
+
     // Segunda llamada API
     fetch("https://localhost:44377/api/Product/GetTopProducts", {
       headers: {
@@ -76,7 +77,7 @@ const App = () => {
         toggleLoading(false);
       });
   }, []);
-  
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -162,7 +163,7 @@ const App = () => {
       path: "/Dashboard",
       element: (
         <ProtectedSysAdmin>
-          <AdminDashboard />
+          <AdminDashboard products={products}/>
         </ProtectedSysAdmin>
       ),
     },
@@ -182,6 +183,7 @@ const App = () => {
         theme={`${theme}`}
       />
       <RouterProvider router={router} />
+      <FloatingButton />
     </div>
   );
 };

@@ -9,6 +9,8 @@ import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../../contexts/AuthContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-bootstrap";
 //const token = "Your JWT";
 
 const Login = () => {
@@ -38,7 +40,7 @@ const Login = () => {
       const response = await fetch("https://localhost:44377/api/Auth/LogIn", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Asegúrate de establecer el tipo de contenido correcto
+          "Content-Type": "application/json", 
         },
         body: JSON.stringify({
           email: email,
@@ -46,21 +48,15 @@ const Login = () => {
         }),
       });
 
-      // Verifica si la solicitud fue exitosa (código de respuesta 200)
+      
       if (response.ok || response.status === 200) {
         const responseData = await response.text();
-        // console.log("token del back:", responseData);
-        // const myDecodedToken = decodeToken(responseData);
-        // console.log(myDecodedToken);
-        // setToken(responseData);
         logInUser(responseData);
       } else {
-        // Si la solicitud no fue exitosa, puedes manejar el error aquí
-        console.error(
-          "Error en la solicitud:",
-          response.status,
-          response.statusText
-        );
+        const responseData = await response.text();
+        return toast.error(responseData);
+        
+        
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -144,6 +140,18 @@ const Login = () => {
             </form>
           </div>
         </div>
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       </div>
       <Footer />
     </div>
