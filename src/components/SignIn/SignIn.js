@@ -39,7 +39,7 @@ const SignIn = () => {
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
     if (values.email === "") {
-      return toast.error("El email no puede ser vacío");;
+      return toast.error("El email no puede ser vacío");
     } else if (!emailPattern.test(values.email)) {
       return toast.error("Ingrese un email válido");
     }
@@ -71,24 +71,25 @@ const SignIn = () => {
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json", 
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(
-              {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                email: values.email,
-                password: values.password,
-              }
-            ), 
+            body: JSON.stringify({
+              firstName: values.firstName,
+              lastName: values.lastName,
+              email: values.email,
+              password: values.password,
+            }),
           }
         );
 
         // Verifica si la solicitud fue exitosa (código de respuesta 200)
         if (response.ok || response.status === 200) {
-          const responseData = await response.text();         
-          logInUser(responseData);          
-        } 
+          const responseData = await response.text();
+          logInUser(responseData);
+        } else {
+          const responseData = await response.text();
+          return toast.error(responseData);
+        }
       } catch (error) {
         console.error("Error en la solicitud:", error);
       }
