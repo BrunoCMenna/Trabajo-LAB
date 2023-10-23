@@ -52,11 +52,18 @@ const ShoppingCartProvider = ({ children }) => {
     }));
   };
 
+  const updateCartItemQuantity = (itemId, quantity) => {
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: parseInt(quantity),
+    }));
+  };
+
   const removeFromCart = (itemId) => {
     if (cartItems[itemId] === 0) {
       alert("El producto no se encuentra en el carrito");
     } else {
-      setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+      setCartItems((prev) => ({ ...prev, [itemId]: 0 }));
     }
   };
 
@@ -89,6 +96,7 @@ const ShoppingCartProvider = ({ children }) => {
     getTotalCartAmount,
     getDefaultCart,
     setCartItems,
+    updateCartItemQuantity,
   };
   return (
     <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>

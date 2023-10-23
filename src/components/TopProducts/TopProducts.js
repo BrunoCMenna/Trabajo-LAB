@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import "../PhoneCard/PhoneCard.css";
 import "../PhoneItem/PhoneItem.css";
-import "./TopProducts.css"
+import "./TopProducts.css";
 import { useNavigate } from "react-router";
 
 const ProductCard = ({ product }) => {

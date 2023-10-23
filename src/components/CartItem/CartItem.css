@@ -1,11 +1,11 @@
 .trash-btn {
   margin: 0;
   padding: 0;
-  position: relative;
-  left: 25px;
+  font-size: 12px;
+  color: #0d6efd;
 }
 .product-img {
-  width: 150px;
+  width: 100px;
 }
 
 .qty {
@@ -13,10 +13,27 @@
 }
 
 .cart-item-dark {
-  background-color: #242424;
+  background-color: #303030;
   color: white;
 }
 
 .trash-button-dark {
+  color: white;
+}
+
+h5 {
+  margin: 0;
+  padding: 0;
+}
+
+.quantity-input {
+  min-width: 99px;
+}
+
+.cart-item-dark input,
+.cart-item-dark select,
+.cart-item-dark label {
+  background-color: #363636;
+  border-color: #505050;
   color: white;
 }

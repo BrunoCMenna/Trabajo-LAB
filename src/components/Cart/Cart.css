@@ -1,6 +1,6 @@
 .cart-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   padding-bottom: 0;
   min-height: calc(
@@ -10,6 +10,7 @@
 
 .cart-container-dark {
   background-color: #303030;
+  color: white;
 }
 
 .emptyCart {
@@ -23,34 +24,45 @@
 }
 
 .cart-table {
-  border-right: 1px solid rgba(220, 220, 220, 0.267);
-  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
 }
 
 .cart-table-dark {
-  background-color: #242424;
+  background-color: #303030;
 }
 
 .subtotal {
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  padding: 1rem;
-  padding-top: 1.5rem;
+  width: 100%;
+  margin: auto;
 }
 
 .subtotal h4 {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.buttons-container {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .subtotal-dark {
-  background-color: #242424;
+  background-color: #303030;
   color: white;
 }
 
 .subtotal-buttons-dark {
-  background-color: #242424;
+  background-color: #303030;
   border-radius: 5px;
   color: white;
+}
+
+.products-container {
+  max-width: 100%;
+  width: 1000px;
 }

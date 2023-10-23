@@ -35,7 +35,7 @@ const App = () => {
 
   useEffect(() => {
     toggleLoading(true);
-  
+
     // Primera llamada API
     fetch(PRODUCTS_ENDPOINT, {
       headers: {
@@ -55,7 +55,7 @@ const App = () => {
         console.log(error);
         toggleLoading(false);
       });
-  
+
     // Segunda llamada API
     fetch("https://localhost:44377/api/Product/GetTopProducts", {
       headers: {
@@ -76,7 +76,7 @@ const App = () => {
         toggleLoading(false);
       });
   }, []);
-  
+
   const router = createBrowserRouter([
     {
       path: "/",

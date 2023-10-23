@@ -9,6 +9,8 @@ import { CartContext } from "../../contexts/ShoppingCartContext";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import CartItem from "../CartItem/CartItem";
+import useFormattedNumber from "../../hooks/useFormattedNumber";
+import { FaShoppingCart } from "react-icons/fa";
 
 const Cart = ({ products }) => {
   const { theme } = useContext(ThemeContext);
@@ -17,7 +19,7 @@ const Cart = ({ products }) => {
   const navigation = useNavigate();
 
   const itemsInCart = getItemAmount();
-  const totalPrice = getTotalCartAmount();
+  const totalPrice = useFormattedNumber(getTotalCartAmount());
 
   const goShop = () => {
     navigation("/shop");
@@ -35,10 +37,15 @@ const Cart = ({ products }) => {
             theme === "dark" && "cart-container-dark"
           }`}
         >
+          <div className="text-center p-4">
+            <h2>
+              CARRITO <FaShoppingCart />
+            </h2>
+          </div>
           <div
             className={`cart-table ${theme === "dark" && "cart-table-dark"}`}
           >
-            <div>
+            <div className="products-container">
               {products.map((product, index) => {
                 if (cartItems[product.id] !== 0) {
                   return (
@@ -49,6 +56,7 @@ const Cart = ({ products }) => {
                       model={product.model}
                       price={product.price}
                       image={product.image}
+                      inStock={product.inStock}
                     />
                   );
                 } else {
@@ -61,14 +69,16 @@ const Cart = ({ products }) => {
           <div className={`subtotal ${theme === "dark" && "subtotal-dark"}`}>
             <div className={`${theme === "dark" && "subtotal-buttons-dark"}`}>
               <h4>
-                Total: <span>${totalPrice}</span>
+                Total: <span className="ps-3">${totalPrice}</span>
               </h4>
-              <Button className="btn btn-success" onClick={goOrders}>
-                Comprar
-              </Button>
-              <Button className="btn btn-primary" onClick={goShop}>
-                Volver a la tienda
-              </Button>
+              <div className="buttons-container">
+                <Button className="btn btn-primary" onClick={goShop}>
+                  Volver
+                </Button>
+                <Button className="btn btn-success" onClick={goOrders}>
+                  Continuar compra
+                </Button>
+              </div>
             </div>
           </div>
         </div>
