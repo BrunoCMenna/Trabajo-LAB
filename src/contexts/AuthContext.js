@@ -13,7 +13,7 @@ const userCookie = Cookies.get("user");
 const userTokenCookie = Cookies.get("userToken");
 
 const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState(userCookie);
+  const [user, setUser] = useState(userCookie ? JSON.parse(userCookie) : null);
   const [token, setToken] = useState(userTokenCookie);
 
   const logOutUser = () => {
@@ -50,7 +50,6 @@ const AuthContextProvider = ({ children }) => {
 
   const logInUser = (token) => {
     const myDecodedToken = decodeToken(token);
-    console.log(myDecodedToken);
     setToken(token);
     setUser(myDecodedToken);
     Cookies.set("user", JSON.stringify(myDecodedToken));
