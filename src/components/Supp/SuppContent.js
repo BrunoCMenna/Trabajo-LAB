@@ -21,7 +21,6 @@ function SuppContent() {
       <NavBar />
       <div className="App">
         <AccordionItem
-          //estas 3 cosas capas pueden ser pasadas como render props
           title="Preguntas Frecuentes"
           isActive={activeItem === "preguntas-frecuentes"}
           toggleItem={() => toggleItem("preguntas-frecuentes")}
@@ -34,7 +33,7 @@ function SuppContent() {
                 <h2>Medio de pago</h2>
                 <p>
                   Actualmente contamos solo con mercado pago, pero tenemos
-                  pensado ampliarnos a mas metodos en la brevedad
+                  pensado ampliarnos a más métodos en la brevedad
                 </p>
                 <h2>Precios e IVA</h2>
                 <p>Todos los precios son precios finales con IVA incluido</p>
@@ -70,7 +69,7 @@ function SuppContent() {
           isActive={activeItem === "sobre-envios"}
           toggleItem={() => toggleItem("sobre-envios")}
         >
-          {(isActive) => isActive && <p>Información de envios</p>}
+          {(isActive) => isActive && <p>Información de envíos</p>}
         </AccordionItem>
       </div>
       <Footer />

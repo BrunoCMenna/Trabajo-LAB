@@ -2,3 +2,18 @@ html {
   font-family: sans-serif;
   background-color: red;
 }
+
+.appLight {
+  background-color: rgba(235, 235, 235, 0.966);
+  z-index: 0; 
+  height: 100vh;
+  position: relative;
+}
+
+.appDark {
+  background-color: transparent;
+  background-color: #303030;
+  z-index: 0; 
+  height: 100vh;
+  position: relative;
+}

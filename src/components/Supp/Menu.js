@@ -6,8 +6,8 @@ function AccordionItem({ title, isActive, toggleItem, children }) {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={`filters-container ${isActive ? "active" : ""} ${
-        theme === "dark" && "sidebar-dark"
+      className={`Accordeon-container ${isActive ? "active" : ""} ${
+        theme === "dark" && "Accordeon-container-dark "
       }`}
     >
       <button
