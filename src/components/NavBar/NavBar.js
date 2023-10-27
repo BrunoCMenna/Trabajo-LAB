@@ -54,7 +54,7 @@ const NavBar = () => {
           {user ? (
             <>
               <span className="d-flex align-self-center align-text-center text-white">
-                Hola, {user.name}!
+                Hola, {user.name ?? "invitado"}!
               </span>
               {user.role === "admin" ? (
                 <>
