@@ -39,6 +39,7 @@
 }
 
 .CRI button {
+  margin-bottom: 1rem;
   transition: 0.2s;
   color: rgb(209, 209, 209);
   margin-left: 20px;
@@ -48,4 +49,17 @@
 button {
   border-style: none;
   background-color: transparent;
+}
+
+.menu-button {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .CRI {
+    display: none;
+  }
+  .menu-button {
+    display: block;
+  }
 }

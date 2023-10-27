@@ -51,6 +51,8 @@ const UserPanel = () => {
       })
       .catch((error) => {
         console.error("Error al traer users:", error);
+        toggleLoading(false);
+        toast.error("Error al traer usuarios");
       });
   };
 
