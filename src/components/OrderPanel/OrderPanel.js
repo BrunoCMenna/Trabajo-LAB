@@ -17,6 +17,8 @@ const ShowOrders = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Pedidos");
   const [orderEndpointsResult, SetOrderEndpointsResult] = useState("");
+  // const [orderItemsEndpointsResult, SetOrderItemsEndpointsResult] =
+  //   useState("");
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
   const { toggleLoading, isLoading } = useContext(LoaderContext);
@@ -55,8 +57,14 @@ const ShowOrders = () => {
       .then((newProductData) => {
         //toast.success("Producto agregado con éxito");
         console.log("Ventas traidas:", newProductData);
+        console.log("OrderItems traidos:", orderEndpointsResult.orderItems);
+        //aca tengo que seguir
         console.log("Objeto como está ahora: ", filteredOrders);
         SetOrderEndpointsResult(newProductData);
+        //SetOrderItemsEndpointsResult(orderEndpointsResult.orderItems);
+        // for (const orderItem in newProductData.orderItems) {
+        //   SetOrderItemsEndpointsResult(...orderItem);
+        // }
       })
       .catch((error) => {
         console.error("Error al traer ventas:", error);
@@ -201,23 +209,96 @@ const ShowOrders = () => {
                         {orderEndpointsResult &&
                           orderEndpointsResult.map((order, index) => (
                             <tr key={index}>
-                              <td className="px-3">
-                                {order.email || order.userId}
-                              </td>
-                              <td className="px-3">{order.name || "Jorge"}</td>
+                              <td className="px-3">{order.email}</td>
+                              <td className="px-3">{order.nameLastName}</td>
                               <td className="px-3">{order.phone}</td>
                               <td className="px-3">{order.province}</td>
-                              <td className="px-3">
-                                {order.city || "Rosario"}
-                              </td>
+                              <td className="px-3">{order.city}</td>
                               <td className="px-3">{order.zipCode}</td>
                               <td className="px-3">{order.shippingAddress}</td>
                               <td className="px-3">
-                              {/* forma de mapear los items de las ventas */}
-                              {/* {order.orderItems.map((item) => item.productId).join(", ")} */}
+                                {/* forma de mapear los items de las ventas */}
+                                {/* {order.orderItems.map((item) => item.productId).join(", ")} */}
+                                {/* <img src={order.orderImage} alt="Imagen de la orden" width={50} />
                               <img src={order.orderImage} alt="Imagen de la orden" width={50} />
-                              <img src={order.orderImage} alt="Imagen de la orden" width={50} />
+                              */}
+                                {/* {orderItemsEndpointsResult &&
+                                  orderItemsEndpointsResult.map(
+                                    (orderItems, index) => (
+                                      <tr key={index}>
+                                        <td className="px-3">
+                                          {orderItems.quantity}
+                                        </td>
+                                      </tr>
+                                    )
+                                  )} */}
+                                {/* {orderEndpointsResult &&
+                                  orderEndpointsResult.orderItems.map(
+                                    (orderItems, index) => (
+                                      <tr key={index}>
+                                        <td className="px-3">
+                                          {orderItems.profuctId ||
+                                            orderItems.quantity}
+                                        </td>
+                                      </tr>
+                                    )
+                                  )} */}
+                                {/* FUNCIONAAA. fijarse como estaba antes para ver como acomodarlo ahora */}
+                                {/* pasar este codigo viejo al actual
+                                 {order.products.map((product, productIndex) => (
+                                <li
+                                  key={productIndex}
+                                  className="accordion-item"
+                                >
+                                  <button
+                                    className="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target={`#collapse${index}${productIndex}`}
+                                    aria-expanded="false"
+                                    aria-controls={`collapse${index}${productIndex}`}
+                                  >
+                                    <div className="d-flex align-items-center">
+                                      <div className="d-flex flex-wrap">
+                                        <img
+                                          src={product.image}
+                                          alt="Producto"
+                                          className="img-fluid img-thumbnail img-product mr-3"
+                                          style={{ width: "100px" }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </button>
+                                  <div
+                                    id={`collapse${index}${productIndex}`}
+                                    className="accordion-collapse collapse"
+                                    aria-labelledby={`heading${index}${productIndex}`}
+                                  >
+                                    <div className="card card-body">
+                                      <p>
+                                        {product.brand} {product.model}
+                                      </p>
+                                      <p>Precio unitario: ${product.price}</p>
+                                      <p>Cantidad: {product.quantity}</p>
+                                    </div>
+                                  </div>
+                                </li>
+                              ))} */}
+                                {orderEndpointsResult &&
+                                  Array.isArray(orderEndpointsResult) &&
+                                  orderEndpointsResult.map((order, index) => (
+                                    <tr key={index}>
+                                      <td className="px-3">
+                                        {order.orderItems.map((item) => (
+                                          <div key={item.id}>
+                                            {item.productId || item.quantity}
+                                          </div>
+                                        ))}
+                                      </td>
+                                    </tr>
+                                  ))}
                               </td>
+                              {/* todo esto vendria a ser como estaba antes mepa */}
                               {/* <td className="px-3">
                                 <ul className="list-unstyled d-flex"> */}
                               {/* {order.products.map(
