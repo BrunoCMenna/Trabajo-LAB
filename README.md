@@ -12,10 +12,10 @@ Tenemos un apartado de Preguntas Frecuentes, pero también contamos con un sopor
 # Ubicacion de requisitos TPI
 # FrontEnd
 
-Custom Hooks: se encuentran en TopProducts.js y {2do CH} __
-Testing Unitario: se le realizó al componente {} __
-Componente de chat: se encuentra en la carpeta SupportPopup __
-Contamos con modo oscuro en toda la web__
+Custom Hooks: se encuentran en TopProducts.js y {2do CH} <br />
+Testing Unitario: se le realizó al componente {} <br />
+Componente de chat: se encuentra en la carpeta SupportPopup <br />
+Contamos con modo oscuro en toda la web <br />
 
 # BackEnd
 
