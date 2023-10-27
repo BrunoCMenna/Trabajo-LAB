@@ -2,6 +2,21 @@
   display: flex;
 }
 
+.Accordeon-container {
+  display: flex;
+  flex-direction: column; /* Cambia la dirección de flexión a columna */
+  justify-content: center;
+  align-items: center;
+  color: black;
+  max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+  margin: 0 auto; /* Centra horizontalmente */
+}
+
+.Accordeon-container-dark {
+  background-color: #303030;
+  color: white;
+}
+
 ul {
   list-style: none;
   padding: 0;
@@ -17,6 +32,16 @@ li {
 
 .content {
   margin-left: 20px;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+}
+
+.AcordeonItem {
+  margin: 0; /* Establecer margen a 0 */
+  padding: 0; /* Establecer relleno a 0 */
 }
 
 a {

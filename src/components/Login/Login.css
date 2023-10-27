@@ -1,6 +1,6 @@
 .banner {
   background-image: url("https://www.cronista.com/files/image/419/419139/61d3378d218ac.jpg");
-  background-size: cover;
+  background-size: contain;
   width: 100%;
   height: 100%;
   position: absolute;

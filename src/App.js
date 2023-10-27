@@ -78,6 +78,15 @@ const App = () => {
       });
   }, []);
 
+  useEffect(() => {
+    const body = document.body;
+    body.classList.add(theme === "dark" ? "appDark" : "appLight");
+
+    return () => {
+      body.classList.remove("appDark", "appLight");
+    };
+  }, [theme]);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -169,7 +178,7 @@ const App = () => {
     },
   ]);
   return (
-    <div>
+    <div className={theme === "dark" ? "appDark" : "appLight"}>
       <ToastContainer
         position="top-center"
         autoClose={1000}
@@ -185,6 +194,7 @@ const App = () => {
       <RouterProvider router={router} />
       <FloatingButton />
     </div>
+    
   );
 };
 

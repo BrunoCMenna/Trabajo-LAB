@@ -15,8 +15,8 @@ const SignIn = () => {
   const { theme } = useContext(ThemeContext);
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
-    firstName: "Gerardos",
-    lastName: "Aguirres",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     role: "user",
@@ -49,15 +49,16 @@ const SignIn = () => {
     } else if (!passwordPattern.test(values.password)) {
       return toast.error("Mínimo de 8 caracteres con un número");
     }
+
+    if (values.firstName === "") {
+      return toast.error("Nombre no puede ser vacio");
+    }
+
+    if (values.lastName === "") {
+      return toast.error("Apellido no puede ser vacio");
+    }
     return errors;
   };
-
-  // const requestData = {
-  //   firstName: values.firstName,
-  //   lastName: values.lastName,
-  //   email: values.email,
-  //   password: values.password,
-  // };
 
   const logInHandler = async (e) => {
     e.preventDefault();
@@ -111,6 +112,30 @@ const SignIn = () => {
             </h2>
             <form>
               <div className="form-group mb-3">
+                <label className="form-label" for="firstName">
+                  Nombre:
+                </label>
+                <input
+                  className="form-control"
+                  type="firstName"
+                  name="firstName"
+                  onChange={handleInput}
+                  required
+                />
+              </div>
+              <div className="form-group mb-3">
+                <label className="form-label" for="lastName">
+                  Apellido:
+                </label>
+                <input
+                  className="form-control"
+                  type="lastName"
+                  name="lastName"
+                  onChange={handleInput}
+                  required
+                />
+              </div>
+              <div className="form-group mb-3">
                 <label className="form-label" for="email">
                   Email:
                 </label>
@@ -121,9 +146,6 @@ const SignIn = () => {
                   onChange={handleInput}
                   required
                 />
-                {errors.email && (
-                  <p className="text-danger text-center">{errors.email}</p>
-                )}
               </div>
               <div className="form-group mb-3">
                 <label className="form-label" for="password">
@@ -137,9 +159,6 @@ const SignIn = () => {
                   required
                 />
               </div>
-              {errors.password && (
-                <p className="text-danger text-center">{errors.password}</p>
-              )}
               <div className="d-flex justify-content-center">
                 <button
                   onClick={logInHandler}
