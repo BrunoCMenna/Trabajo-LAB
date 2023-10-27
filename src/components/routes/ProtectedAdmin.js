@@ -6,7 +6,7 @@ import { UserContext } from "../../contexts/AuthContext";
 const ProtectedAdmin = ({ children }) => {
   const { user } = useContext(UserContext);
 
-  if (!user || user.role !== "admin") {
+  if (!user || user.role === "user") {
     return <Navigate to="/" replace />;
   }
   return children;

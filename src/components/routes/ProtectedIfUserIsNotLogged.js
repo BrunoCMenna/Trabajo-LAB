@@ -6,7 +6,7 @@ import { UserContext } from "../../contexts/AuthContext";
 const ProtectedIfUserIsNotLogged = ({ children }) => {
   const { user } = useContext(UserContext);
 
-  if (user === null || user.role === "disabled") {
+  if (user === null || user.role === "disabled" || user.role !== "user") {
     return <Navigate to="/login" replace />;
   }
 
