@@ -70,7 +70,7 @@ const ProductDetail = ({ product }) => {
           </div>
           <div>
             <p className="h1 mt-4">${useFormattedNumber(price)}</p>
-            {isActive ? (
+            {inStock > 0 && isActive ? (
               <div className="text-success d-flex flex-wrap gap-1 align-items-center">
                 <BsCheck2Circle />
                 Unidad disponible{" "}
@@ -120,7 +120,7 @@ const ProductDetail = ({ product }) => {
             </select>
           </div>
           <div className="d-grid mx-auto">
-            {isActive ? (
+            {inStock > 0 && isActive ? (
               <button
                 className="btn btn-primary"
                 type="button"

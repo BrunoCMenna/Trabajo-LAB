@@ -171,9 +171,9 @@ const App = () => {
     {
       path: "/Dashboard",
       element: (
-        <ProtectedAdmin>
-          <AdminDashboard products={products} />
-        </ProtectedAdmin>
+        <ProtectedSysAdmin>
+          <AdminDashboard products={products}/>
+        </ProtectedSysAdmin>
       ),
     },
   ]);
