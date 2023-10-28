@@ -48,28 +48,10 @@ const PhoneItem = ({
           <div className="text-uppercase fw-medium">
             {brand} {model} / {ram} GB RAM / {storage} GB
           </div>
-          {inStock > 0 ? (
+          {inStock > 0 && isActive === true ? (
             <div className="text-success mt-3">Disponible</div>
           ) : (
             <div className="text-danger mt-3">No disponible</div>
-          )}
-          {isActive ? (
-            <>
-              {/* <button
-                  id="cart-button"
-                  type="button"
-                  onClick={addToCartAction}
-                  className="btn btn-outline-success"
-                >
-                  Agregar al carrito <FaCartPlus />
-                </button> */}
-            </>
-          ) : (
-            <>
-              <div className="text-danger">
-                <p>No disponible</p>
-              </div>
-            </>
           )}
         </div>
       </PhoneCard>
