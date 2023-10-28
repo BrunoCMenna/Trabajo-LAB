@@ -33,11 +33,12 @@ const ShowOrders = () => {
       .then((ordersData) => {
         setUserOrders(ordersData);
         console.log("Ordenes traídas: ", ordersData);
+        toggleLoading(false);
       })
       .catch((error) => {
         console.error("Error al traer ventas:", error);
+        toggleLoading(false);
       });
-    toggleLoading(false);
   }, []);
 
   const goShop = () => {
@@ -118,71 +119,58 @@ const ShowOrders = () => {
                       {userOrders &&
                         userOrders.map((order, index) => (
                           <tr key={index}>
-                            <td className="px-3">{order.orderDate}</td>
+                            <td className="px-3">{order.nameLastName}</td>
                             <td className="px-3">{order.phone}</td>
                             <td className="px-3">{order.province}</td>
                             <td className="px-3">{order.city}</td>
                             <td className="px-3">{order.zipCode}</td>
                             <td className="px-3">{order.shippingAddress}</td>
                             <td className="px-3">{order.orderStatus}</td>
-                            {/* <td className="px-3">
+                            <td className="px-3">
                               <ul className="list-unstyled d-flex">
-                                {order.orderItems.map(
-                                  (product, productIndex) => (
-                                    <li
-                                      key={productIndex}
-                                      className="accordion-item"
+                                {order.orderItems.map((item, productIndex) => (
+                                  <li
+                                    key={productIndex}
+                                    className="accordion-item"
+                                  >
+                                    <button
+                                      className="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target={`#collapse${index}${productIndex}`}
+                                      aria-expanded="false"
+                                      aria-controls={`collapse${index}${productIndex}`}
                                     >
-                                      <button
-                                        className="accordion-button"
-                                        type="button"
-                                        data-bs-toggle="collapse"
-                                        data-bs-target={`#collapse${index}${productIndex}`}
-                                        aria-expanded="false"
-                                        aria-controls={`collapse${index}${productIndex}`}
-                                      >
-                                        <div className="d-flex align-items-center">
-                                          <div className="d-flex flex-wrap">
-                                            <img
-                                              src={
-                                                products[product.productId]
-                                                  .image
-                                              }
-                                              alt="Producto"
-                                              className="img-fluid img-thumbnail img-product mr-3"
-                                              style={{ width: "100px" }}
-                                            />
-                                          </div>
-                                        </div>
-                                      </button>
-                                      <div
-                                        id={`collapse${index}${productIndex}`}
-                                        className="accordion-collapse collapse"
-                                        aria-labelledby={`heading${index}${productIndex}`}
-                                      >
-                                        <div className="card card-body">
-                                          <p>
-                                            {
-                                              products[product.productId]
-                                                .brand
-                                            }{" "}
-                                            {
-                                              products[product.productId]
-                                                .model
-                                            }
-                                          </p>
-                                          <p>
-                                            Precio unitario: $
-                                            {product.unitaryPrice}
-                                          </p>
-                                          <p>Cantidad: {product.quantity}</p>
+                                      <div className="d-flex align-items-center">
+                                        <div className="d-flex flex-wrap">
+                                          <img
+                                            src={item.image}
+                                            alt="Producto"
+                                            className="img-fluid img-thumbnail img-product mr-3"
+                                            style={{ width: "100px" }}
+                                          />
                                         </div>
                                       </div>
-                                    </li>
-                                  )
-                                )}
+                                    </button>
+                                    <div
+                                      id={`collapse${index}${productIndex}`}
+                                      className="accordion-collapse collapse"
+                                      aria-labelledby={`heading${index}${productIndex}`}
+                                    >
+                                      <div className="card p-2 card-font">
+                                        <p>
+                                          {item.brand} {item.model}
+                                        </p>
+                                        <p>
+                                          Precio unitario: ${item.unitaryPrice}
+                                        </p>
+                                        <p>Cantidad: {item.quantity}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                ))}
                               </ul>
-                            </td> */}
+                            </td>
                             <td className="px-3">${order.orderTotal}</td>
                           </tr>
                         ))}
