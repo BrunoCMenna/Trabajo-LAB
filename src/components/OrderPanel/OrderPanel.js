@@ -65,8 +65,8 @@ const ShowOrders = () => {
     const requestBody = {
       "orderStatus": newState,
     };
-
     console.log("newState: ", newState);
+    console.log("OrderID: ", orderId);
     fetch(`https://localhost:44377/api/Order/UpdateOrderStatus/${orderId}`, {
       method: "PUT",
       headers: {
