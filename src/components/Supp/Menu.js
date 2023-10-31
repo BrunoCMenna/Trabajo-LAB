@@ -12,13 +12,17 @@ function AccordionItem({ title, isActive, toggleItem, children }) {
     >
       <button
         onClick={toggleItem}
-        className={`sb-button ${theme === "dark" && "sb-button-dark"}`}
+        className={`ac-button ${isActive ? "active" : ""} ${theme === "dark" && "ac-button-dark"}`}
       >
         {title}
       </button>
-      {children(isActive)}
+      <div className={`accordion-content ${isActive ? "active" : ""}`}>
+        {children(isActive)}
+      </div>
     </div>
   );
 }
+
+
 
 export default AccordionItem;
