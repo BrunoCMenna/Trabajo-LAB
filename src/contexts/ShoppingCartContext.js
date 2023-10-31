@@ -36,13 +36,6 @@ const ShoppingCartProvider = ({ children }) => {
       cart[product.id] = 0;
     }
     return cart;
-    //Devuelve un objeto "cart" que su atributo va a coincidir con la ID de cada uno de nuestros objetos PHONES.
-    //Se crearia un objeto que simula ser el carrito de esta forma:
-    // 1: 0
-    // 2: 0
-    // 3: 0
-    // ...
-    // donde el atributo indica el ID de nuestro producto y lo setea en 0 (es decir ninguno esta en el carrito todavia)
   };
 
   const addToCart = (itemId, quantity) => {
