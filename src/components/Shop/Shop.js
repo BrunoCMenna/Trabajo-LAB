@@ -80,6 +80,10 @@ const Shop = ({ products, top3 }) => {
     sortOption
   );
 
+  const finalProducts = filteredAndSortedProducts.filter(
+    (p) => p.isActive !== false
+  );
+
   return (
     <div className={`d-flex flex-column ${theme === "dark" && "shop-dark"}`}>
       <div>
@@ -100,8 +104,6 @@ const Shop = ({ products, top3 }) => {
                 stockFilter={stockFilter}
                 onStockFilterChange={handleStockFilterChange}
                 onPriceFilterChange={handlePriceFilterChange}
-                currentMinPrice={minPrice}
-                currentMaxPrice={maxPrice}
               />
             </div>
             <div>
@@ -116,13 +118,13 @@ const Shop = ({ products, top3 }) => {
                   onClick={() => setShowMobileFilters(!showMobileFilters)}
                 >
                   {showMobileFilters ? (
-                    <>
+                    <div className={`${theme === "dark" && "white-text"}`}>
                       Ocultar Filtros <FaAngleDown />
-                    </>
+                    </div>
                   ) : (
-                    <>
+                    <div className={`${theme === "dark" && "white-text"}`}>
                       Mostrar Filtros <FaAngleRight />
-                    </>
+                    </div>
                   )}
                 </button>
               </div>
@@ -135,15 +137,13 @@ const Shop = ({ products, top3 }) => {
                     stockFilter={stockFilter}
                     onStockFilterChange={handleStockFilterChange}
                     onPriceFilterChange={handlePriceFilterChange}
-                    currentMinPrice={minPrice}
-                    currentMaxPrice={maxPrice}
                   />
                 )}
               </div>
-              <div className="conten">
+              <div className="content">
                 <div className="card-grid">
                   <PhoneCatalog
-                    phones={filteredAndSortedProducts}
+                    phones={finalProducts}
                     brandFilterSelected={brandFilterSelected}
                   />
                 </div>

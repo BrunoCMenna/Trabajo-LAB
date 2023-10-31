@@ -144,7 +144,6 @@ const ProductPanel = ({ products }) => {
         },
       }
     )
-      .then((response) => response.json())
       .then(() => {
         toast.success("Producto desactivado con éxito");
         setEditedProducts((prevProducts) =>
@@ -203,122 +202,141 @@ const ProductPanel = ({ products }) => {
         ) : (
           <>
             <div className="row">
-              {editedProducts.map((product) => (
-                <div key={product.id} className="col-md-4 mb-4">
-                  <div
-                    className={`card ${
-                      product.isActive ? "" : "bg-secondary"
-                    } ${theme === "dark" ? "text-bg-dark" : ""}`}
-                  >
-                    <img
-                      src={product.image}
-                      alt={product.model}
-                      className="card-img-top img-fluid"
-                    />
-                    <div className="card-body d-flex flex-column">
-                      <p className="card-text">
-                        Marca:{" "}
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="brand"
-                          value={product.brand}
-                          onChange={(e) =>
-                            handleInputChangeOnExistingProduct(e, product.id)
-                          }
-                          disabled={isUpdating}
-                        />
-                      </p>
-                      <p className="card-text">
-                        Modelo:{" "}
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="model"
-                          value={product.model}
-                          onChange={(e) =>
-                            handleInputChangeOnExistingProduct(e, product.id)
-                          }
-                          disabled={isUpdating}
-                        />
-                      </p>
-                      <p className="card-text">
-                        Almacenamiento:{" "}
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="storage"
-                          value={product.storage}
-                          onChange={(e) =>
-                            handleInputChangeOnExistingProduct(e, product.id)
-                          }
-                          disabled={isUpdating}
-                        />
-                      </p>
-                      <p className="card-text">
-                        Stock:
-                        <input
-                          type="number"
-                          className="form-control"
-                          name="inStock"
-                          value={product.inStock}
-                          onChange={(e) =>
-                            handleInputChangeOnExistingProduct(e, product.id)
-                          }
-                          disabled={isUpdating}
-                        />
-                      </p>
-                      <p className="card-text">
-                        Precio:
-                        <input
-                          type="number"
-                          className="form-control"
-                          name="price"
-                          value={product.price}
-                          onChange={(e) =>
-                            handleInputChangeOnExistingProduct(e, product.id)
-                          }
-                          disabled={isUpdating}
-                        />
-                      </p>
-                      <p className="card-text">
-                        Imagen:
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="image"
-                          value={product.image}
-                          onChange={(e) =>
-                            handleInputChangeOnExistingProduct(e, product.id)
-                          }
-                          disabled={isUpdating}
-                        />
-                      </p>
-                      <p className="card-text">
-                        Estado:{" "}
-                        {product.isActive ? "Disponible" : "No disponible"}
-                      </p>
-                      {!product.isActive ? (
-                        <button
-                          className={`mx-auto btn btn-sm btn-success`}
-                          onClick={(e) => handleStatusChange(product.id, true)}
-                          disabled={isUpdating}
-                        >
-                          Listar
-                        </button>
-                      ) : (
-                        <button
-                          className="mx-auto btn btn-sm btn-danger mt-2"
-                          onClick={() => openDeleteModal(product.id)}
-                          disabled={isUpdating}
-                        >
-                          Eliminar producto
-                        </button>
-                      )}
+              {editedProducts
+                .filter((p) => p.isActive !== false)
+                .map((product) => (
+                  <div key={product.id} className="col-md-4 mb-4">
+                    <div
+                      className={`card ${
+                        product.isActive ? "" : "bg-secondary"
+                      } ${theme === "dark" ? "text-bg-dark" : ""}`}
+                    >
+                      <img
+                        src={product.image}
+                        alt={product.model}
+                        className="card-img-top img-fluid"
+                      />
+                      <div className="card-body d-flex flex-column">
+                        <p className="card-text">
+                          Marca:{" "}
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="brand"
+                            value={product.brand}
+                            onChange={(e) =>
+                              handleInputChangeOnExistingProduct(e, product.id)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </p>
+                        <p className="card-text">
+                          Modelo:{" "}
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="model"
+                            value={product.model}
+                            onChange={(e) =>
+                              handleInputChangeOnExistingProduct(e, product.id)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </p>
+                        <p className="card-text">
+                          Almacenamiento:{" "}
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="storage"
+                            value={product.storage}
+                            onChange={(e) =>
+                              handleInputChangeOnExistingProduct(e, product.id)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </p>
+                        <p className="card-text">
+                          Stock:
+                          <input
+                            type="number"
+                            min={0}
+                            className="form-control"
+                            name="inStock"
+                            value={product.inStock}
+                            onChange={(e) =>
+                              handleInputChangeOnExistingProduct(e, product.id)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </p>
+                        <p className="card-text">
+                          Precio:
+                          <input
+                            type="number"
+                            min={0}
+                            className="form-control"
+                            name="price"
+                            value={product.price}
+                            onChange={(e) =>
+                              handleInputChangeOnExistingProduct(e, product.id)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </p>
+                        <p className="card-text">
+                          Descripción:
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="description"
+                            value={product.description}
+                            onChange={(e) =>
+                              handleInputChangeOnExistingProduct(e, product.id)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </p>
+                        <p className="card-text">
+                          Imagen:
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="image"
+                            value={product.image}
+                            onChange={(e) =>
+                              handleInputChangeOnExistingProduct(e, product.id)
+                            }
+                            disabled={isUpdating}
+                          />
+                        </p>
+                        <p className="card-text">
+                          Estado:{" "}
+                          {product.inStock > 0 ? "Disponible" : "No disponible"}
+                        </p>
+                        {!product.isActive ? (
+                          <button
+                            className={`mx-auto btn btn-sm btn-success`}
+                            onClick={(e) =>
+                              handleStatusChange(product.id, true)
+                            }
+                            disabled={isUpdating}
+                          >
+                            Listar
+                          </button>
+                        ) : (
+                          <button
+                            className="mx-auto btn btn-sm btn-danger mt-2"
+                            onClick={() => openDeleteModal(product.id)}
+                            disabled={isUpdating}
+                          >
+                            Eliminar producto
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
             <div className="d-flex flex-column justify-content-center align-self-center">
               <button
@@ -502,8 +520,12 @@ const ProductPanel = ({ products }) => {
                   <Modal.Title>Eliminar producto</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <p>Este producto se volverá no disponible.</p>
-                  <p>¿Está seguro que desea continuar?</p>
+                  <p className="text-center">
+                    Este producto se elminará de la tienda y paneles de gestión.
+                  </p>
+                  <p className="text-center">
+                    ¿Está seguro que desea continuar?
+                  </p>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={closeDeleteModal}>

@@ -60,5 +60,10 @@ body {
 }
 
 .content {
-  max-width: 800px;
+  max-width: 815px;
+  margin: 0 !important;
+}
+
+.white-text {
+  color: white;
 }

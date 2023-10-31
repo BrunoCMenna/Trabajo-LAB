@@ -60,9 +60,20 @@ const UserPanel = () => {
     if (selectedOption === "all") {
       return users;
     } else if (selectedOption === "users") {
-      return users.filter((users) => users.roleId !== 2 && users.roleId !== 3);
+      return users.filter(
+        (users) =>
+          users.roleId !== 2 && users.roleId !== 3 && users.roleId !== 4
+      );
     } else if (selectedOption === "admins") {
-      return users.filter((users) => users.roleId !== 1 && users.roleId !== 3);
+      return users.filter(
+        (users) =>
+          users.roleId !== 1 && users.roleId !== 3 && users.roleId !== 4
+      );
+    } else if (selectedOption === "disabled") {
+      return users.filter(
+        (users) =>
+          users.roleId !== 1 && users.roleId !== 2 && users.roleId !== 3
+      );
     }
     return [];
   };
@@ -169,6 +180,7 @@ const UserPanel = () => {
             <option value="all">Todos</option>
             <option value="users">Usuarios</option>
             <option value="admins">Administradores</option>
+            <option value="disabled">Deshabilitados</option>
           </select>
         </div>
         {isLoading ? (
