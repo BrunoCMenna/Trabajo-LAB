@@ -12,9 +12,9 @@ Tenemos un apartado de Preguntas Frecuentes, pero también contamos con un sopor
 # Ubicacion de requisitos TPI
 # FrontEnd
 
-Custom Hooks: se encuentran en TopProducts.js y {2do CH} <br />
-Testing Unitario: se le realizó al componente {} <br />
-Componente de chat: se encuentra en la carpeta SupportPopup <br />
+Custom Hooks: se encuentran en TopProducts.js (useTopProductsNavigation) y {2do CH} <br />
+Testing Unitario: se le realizó al componente SignIn, la función Validation que valida el estado de los datos antes de entrar y enviar el formulario de registro <br />
+Componente de chat: se encuentra en la carpeta SupportPopup, es un re-direccionado a whatsapp API <br />
 Contamos con modo oscuro en toda la web <br />
 
 # BackEnd
@@ -26,4 +26,4 @@ Contamos con permisos sobre los endpoints acorde a los roles <br />
 Tenemos 4 tipo de Roles: Administradores, SysAdmin, Usuarios e invitados <br />
 Utilizamos JWT para el sistema de registro y login de nuestros usuarios <br />
 Como consulta compleja implementamos GetTopProducts (backend) y la utilizamos en TopProducts (frontend) <br />
-La implementacion del patron visto en clase fue utilizada en {} <br />
+La implementacion del patron visto en clase fue Prototype y fue utilizada en un Historial de productos en HistoricProducs <br />
