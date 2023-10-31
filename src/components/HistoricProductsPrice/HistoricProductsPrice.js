@@ -6,6 +6,7 @@ import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { LoaderContext } from "../../contexts/LoaderContext";
 import Spinner from "../ui/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const HistoricProductsPrice = () => {
   const [historicProducts, setHistoricProducts] = useState([]);
@@ -13,6 +14,7 @@ const HistoricProductsPrice = () => {
   const { theme } = useContext(ThemeContext);
   const { isLoading, toggleLoading } = useContext(LoaderContext);
   const { token } = useContext(UserContext);
+  const navigation = useNavigate();
 
   useEffect(() => {
     toggleLoading(true);
