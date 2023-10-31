@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-
+import { useNavigate } from "react-router";
 import "../ProductPanel/ProductPanel.css";
-
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -33,6 +32,7 @@ const ProductPanel = ({ products }) => {
   const { token } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const { isLoading } = useContext(LoaderContext);
+  const navigation = useNavigate();
 
   useEffect(() => {
     setEditedProducts(products);
@@ -54,6 +54,10 @@ const ProductPanel = ({ products }) => {
       setModifiedProductIds((prevIds) => [...prevIds, productId]);
     }
     setHasChanges(true);
+  };
+
+  const goHistoricProductsList = () => {
+    navigation("/HistoricProductsPrice");
   };
 
   const handleInputChange = (event) => {
@@ -187,6 +191,10 @@ const ProductPanel = ({ products }) => {
         <h2 className="d-flex justify-content-center">
           Panel de Gestión de Productos
         </h2>
+        <Button onClick={goHistoricProductsList}>
+          {" "}
+          Listado productos historicos{" "}
+        </Button>
         <hr />
         {isLoading ? (
           <div className="d-flex justify-content-center mb-5">
