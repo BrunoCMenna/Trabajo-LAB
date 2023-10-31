@@ -191,7 +191,7 @@ const ProductPanel = ({ products }) => {
         <h2 className="d-flex justify-content-center">
           Panel de Gestión de Productos
         </h2>
-        <Button onClick={goHistoricProductsList}>
+        <Button onClick={goHistoricProductsList} className="mx-auto w-50">
           {" "}
           Listado productos historicos{" "}
         </Button>
