@@ -66,7 +66,7 @@ const ShowOrders = () => {
             <div className="container">
               {userOrders && userOrders.length === 0 ? (
                 <>
-                  <div className="d-flex justify-content-center">
+                  <div className="d-flex justify-content-center pt-5">
                     <h4>No realizaste ningún pedido</h4>
                   </div>
                   <div className="d-flex justify-content-center m-2">

@@ -91,11 +91,19 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Shop products={products} top3={top3} />,
+      element: (
+        <ProtectedOnlyUser>
+          <Shop products={products} top3={top3} />
+        </ProtectedOnlyUser>
+      ),
     },
     {
       path: "/shop",
-      element: <Shop products={products} top3={top3} />,
+      element: (
+        <ProtectedOnlyUser>
+          <Shop products={products} top3={top3} />
+        </ProtectedOnlyUser>
+      ),
     },
     {
       path: "/Login",
@@ -171,14 +179,18 @@ const App = () => {
     },
     {
       path: "/product/:id",
-      element: <Product products={products} />,
+      element: (
+        <ProtectedOnlyUser>
+          <Product products={products} />
+        </ProtectedOnlyUser>
+      ),
     },
     {
       path: "/Dashboard",
       element: (
-        <ProtectedSysAdmin>
-          <AdminDashboard products={products}/>
-        </ProtectedSysAdmin>
+        <ProtectedAdmin>
+          <AdminDashboard products={products} />
+        </ProtectedAdmin>
       ),
     },
   ]);

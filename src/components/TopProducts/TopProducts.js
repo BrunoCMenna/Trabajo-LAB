@@ -4,6 +4,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "./TopProducts.css";
+import PhoneItem from "../PhoneItem/PhoneItem";
 
 function useTopProductsNavigation() {
   const navigate = useNavigate();
@@ -20,25 +21,30 @@ const TopProducts = ({ top3 }) => {
   const navigateToProduct = useTopProductsNavigation();
 
   return (
-    <div className={`d-flex flex-column ${theme === "dark" && "top-card-dark"}`}>
-      <h2 className="d-flex justify-content-center">Trending!</h2>
+    <div
+      className={`d-flex flex-column ${theme === "dark" && "top-card-dark"}`}
+    >
+      <h3 className="text-center">Más vendidos</h3>
       <Carousel
         showThumbs={false}
         showStatus={false}
         showIndicators={true}
         emulateTouch={true}
       >
-        {top3.map((product) => (
-          <button onClick={() => navigateToProduct(product.productId)}>
-            <div
-              className={`top3-card-container ${theme === "dark" && "top3-card-dark"}`}
-              style={{ width: "200px", height: "170px" }}
-            >
-              <h3 className="text-uppercase fw-medium">
-                {product.brand} {product.model}
-              </h3>
-              <p> ${product.price}</p>
-            </div>
+        {top3.map((p, index) => (
+          <button onClick={() => navigateToProduct(p.productId)}>
+            <PhoneItem
+              key={index}
+              id={p.id}
+              brand={p.brand}
+              model={p.model}
+              price={p.price}
+              image={p.image}
+              isActive={p.isActive}
+              inStock={p.inStock}
+              ram={p.ram}
+              storage={p.storage}
+            />
           </button>
         ))}
       </Carousel>

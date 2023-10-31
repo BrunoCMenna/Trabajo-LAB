@@ -6,8 +6,8 @@ const ProtectedOnlyUser = ({ children }) => {
   const { user } = useContext(UserContext);
 
   if (user) {
-    if (user.role !== "user") {
-      return <Navigate to="/" replace />;
+    if (user.role !== "user" && user.role !== "disabled") {
+      return <Navigate to="/productpanel" replace />;
     }
   }
 
