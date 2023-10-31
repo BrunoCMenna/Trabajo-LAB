@@ -17,10 +17,12 @@ import logo from "../../img/logo.png";
 import { CartContext } from "../../contexts/ShoppingCartContext";
 import { UserContext } from "../../contexts/AuthContext";
 import ToggleTheme from "../ToggleTheme/ToggleTheme";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const NavBar = () => {
   const { getItemAmount } = useContext(CartContext);
   const { user, logOutUser } = useContext(UserContext);
+  const { theme } = useContext(ThemeContext);
   const cartAmount = getItemAmount();
   const navigation = useNavigate();
 
@@ -54,7 +56,7 @@ const NavBar = () => {
           {user ? (
             <>
               <span className="d-flex align-self-center align-text-center text-white">
-                Hola, {user.name}!
+                Hola, {user.name ?? "invitado"}!
               </span>
               {user.role === "admin" ? (
                 <>
@@ -235,6 +237,7 @@ const NavBar = () => {
                 align="end"
                 title=<RiMenuFill />
                 id="dropdown-menu-align-end"
+                data-bs-theme={theme}
               >
                 <Dropdown.Item as={Link} to="/cart">
                   Carrito
@@ -258,6 +261,7 @@ const NavBar = () => {
                     align="end"
                     title=<RiMenuFill />
                     id="dropdown-menu-align-end"
+                    data-bs-theme={theme}
                   >
                     <Dropdown.Item as={Link} to="/productpanel">
                       Gestión de productos
@@ -280,6 +284,7 @@ const NavBar = () => {
                     align="end"
                     title=<RiMenuFill />
                     id="dropdown-menu-align-end"
+                    data-bs-theme={theme}
                   >
                     <Dropdown.Item as={Link} to="/userpanel">
                       Lista de usuarios
@@ -305,6 +310,7 @@ const NavBar = () => {
                     align="end"
                     title=<RiMenuFill />
                     id="dropdown-menu-align-end"
+                    data-bs-theme={theme}
                   >
                     <Dropdown.Item as={Link} to="/showorders">
                       Mis pedidos

@@ -34,10 +34,10 @@ li {
   margin-left: 20px;
 }
 
-button {
+/* button {
   margin: 0;
   padding: 0;
-}
+} */
 
 .AcordeonItem {
   margin: 0; /* Establecer margen a 0 */

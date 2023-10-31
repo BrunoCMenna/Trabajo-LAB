@@ -1,3 +1,11 @@
-/* .catalog-dark {
-  background-color: #020c1a;
-} */
+.grid-item {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+@media (max-width: 768px) {
+  .grid-item {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}

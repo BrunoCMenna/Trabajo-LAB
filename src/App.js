@@ -26,6 +26,7 @@ import SuppContent from "./components/Supp/SuppContent";
 import Product from "./components/Product/Product";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import FloatingButton from "./components/SupportPopup/FloatingButton";
+import ProtectedOnlyUser from "./components/routes/ProtectedOnlyUser";
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
@@ -90,11 +91,19 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Shop products={products} top3={top3} />,
+      element: (
+        <ProtectedOnlyUser>
+          <Shop products={products} top3={top3} />
+        </ProtectedOnlyUser>
+      ),
     },
     {
       path: "/shop",
-      element: <Shop products={products} top3={top3} />,
+      element: (
+        <ProtectedOnlyUser>
+          <Shop products={products} top3={top3} />
+        </ProtectedOnlyUser>
+      ),
     },
     {
       path: "/Login",
@@ -106,7 +115,11 @@ const App = () => {
     },
     {
       path: "/Cart",
-      element: <Cart products={products} />,
+      element: (
+        <ProtectedOnlyUser>
+          <Cart products={products} />
+        </ProtectedOnlyUser>
+      ),
     },
     {
       path: "/signin",
@@ -166,14 +179,18 @@ const App = () => {
     },
     {
       path: "/product/:id",
-      element: <Product products={products} />,
+      element: (
+        <ProtectedOnlyUser>
+          <Product products={products} />
+        </ProtectedOnlyUser>
+      ),
     },
     {
       path: "/Dashboard",
       element: (
-        <ProtectedSysAdmin>
+        <ProtectedAdmin>
           <AdminDashboard />
-        </ProtectedSysAdmin>
+        </ProtectedAdmin>
       ),
     },
   ]);
@@ -194,7 +211,6 @@ const App = () => {
       <RouterProvider router={router} />
       <FloatingButton />
     </div>
-    
   );
 };
 
