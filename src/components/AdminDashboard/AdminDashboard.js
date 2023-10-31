@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import { LoaderContext } from "../../contexts/LoaderContext";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import "./AdminDashboard.css";
+import { UserContext } from "../../contexts/AuthContext";
 
 const colorScheme = [
   "#25CCF7",
@@ -60,16 +61,18 @@ const getRandomColor = () => {
   return colorScheme[randomIndex];
 };
 
-function AdminDashboard({ products }) {
+function AdminDashboard() {
   const { theme } = useContext(ThemeContext);
   const { toggleLoading } = useContext(LoaderContext);
+  const { token } = useContext(UserContext);
   const [sells, setSells] = useState([]);
 
   const chartOptionsP = {
     plugins: {
       legend: {
         labels: {
-          color: theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en la leyenda
+          color:
+            theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en la leyenda
         },
       },
     },
@@ -79,19 +82,22 @@ function AdminDashboard({ products }) {
     plugins: {
       legend: {
         labels: {
-          color: theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en la leyenda
+          color:
+            theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en la leyenda
         },
       },
     },
     scales: {
       x: {
         ticks: {
-          color: theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en el eje X
+          color:
+            theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en el eje X
         },
       },
       y: {
         ticks: {
-          color: theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en el eje Y
+          color:
+            theme === "dark" ? "rgba(245, 240, 240, 1)" : "rgba(15, 15, 15, 1)", // Color del texto en el eje Y
         },
       },
     },
@@ -129,6 +135,7 @@ function AdminDashboard({ products }) {
     fetch("https://localhost:44377/api/Order/GetOrders", {
       headers: {
         accept: "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -138,9 +145,29 @@ function AdminDashboard({ products }) {
         }));
         setSells(sellsComp);
         separatePerDate(sellsComp);
-        calculateTopProducts(sellsComp);
         toggleLoading(false);
         console.log("sells cargado", sellsComp);
+      })
+      .catch((error) => {
+        console.log(error);
+        toggleLoading(false);
+      });
+
+    fetch("https://localhost:44377/api/Product/GetAllTopProducts", {
+      headers: {
+        accept: "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((productData) => {
+        const sellsComp = productData.map((product) => ({
+          ...product,
+        }));
+
+        calculateTopProducts(sellsComp);
+        toggleLoading(false);
+        console.log("productos cargados", sellsComp);
       })
       .catch((error) => {
         console.log(error);
@@ -179,42 +206,23 @@ function AdminDashboard({ products }) {
     console.log("Ventas por día", Object.keys(salesByDate));
   };
 
-  const calculateTopProducts = (sellsComp) => {
-    const productSales = {};
-    const backgroundColors = [];
-
-    // Calcular la cantidad vendida de cada producto
-    sellsComp.forEach((item) => {
-      const productId = item.orderItems[0].productId;
-      if (productSales[productId]) {
-        productSales[productId] += item.orderItems[0].quantity;
-      } else {
-        productSales[productId] = item.orderItems[0].quantity;
-      }
-
-      // Asignar un color aleatorio para cada producto
-      backgroundColors.push(getRandomColor());
-    });
-
-    // Ordenar los productos por cantidad vendida de forma descendente
-    const sortedProducts = Object.keys(productSales).sort(
-      (a, b) => productSales[b] - productSales[a]
+  const calculateTopProducts = (productData) => {
+    const topProductsLabels = productData.map(
+      (product) => `${product.brand} - ${product.model}`
     );
-
-    // Limitar a los 3 productos más vendidos
-    const topProductsLabels = sortedProducts.slice(0, 3);
+    const topProductsQuantities = productData.map(
+      (product) => product.totalQuantity
+    );
+    const backgroundColors = topProductsLabels.map(() => getRandomColor());
 
     setTopProducts({
       ...topProducts,
-      labels: topProductsLabels.map((productId) => {
-        const product = products.find((p) => p.id === parseInt(productId));
-        return product ? `${product.brand} ${product.model}` : "";
-      }),
+      labels: topProductsLabels,
       datasets: [
         {
           ...topProducts.datasets[0],
-          data: topProductsLabels.map((productId) => productSales[productId]),
-          backgroundColor: backgroundColors, // Asignar los colores aleatorios
+          data: topProductsQuantities,
+          backgroundColor: backgroundColors,
         },
       ],
     });
@@ -250,7 +258,7 @@ function AdminDashboard({ products }) {
             <LineChart chartData={topProducts} options={chartOptions} />
           </div>
           <div style={{ width: 300 }}>
-            <PieChart chartData={topProducts}  options={chartOptionsP}/>
+            <PieChart chartData={topProducts} options={chartOptionsP} />
           </div>
         </div>
       </div>
