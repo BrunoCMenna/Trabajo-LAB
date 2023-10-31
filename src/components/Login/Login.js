@@ -17,7 +17,6 @@ const Login = () => {
   const { logInUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const [token, setToken] = useState("");
-  
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
@@ -34,7 +33,7 @@ const Login = () => {
       const response = await fetch("https://localhost:44377/api/Auth/LogIn", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", 
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: email,
@@ -42,15 +41,12 @@ const Login = () => {
         }),
       });
 
-      
       if (response.ok || response.status === 200) {
         const responseData = await response.text();
         logInUser(responseData);
       } else {
         const responseData = await response.text();
         return toast.error(responseData);
-        
-        
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);
@@ -71,7 +67,7 @@ const Login = () => {
         <div className="banner"></div>
         <div className="login w-26 p-3">
           <div className={`${theme === "dark" && "login-box-dark"}`}>
-            <h2 className="mb-2 d-flex justify-content-center fs-4">
+            <h2 className="mb-2 pt-2 d-flex justify-content-center fs-4">
               ¡Bienvenido a Tecno Rosario!
             </h2>
             <p className="d-flex justify-content-center">
@@ -88,6 +84,7 @@ const Login = () => {
                   value={email}
                   onChange={emailChangeHandler}
                   required
+                  data-bs-theme={theme}
                 />
               </div>
               <div className="form-group mb-3">
@@ -100,6 +97,7 @@ const Login = () => {
                   value={password}
                   onChange={passwordChangeHandler}
                   required
+                  data-bs-theme={theme}
                 />
               </div>
               <div className="d-flex justify-content-center">
@@ -111,7 +109,7 @@ const Login = () => {
                   Iniciar sesión
                 </button>
               </div>
-              <div className="mx-5">
+              <div className="mx-4 text-center">
                 <span>¿No tenés una cuenta?</span>
                 <button
                   type="button"
@@ -121,7 +119,7 @@ const Login = () => {
                   Registrarse
                 </button>
               </div>
-              <div className="mx-5">
+              <div className="mx-4 text-center">
                 <span>¿Querés ver los productos sin una cuenta?</span>
                 <button
                   type="button"
@@ -135,17 +133,17 @@ const Login = () => {
           </div>
         </div>
         <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </div>
       <Footer />
     </div>

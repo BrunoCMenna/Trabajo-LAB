@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import PhoneItem from "../PhoneItem/PhoneItem";
 import "../PhoneCatalog/PhoneCatalog.css";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 const PhoneCatalog = ({ phones, brandFilterSelected }) => {
+  const { theme } = useContext(ThemeContext);
   let phonesFiltered;
 
   if (brandFilterSelected) {
@@ -41,7 +43,11 @@ const PhoneCatalog = ({ phones, brandFilterSelected }) => {
 
   if (phonesFiltered.length === 0) {
     return (
-      <div className="text-center grid-item my-5">
+      <div
+        className={`text-center grid-item my-5 ${
+          theme === "dark" && "white-text"
+        }`}
+      >
         <h5>No se encontraron productos con la búsqueda seleccionada.</h5>
       </div>
     );

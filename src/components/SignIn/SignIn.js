@@ -34,10 +34,9 @@ export const Validation = (values) => {
   if (values.lastName === "") {
     throw new Error("Apellido no puede ser vacío");
   }
-  
+
   return errors;
 };
-
 
 const SignIn = () => {
   const { logInUser } = useContext(UserContext);
@@ -57,8 +56,6 @@ const SignIn = () => {
     setValues(newObj);
     console.log(values);
   };
-
-  
 
   const logInHandler = async (e) => {
     e.preventDefault();
@@ -83,7 +80,7 @@ const SignIn = () => {
               }),
             }
           );
-  
+
           // Verifica si la solicitud fue exitosa (código de respuesta 200)
           if (response.ok || response.status === 200) {
             const responseData = await response.text();
@@ -100,7 +97,6 @@ const SignIn = () => {
       toast.error(error.message);
     }
   };
-  
 
   const goLogIn = () => {
     navigation("/login");
@@ -126,6 +122,7 @@ const SignIn = () => {
                   name="firstName"
                   onChange={handleInput}
                   required
+                  data-bs-theme={theme}
                 />
               </div>
               <div className="form-group mb-3">
@@ -138,6 +135,7 @@ const SignIn = () => {
                   name="lastName"
                   onChange={handleInput}
                   required
+                  data-bs-theme={theme}
                 />
               </div>
               <div className="form-group mb-3">
@@ -150,6 +148,7 @@ const SignIn = () => {
                   name="email"
                   onChange={handleInput}
                   required
+                  data-bs-theme={theme}
                 />
               </div>
               <div className="form-group mb-3">
@@ -162,6 +161,7 @@ const SignIn = () => {
                   name="password"
                   onChange={handleInput}
                   required
+                  data-bs-theme={theme}
                 />
               </div>
               <div className="d-flex justify-content-center">

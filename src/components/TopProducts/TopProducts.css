@@ -3,6 +3,10 @@
   border-radius: 10px;
 }
 
+.top-card-dark h3 {
+  color: black;
+}
+
 .top3-card-container {
   transition: 0.3s;
   border-radius: 10px;

@@ -11,12 +11,10 @@ const SidebarFilters = ({
   onStockFilterChange,
   stockFilter,
   onPriceFilterChange,
-  currentMinPrice,
-  currentMaxPrice,
 }) => {
   const { theme } = useContext(ThemeContext);
-  const [sortBy, setSortBy] = useState(""); // Estado para el filtro de ordenamiento
-  const [minPrice, setMinPrice] = useState(""); // Estado para el precio mínimo
+  const [sortBy, setSortBy] = useState("");
+  const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
   const handlePriceChange = (e) => {
@@ -33,13 +31,15 @@ const SidebarFilters = ({
 
   const getSameBrandPhones = () => {
     const sameBrandPhones = {};
-    phones.forEach((p) => {
-      if (sameBrandPhones[p.brand]) {
-        sameBrandPhones[p.brand]++;
-      } else {
-        sameBrandPhones[p.brand] = 1;
-      }
-    });
+    phones
+      .filter((p) => p.isActive !== false)
+      .forEach((p) => {
+        if (sameBrandPhones[p.brand]) {
+          sameBrandPhones[p.brand]++;
+        } else {
+          sameBrandPhones[p.brand] = 1;
+        }
+      });
     return sameBrandPhones;
   };
 
@@ -49,8 +49,8 @@ const SidebarFilters = ({
 
   const changeSortHandler = (e) => {
     const selectedSort = e.target.value;
-    setSortBy(selectedSort); // Actualiza el estado del filtro de ordenamiento
-    onSortChange(selectedSort); // Llama a la función de ordenamiento en tu componente principal
+    setSortBy(selectedSort);
+    onSortChange(selectedSort);
   };
 
   const changeStockFilterHandler = (e) => {

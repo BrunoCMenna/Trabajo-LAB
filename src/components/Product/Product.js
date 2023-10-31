@@ -19,7 +19,9 @@ const Product = ({ products }) => {
   const navigate = useNavigate();
 
   // Encuentra el producto correspondiente al ID en la lista de productos
-  const product = products.find((product) => product.id == id);
+  const product = products
+    .filter((p) => p.isActive !== false)
+    .find((product) => product.id == id);
   console.log(product);
 
   return (
