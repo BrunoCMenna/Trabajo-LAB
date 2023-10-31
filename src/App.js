@@ -26,8 +26,8 @@ import SuppContent from "./components/Supp/SuppContent";
 import Product from "./components/Product/Product";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import FloatingButton from "./components/SupportPopup/FloatingButton";
+import HistoricProductsPrice from "./components/HistoricProductsPrice/HistoricProductsPrice";
 import ProtectedOnlyUser from "./components/routes/ProtectedOnlyUser";
-
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const { toggleLoading } = useContext(LoaderContext);
@@ -166,6 +166,14 @@ const App = () => {
       element: (
         <ProtectedAdmin>
           <OrderPanel />
+        </ProtectedAdmin>
+      ),
+    },
+    {// hay que agregar protected admin solamente
+      path: "/HistoricProductsPrice",
+      element: (
+        <ProtectedAdmin>
+          <HistoricProductsPrice />
         </ProtectedAdmin>
       ),
     },

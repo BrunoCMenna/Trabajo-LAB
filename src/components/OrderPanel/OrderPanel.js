@@ -15,6 +15,7 @@ const ShowOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Pedidos");
+  const [orderEndpointsResult, SetOrderEndpointsResult] = useState([]);
   const navigation = useNavigate();
   const { theme } = useContext(ThemeContext);
   const { toggleLoading, isLoading } = useContext(LoaderContext);
@@ -114,7 +115,6 @@ const ShowOrders = () => {
     }
     return [];
   };
-
   const filteredOrders = filterOrders(ordersData);
 
   return (
