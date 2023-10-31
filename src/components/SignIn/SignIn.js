@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useJwt, decodeToken } from "react-jwt";
 import { useNavigate } from "react-router";
 import "../Login/Login.css";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -51,9 +50,6 @@ const SignIn = () => {
     password: "",
     role: "user",
   });
-  //const { decodedToken, isExpired } = useJwt(token);
-
-  //const { createUser } = useContext(UserContext);
   const navigation = useNavigate();
 
   const handleInput = (e) => {

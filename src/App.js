@@ -1,9 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "./contexts/ThemeContext";
 import ProtectedIfUserIsLogged from "./components/routes/ProtectedIfUserIsLogged";
@@ -21,7 +19,6 @@ import ProtectedAdmin from "./components/routes/ProtectedAdmin";
 import OrderPanel from "./components/OrderPanel/OrderPanel";
 import ProtectedSysAdmin from "./components/routes/ProtectedSysAdmin";
 import { LoaderContext } from "./contexts/LoaderContext";
-
 import SuppContent from "./components/Supp/SuppContent";
 import Product from "./components/Product/Product";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";

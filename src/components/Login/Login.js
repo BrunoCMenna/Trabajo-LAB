@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
-import { useJwt, decodeToken } from "react-jwt";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-
 import "./Login.css";
-
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import { UserContext } from "../../contexts/AuthContext";
@@ -17,13 +14,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
-  //const { logInUser } = useContext(UserContext);
   const { logInUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
-  //const { decodedToken } = useJwt(token);
-
   const [token, setToken] = useState("");
-  //const myDecodedToken
+  
 
   const emailChangeHandler = (e) => {
     setEmail(e.target.value);
