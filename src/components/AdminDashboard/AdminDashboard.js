@@ -145,9 +145,29 @@ function AdminDashboard() {
         }));
         setSells(sellsComp);
         separatePerDate(sellsComp);
-        calculateTopProducts(sellsComp);
         toggleLoading(false);
         console.log("sells cargado", sellsComp);
+      })
+      .catch((error) => {
+        console.log(error);
+        toggleLoading(false);
+      });
+
+    fetch("https://localhost:44377/api/Product/GetAllTopProducts", {
+      headers: {
+        accept: "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((productData) => {
+        const sellsComp = productData.map((product) => ({
+          ...product,
+        }));
+
+        calculateTopProducts(sellsComp);
+        toggleLoading(false);
+        console.log("productos cargados", sellsComp);
       })
       .catch((error) => {
         console.log(error);
@@ -185,49 +205,29 @@ function AdminDashboard() {
 
     console.log("Ventas por día", Object.keys(salesByDate));
   };
-  const calculateTopProducts = (sellsComp) => {
-    const productSales = {};
-    const backgroundColors = {};
 
-    sellsComp.forEach((order) => {
-      order.orderItems.forEach((item) => {
-        const brand = item.brand; // Obtenemos la marca del producto
-        const model = item.model; // Obtenemos el modelo del producto
-        const productKey = `${brand} - ${model}`; // Creamos una clave única con marca y modelo
+  const calculateTopProducts = (productData) => {
+    const topProductsLabels = productData.map(
+      (product) => `${product.brand} - ${product.model}`
+    );
+    const topProductsQuantities = productData.map(
+      (product) => product.totalQuantity
+    );
+    const backgroundColors = topProductsLabels.map(() => getRandomColor());
 
-        if (productSales[productKey]) {
-          productSales[productKey] += item.quantity;
-        } else {
-          productSales[productKey] = item.quantity;
-        }
-
-        // Asignar un color aleatorio para cada producto (una vez por producto)
-        if (!backgroundColors[productKey]) {
-          backgroundColors[productKey] = getRandomColor();
-        }
-      });
-
-      // Obtener la lista de productos más vendidos
-      const topProductsLabels = Object.keys(productSales);
-
-      setTopProducts({
-        ...topProducts,
-        labels: topProductsLabels,
-        datasets: [
-          {
-            ...topProducts.datasets[0],
-            data: topProductsLabels.map(
-              (productKey) => productSales[productKey]
-            ),
-            backgroundColor: topProductsLabels.map(
-              (productKey) => backgroundColors[productKey]
-            ),
-          },
-        ],
-      });
-
-      console.log("Productos más vendidos", topProductsLabels);
+    setTopProducts({
+      ...topProducts,
+      labels: topProductsLabels,
+      datasets: [
+        {
+          ...topProducts.datasets[0],
+          data: topProductsQuantities,
+          backgroundColor: backgroundColors,
+        },
+      ],
     });
+
+    console.log("Productos más vendidos", topProductsLabels);
   };
 
   return (
