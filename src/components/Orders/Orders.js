@@ -94,7 +94,7 @@ const Orders = ({ products }) => {
           toast.success("¡Tu compra realizada con éxito!");
           setCartItems(getDefaultCart(products));
         } else {
-          toast.error("Error: ");
+          toast.error("Producto delistado o sin stock, por favor recargue la página ");
         }
       } catch (error) {
         console.log("Error clg: ", error);

@@ -11,7 +11,7 @@ import Spinner from "../ui/Spinner";
 import "../OrderPanel/OrderPanel.css";
 
 const ShowOrders = () => {
-  const [userOrders, setUserOrders] = useState([]);
+  const [ordersData, setOrdersData] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Pedidos");
@@ -35,7 +35,7 @@ const ShowOrders = () => {
         console.log("Ventas traidas:", ordersData);
         console.log("OrderItems traidos:", ordersData.orderItems);
         console.log("Objeto como está ahora: ", filteredOrders);
-        SetOrderEndpointsResult(ordersData);
+        setOrdersData(ordersData);
         toggleLoading(false);
       })
       .catch((error) => {
@@ -74,25 +74,48 @@ const ShowOrders = () => {
         "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(requestBody),
-    });
+    })
+      .then((response) => response.json)
+      .then(() => {
+        toast.info("Pedido actualizado");
+        const updatedOrdersData = ordersData.map((order) => {
+          if (order.id === orderId) {
+            return { ...order, orderStatus: newState };
+          }
+          return order;
+        });
+        setOrdersData(updatedOrdersData);
+      })
+      .catch((error) => {
+        toast.error("Hubo un problema al actualizar el pedido");
+        console.log("Error al actualizar pedido: ", error);
+      });
   };
 
   const confirmStateChange = () => {
     const { userId, orderId, newState } = selectedOrder;
     updateOrderState(userId, newState, orderId);
+
+    const updatedOrdersData = ordersData.map((order) => {
+      if (order.id === orderId) {
+        return { ...order, orderStatus: newState };
+      }
+      return order;
+    });
+    setOrdersData(updatedOrdersData);
+
     setShowModal(false);
   };
 
   const filterOrders = (orders) => {
     if (selectedOption === "Pedidos") {
-      return orders.filter((order) => order.state !== "Entregado");
+      return orders.filter((order) => order.orderStatus !== "Entregado");
     } else if (selectedOption === "Archivados") {
-      return orders.filter((order) => order.state === "Entregado");
+      return orders.filter((order) => order.orderStatus === "Entregado");
     }
     return [];
   };
-
-  const filteredOrders = filterOrders(orderEndpointsResult);
+  const filteredOrders = filterOrders(ordersData);
 
   return (
     <>
@@ -177,8 +200,7 @@ const ShowOrders = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {/* {orderEndpointsResult.map((order, index))} */}
-                        {orderEndpointsResult.map((order, index) => (
+                        {filteredOrders.map((order, index) => (
                           <tr key={index}>
                             <td className="px-3">{order.email}</td>
                             <td className="px-3">{order.nameLastName}</td>
@@ -242,7 +264,7 @@ const ShowOrders = () => {
                             <td>
                               {order.orderStatus !== "Entregado" ? (
                                 <select
-                                  value={order.status}
+                                  value={order.orderStatus}
                                   onChange={(e) =>
                                     handleStateChange(
                                       order.userId,

@@ -135,7 +135,7 @@ const ProductPanel = ({ products }) => {
 
   const deleteProduct = () => {
     fetch(
-      `https://648a168e5fa58521cab0c8e7.mockapi.io/api/v1/products/${selectedProductId}`,
+      `https://localhost:44377/api/Product/DeleteProduct/${selectedProductId}`,
       {
         method: "DELETE",
         headers: {
@@ -146,7 +146,7 @@ const ProductPanel = ({ products }) => {
     )
       .then((response) => response.json())
       .then(() => {
-        toast.success("Producto eliminado con éxito");
+        toast.success("Producto desactivado con éxito");
         setEditedProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== selectedProductId)
         );
@@ -256,6 +256,19 @@ const ProductPanel = ({ products }) => {
                         />
                       </p>
                       <p className="card-text">
+                        Stock:
+                        <input
+                          type="number"
+                          className="form-control"
+                          name="inStock"
+                          value={product.inStock}
+                          onChange={(e) =>
+                            handleInputChangeOnExistingProduct(e, product.id)
+                          }
+                          disabled={isUpdating}
+                        />
+                      </p>
+                      <p className="card-text">
                         Precio:
                         <input
                           type="number"
@@ -285,24 +298,23 @@ const ProductPanel = ({ products }) => {
                         Estado:{" "}
                         {product.isActive ? "Disponible" : "No disponible"}
                       </p>
-                      <button
-                        className={`mx-auto btn btn-sm ${
-                          product.isActive ? "btn-danger" : "btn-success"
-                        }`}
-                        onClick={(e) =>
-                          handleStatusChange(product.id, !product.isActive)
-                        }
-                        disabled={isUpdating}
-                      >
-                        {product.isActive ? "Desenlistar" : "Listar"}
-                      </button>
-                      <button
-                        className="mx-auto btn btn-sm btn-danger mt-2"
-                        onClick={() => openDeleteModal(product.id)}
-                        disabled={isUpdating}
-                      >
-                        Eliminar producto
-                      </button>
+                      {!product.isActive ? (
+                        <button
+                          className={`mx-auto btn btn-sm btn-success`}
+                          onClick={(e) => handleStatusChange(product.id, true)}
+                          disabled={isUpdating}
+                        >
+                          Listar
+                        </button>
+                      ) : (
+                        <button
+                          className="mx-auto btn btn-sm btn-danger mt-2"
+                          onClick={() => openDeleteModal(product.id)}
+                          disabled={isUpdating}
+                        >
+                          Eliminar producto
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -490,7 +502,7 @@ const ProductPanel = ({ products }) => {
                   <Modal.Title>Eliminar producto</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <p>Este producto se elminará para siempre.</p>
+                  <p>Este producto se volverá no disponible.</p>
                   <p>¿Está seguro que desea continuar?</p>
                 </Modal.Body>
                 <Modal.Footer>

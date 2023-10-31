@@ -29,3 +29,8 @@
   background-color: #303030;
   color: white;
 }
+
+.card-font {
+  font-size: 13px;
+  width: max-content;
+}
