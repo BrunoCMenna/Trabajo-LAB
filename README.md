@@ -14,6 +14,7 @@ Tenemos un apartado de Preguntas Frecuentes, pero también contamos con un sopor
 # Ubicacion de requisitos TPI
 
 # FrontEnd
+https://github.com/BrunoCMenna/Trabajo-LAB <br />
 
 Custom Hooks: se encuentran en TopProducts.js (useTopProductsNavigation) y en Cart.js (hooks/useFormattedNumber.js) <br />
 Testing Unitario: se le realizó al componente SignIn, la función Validation que valida el estado de los datos antes de entrar y enviar el formulario de registro. <br />
@@ -21,6 +22,7 @@ Componente de chat: se encuentra en la carpeta SupportPopup, es un re-direcciona
 Contamos con modo oscuro en toda la web.<br />
 
 # BackEnd
+El BackEnd se encuentra en privado, ya que una API que utilizamos lo requería, ambos profesores fueron invitados a colaboradores.
 
 https://github.com/BrunoCMenna/API-TrabajoPractico-Prog <br />
 
