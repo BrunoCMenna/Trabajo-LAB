@@ -14,6 +14,7 @@ Tenemos un apartado de Preguntas Frecuentes, pero también contamos con un sopor
 # Ubicacion de requisitos TPI
 
 # FrontEnd
+
 https://github.com/BrunoCMenna/Trabajo-LAB <br />
 
 Custom Hooks: se encuentran en TopProducts.js (useTopProductsNavigation) y en Cart.js (hooks/useFormattedNumber.js) <br />
@@ -22,6 +23,7 @@ Componente de chat: se encuentra en la carpeta SupportPopup, es un re-direcciona
 Contamos con modo oscuro en toda la web.<br />
 
 # BackEnd
+
 El BackEnd se encuentra en privado, ya que una API que utilizamos lo requería, ambos profesores fueron invitados a colaboradores.
 
 https://github.com/BrunoCMenna/API-TrabajoPractico-Prog <br />
@@ -32,3 +34,13 @@ Tenemos 4 tipo de Roles: Administradores, SysAdmin, Usuarios y Disabled (para ba
 Utilizamos JWT para el sistema de registro y login de nuestros usuarios. <br />
 Como consulta compleja implementamos GetTopProducts (backend) y la utilizamos en TopProducts (frontend). <br />
 La implementacion del patron visto en clase fue Prototype y fue utilizada en un Historial de productos en HistoricProducts. <br />
+
+# Cuentas con permisos
+
+Administrador: <br />
+email: f12@gmail.com <br />
+password: contra1234 <br />
+
+SysAdmin: <br />
+email: dd@gmail.com <br />
+password: contra1234 <br />
