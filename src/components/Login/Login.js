@@ -45,8 +45,7 @@ const Login = () => {
         const responseData = await response.text();
         logInUser(responseData);
       } else {
-        const responseData = await response.text();
-        return toast.error(responseData);
+        return toast.error("Email o contraseña incorrectas");
       }
     } catch (error) {
       console.error("Error en la solicitud:", error);

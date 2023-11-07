@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
 import "../Orders/Orders.css";
@@ -10,9 +10,11 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 import { toast } from "react-toastify";
 import Footer from "../Footer/Footer";
 import { LoaderContext } from "../../contexts/LoaderContext";
+import { BsPatchCheckFill } from "react-icons/bs";
 
 const Orders = ({ products }) => {
   const [showThankYouPage, setShowThankYouPage] = useState(false);
+  const [purchaseDetail, setPurchaseDetail] = useState();
   const [orderNumber, setOrderNumber] = useState();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -26,7 +28,9 @@ const Orders = ({ products }) => {
     useContext(CartContext);
   const { token } = useContext(UserContext);
   const { isLoading, toggleLoading } = useContext(LoaderContext);
-  const TotalCartAmount = getTotalCartAmount();
+  //const TotalCartAmount = getTotalCartAmount();
+  const TotalCartAmount = useMemo(() => getTotalCartAmount(), []);
+
   const navigation = useNavigate();
   const goShop = () => {
     navigation("/shop");
@@ -59,6 +63,33 @@ const Orders = ({ products }) => {
     return orderItems;
     // Se crea el objeto que determina solamente los productos que se van a comprar
   };
+
+  const createPurchaseDetail = (cart) => {
+    const purchaseDetailItems = [];
+
+    for (const productId in cart) {
+      const quantity = cart[productId];
+      const phone = products.find(
+        (phone) => parseInt(phone.id) === parseInt(productId)
+      );
+
+      if (phone && quantity >= 1) {
+        purchaseDetailItems.push({
+          productId: parseInt(productId),
+          quantity: quantity,
+          image: phone.image,
+          brand: phone.brand,
+          model: phone.model,
+          price: phone.price,
+        });
+      }
+    }
+    return purchaseDetailItems;
+  };
+
+  useEffect(() => {
+    setPurchaseDetail(createPurchaseDetail(cartItems));
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,7 +124,6 @@ const Orders = ({ products }) => {
         );
         if (response.ok) {
           const data = await response.json();
-          console.log("Orden de compra: ", data.Id);
           setOrderNumber(data.Id);
           setShowThankYouPage(true);
           setCartItems(getDefaultCart(products));
@@ -139,9 +169,91 @@ const Orders = ({ products }) => {
       ) : (
         <>
           {showThankYouPage ? (
-            <div className="thank-you-page">
-              <h2>¡Muchas gracias por tu compra!</h2>
-              <p>El número de ID de tu pedido es: #{orderNumber}</p>
+            <div
+              className={`d-flex flex-column align-items-center pt-5 pb-3 justify-content-center ${
+                theme === "dark" && "body-container-dark"
+              }`}
+            >
+              <div className="pt-4 pb-3 d-flex flex-column justify-content-center align-items-center">
+                <span className="text-success pb-3">
+                  <BsPatchCheckFill size={60} />
+                </span>
+                <h2 className="text-center">¡Muchas gracias por tu compra!</h2>
+                <p className="text-center">
+                  Tu número de pedido es: <b>#{orderNumber}</b>
+                </p>
+              </div>
+              <div className="total me-5 border p-3 mb-2">
+                <h4>Detalle:</h4>
+                {purchaseDetail.map((product) => {
+                  if (
+                    purchaseDetail &&
+                    purchaseDetail[product.productId] !== 0
+                  ) {
+                    return (
+                      <div className="d-flex">
+                        <img
+                          className="product-img"
+                          src={product.image}
+                          alt=""
+                        />
+                        <span className="ms-3 pe-2">
+                          {product.brand} {product.model}
+                        </span>
+                        <span className="me-3 ms-auto">
+                          x{product.quantity}
+                        </span>
+                        <span className="ms-auto">
+                          ${product.price * [product.quantity]}
+                        </span>
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+                <hr />
+                <div className="d-flex">
+                  <h4>Subtotal:</h4>
+                  <span className="ms-auto">${TotalCartAmount}</span>
+                </div>
+              </div>
+              <div className="text-center p-4">
+                <h4>Importante!</h4>
+                <p>
+                  Enviar el importe mediante transferencia a CBU:
+                  2205022111100004482894{" "}
+                </p>
+                <p>
+                  Realizada la transferencia, envie el recibo junto al número de
+                  pedido a nuestro{" "}
+                  <a
+                    href="https://api.whatsapp.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    WhatsApp
+                  </a>{" "}
+                  y nosotros le responderemos en la brevedad, enviando el
+                  pedido.
+                </p>
+                <p>
+                  Se le avisará sobre el estado de su envío mediante un email a
+                  la siguiente direccion: {user.email}
+                </p>
+              </div>
+              <hr style={{ maxWidth: "1200px" }}></hr>
+              <div className="p-4">
+                <button onClick={goShop} className="btn btn-primary">
+                  Ir a la tienda
+                </button>
+                <button
+                  onClick={() => navigation("/showorders")}
+                  className="btn btn-primary"
+                >
+                  Mis pedidos
+                </button>
+              </div>
             </div>
           ) : (
             <div

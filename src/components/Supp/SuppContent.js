@@ -21,7 +21,7 @@ function SuppContent() {
   return (
     <>
       <NavBar />
-      <div className="App">
+      <div className="App p-5">
         <AccordionItem
           title="Preguntas Frecuentes"
           isActive={activeItem === "preguntas-frecuentes"}
@@ -87,7 +87,8 @@ function SuppContent() {
                 <h3>Metodo de pago</h3>
                 <p>Enviar transferencia a CBU: 2205022111100004482894 </p>
                 <p>
-                  Al momento de completarse la transacción envie el recibo a{" "}
+                  Realizada la transferencia, envie el recibo junto al número de
+                  pedido a nuestro{" "}
                   <a
                     href="https://api.whatsapp.com"
                     target="_blank"
@@ -97,6 +98,10 @@ function SuppContent() {
                   </a>{" "}
                   y nosotros le responderemos en la brevedad, enviando el
                   pedido.
+                </p>
+                <p>
+                  Se le avisará sobre el estado de su envío mediante un email a
+                  la casilla de correo de su usuario.
                 </p>
               </div>
             )

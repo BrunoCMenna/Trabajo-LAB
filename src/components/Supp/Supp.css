@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.App {
+  min-height: calc(100vh - 100px - 462px);
+}
+
 .Accordeon-container {
   display: flex;
   flex-direction: column; /* Cambia la dirección de flexión a columna */
@@ -35,8 +39,8 @@ li {
 }
 
 .AcordeonItem {
-  margin: 0; 
-  padding: 0; 
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -52,16 +56,15 @@ a:hover {
   padding: 10px;
   background-color: #dfdfdf;
   width: 600px;
-  }
-
+}
 
 .ac-button {
-  font-size: 1.5em; 
-  margin: 10px; 
-  transition: font-weight ; 
-  background-color: #d8d6d6; 
-  padding: 10px; 
-  width: 400px; 
+  font-size: 1.5em;
+  margin: 10px;
+  transition: font-weight;
+  background-color: #d8d6d6;
+  padding: 10px;
+  width: 400px;
 }
 
 .open-aci-dark {
@@ -69,25 +72,21 @@ a:hover {
   color: white;
 }
 
-
 .ac-button.active {
-  font-weight: bold; 
+  font-weight: bold;
 }
-
 
 .ac-button-dark {
   color: white;
-  background-color: #3b3b3b; 
+  background-color: #3b3b3b;
 }
-
 
 .accordion-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease-out; 
+  transition: max-height 0.5s ease-out;
 }
 
-
 .accordion-content.active {
-  max-height: 500px; 
+  max-height: 500px;
 }

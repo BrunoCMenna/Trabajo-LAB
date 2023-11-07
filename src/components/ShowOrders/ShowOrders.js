@@ -32,7 +32,6 @@ const ShowOrders = () => {
       .then((response) => response.json())
       .then((ordersData) => {
         setUserOrders(ordersData);
-        console.log("Ordenes traídas: ", ordersData);
         toggleLoading(false);
       })
       .catch((error) => {
