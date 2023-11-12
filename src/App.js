@@ -48,7 +48,6 @@ const App = () => {
         }));
         setProducts(productsMapped);
         toggleLoading(false);
-        console.log("Productos cargados en App", productsMapped);
       })
       .catch((error) => {
         console.log(error);
@@ -68,7 +67,6 @@ const App = () => {
         }));
         setTop3(topProducts);
         toggleLoading(false);
-        console.log("top3 cargado", topProducts);
       })
       .catch((error) => {
         console.log(error);
@@ -166,7 +164,8 @@ const App = () => {
         </ProtectedAdmin>
       ),
     },
-    {// hay que agregar protected admin solamente
+    {
+      // hay que agregar protected admin solamente
       path: "/HistoricProductsPrice",
       element: (
         <ProtectedAdmin>

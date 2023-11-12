@@ -54,7 +54,6 @@ const SignIn = () => {
   const handleInput = (e) => {
     const newObj = { ...values, [e.target.name]: e.target.value };
     setValues(newObj);
-    console.log(values);
   };
 
   const logInHandler = async (e) => {
@@ -62,7 +61,6 @@ const SignIn = () => {
     try {
       const errorObj = Validation(values);
       if (Object.keys(errorObj).length === 0) {
-        console.log("no hay errores");
         setErrors(errorObj);
         try {
           const response = await fetch(
@@ -86,8 +84,7 @@ const SignIn = () => {
             const responseData = await response.text();
             logInUser(responseData);
           } else {
-            const responseData = await response.text();
-            return toast.error(responseData);
+            return toast.error("El email ya está en uso");
           }
         } catch (error) {
           console.error("Error en la solicitud:", error);

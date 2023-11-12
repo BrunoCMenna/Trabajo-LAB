@@ -32,7 +32,6 @@ const ShowOrders = () => {
       .then((response) => response.json())
       .then((ordersData) => {
         setUserOrders(ordersData);
-        console.log("Ordenes traídas: ", ordersData);
         toggleLoading(false);
       })
       .catch((error) => {
@@ -104,6 +103,9 @@ const ShowOrders = () => {
                         <th scope="col" className="px-3">
                           Dirección
                         </th>
+                        <th scope="col" className="">
+                          N° orden de compra
+                        </th>
                         <th scope="col" className="px-3">
                           Estado
                         </th>
@@ -125,6 +127,7 @@ const ShowOrders = () => {
                             <td className="px-3">{order.city}</td>
                             <td className="px-3">{order.zipCode}</td>
                             <td className="px-3">{order.shippingAddress}</td>
+                            <td className="px-3">#{order.id}</td>
                             <td className="px-3">{order.orderStatus}</td>
                             <td className="px-3">
                               <ul className="list-unstyled d-flex">

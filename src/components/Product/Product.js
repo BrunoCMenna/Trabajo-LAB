@@ -22,7 +22,6 @@ const Product = ({ products }) => {
   const product = products
     .filter((p) => p.isActive !== false)
     .find((product) => product.id == id);
-  console.log(product);
 
   return (
     <div className="">
